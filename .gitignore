@@ -1,1 +1,3 @@
 /src/.vagrant/
+/src/kubeconfig
+/src/cloud-init.yaml
