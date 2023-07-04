@@ -1,13 +1,6 @@
 # iot-edge
+[GenerIoT - Generating and Deploying Lightweight, Secure and Zero-overhead Software for Multipurpose IoT Devices](https://itea4.org/project/generiot.html)
 
-## Start working with Vagrant (doesn't work on Mac M1)
-- all commands: `cd src` 
-- to run VMs `vagrant up;`
-  - to ssh into VM `vagrant ssh [machine1];`
-  - list all VMs `vagrant status;`
-- to stop VM(s) `vagrant halt [machine1 machine2];`
-- to remove VM(s) `vagrant destroy [machine1 machine2];`
-
-## Start working with Multipass
-- all commands: `cd src` 
-- chmod +x multipass_script.sh
+## Contents
+* [Local Development](./LOCAL-DEV.md)
+* [Change log](./CHANGE-LOG.md)
