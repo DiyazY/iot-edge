@@ -25,6 +25,5 @@ generate_ssh_key() {
     fi
 
     # Output the public key
-    echo "Copy the following public key to your cloud-init config:"
     cat "$ssh_path/${key_name}.pub"
 }

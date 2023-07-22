@@ -1,0 +1,15 @@
+#cloud-config
+
+ssh_pwauth: false
+
+# Create my user & SSH keys
+users:
+  - name: rpi-user
+    groups: [sudo]
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - __SSH_AUTHORIZED_KEYS__
+
+runcmd:
+ - printf "ubuntu-host-$(openssl rand -hex 3)" > /etc/hostname
+ - printf "Ubuntu 22.04 LTS \nIP - $(hostname -I)\n" > /etc/issue
