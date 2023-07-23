@@ -118,3 +118,4 @@ provision_os
 # ssh-keygen -f "~/.ssh/known_hosts" -R "192.168.1.113"
 # remove the ssh key file (prefix with iot-) from the .ssh folder
 # remove generated cloud-init file
+# also find out how to keep IP address static over many reinstalls
