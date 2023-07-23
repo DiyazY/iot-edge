@@ -23,5 +23,5 @@ generate_cloud_init_file() {
     # Replace the placeholder in the template with the SSH key and write to the output file
     sed "s|__SSH_AUTHORIZED_KEYS__|$ssh_key|g" "$template_file" > "$output_file"
 
-    echo "Generated $output_file with substituted SSH key."
+    echo "$output_file"
 }
