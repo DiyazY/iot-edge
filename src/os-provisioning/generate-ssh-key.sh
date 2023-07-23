@@ -2,7 +2,7 @@
 
 generate_ssh_key() {
     # This function expects the key name as its first argument
-    local key_name="$1"
+    local key_name="iot-$1"
     # This function expects the path as its second argument
     local ssh_path="${2:-$HOME/.ssh}"
     # This function expects a flag indicating whether to overwrite existing keys as its third argument
@@ -20,7 +20,6 @@ generate_ssh_key() {
 
     # Check if the key already exists
     if [[ -f "$ssh_path/$key_name" && "$overwrite" || ! -f "$ssh_path/$key_name" ]]; then
-        echo "Generating a new key..."
         ssh-keygen -t rsa -b 4096 -f "$ssh_path/$key_name" -q -N ""
     fi
 
