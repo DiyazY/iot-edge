@@ -1,4 +1,4 @@
 /src/.vagrant/
 /src/kubeconfig
-/src/cloud-init.yaml
+/src/**/cloud-init.yaml
 *img*
