@@ -1,5 +1,9 @@
 # LOGS
+* August
+  * 
 * July
+  * Accidentally, I tore down the whole VM... I confused the disk for installing fresh OS.
+  * OS provisioning for raspberry pi is done. It can be found [here](./src/os-provisioning/raspberry-pi.sh).
   * Decided to automate the image preparation.
   * Intended to implement [non-touch bare metal Ubuntu installation](https://www.jimangel.io/posts/automate-ubuntu-22-04-lts-bare-metal/#create-a-bootable-live-server-usb).
     * the attempt is failed due a shortage of USB sticks and some knowledge gaps. Additionally, it was considered as an overhead for such a small project. 
