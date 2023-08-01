@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# sudo su -
+sudo su -
 export IMAGE_URL="https://releases.ubuntu.com/jammy/ubuntu-22.04.2-live-server-amd64.iso"
 export ORIG_ISO="ubuntu-22.04.2-live-server-amd64.iso"
 
@@ -27,7 +27,7 @@ if [[ $yn == [Yy]* ]]; then
 
     # copy command exactly as is, it appends `-modded` to the new filename
     export MODDED_ISO="${ORIG_ISO::-4}-modded.iso"
-    livefs-edit ../$ORIG_ISO ../$MODDED_ISO --cp /tmp/grub.cfg new/iso/boot/grub/grub.cfg
+    livefs-edit ./$ORIG_ISO ./$MODDED_ISO --cp /tmp/grub.cfg new/iso/boot/grub/grub.cfg
     ORIG_ISO=$MODDED_ISO
 fi
 
@@ -44,5 +44,5 @@ esac
 
 umount "$USB_STICK_DEV"* || true
 
-sudo dd bs=4M if=../$ORIG_ISO of=$USB_STICK_DEV conv=fdatasync status=progress
+sudo dd bs=4M if=./$ORIG_ISO of=$USB_STICK_DEV conv=fdatasync status=progress
 

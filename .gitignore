@@ -2,3 +2,4 @@
 /src/kubeconfig
 /src/**/cloud-init.yaml
 *img*
+*.iso
