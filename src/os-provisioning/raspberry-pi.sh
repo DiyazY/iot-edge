@@ -3,13 +3,15 @@
 source ./generate-ssh-key.sh
 source ./generate-cloud-init-file.sh
 
-# Check if the script is being run as root
-if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root"
-    exit 1
-fi
+
+# # Check if the script is being run as root
+# if [[ $EUID -ne 0 ]]; then
+#     echo "This script must be run as root"
+#     exit 1
+# fi
 
 provision_os(){
+    local ssh_key="$1:iot-key"
     local image_file="ubuntu-22.04.2-preinstalled-server-arm64+raspi.img.xz"
     local image_url="https://cdimage.ubuntu.com/releases/22.04/release/ubuntu-22.04.2-preinstalled-server-arm64+raspi.img.xz"
 
@@ -35,7 +37,7 @@ provision_os(){
     esac
 
     flash_image_to_sd_card "$SD_CARD_DEV" "$image_file" "$image_url"
-    flash_cloud_init_to_sd_card "$SD_CARD_DEV" "./cloud-init.template" "/home/parallels/.ssh"
+    flash_cloud_init_to_sd_card "$SD_CARD_DEV" "./cloud-init.template" "/home/parallels/.ssh" "$ssh_key"
 
     echo "Finished provisioning OS!"
 }
@@ -68,7 +70,7 @@ flash_image_to_sd_card() {
 
     # Copy the image to the SD card
     # This will take a while, and there's no progress indicator.
-    dd if="$DECOMPRESSED_IMAGE" of="$disk_path" bs=100M status=progress
+    sudo dd if="$DECOMPRESSED_IMAGE" of="$disk_path" bs=100M status=progress
 
     # Ensure the system has finished writing data to the SD card
     sync
@@ -81,6 +83,7 @@ flash_cloud_init_to_sd_card(){
     local disk_path="$1"
     local file_path="${2:-./cloud-init.template}"
     local ssh_path="$3"
+    local ssh_key_name="$4"
 
     local partition_path="${disk_path}1" #$(lsblk -p -o NAME,MOUNTPOINT | grep 'system-boot' |tr -d '├─'| awk '{print $1}')
     # check that the partition is exact part of the $disk_path
@@ -95,24 +98,25 @@ flash_cloud_init_to_sd_card(){
     TMP_DISK="/tmp/pi-disk"
     mkdir -p "$TMP_DISK"
 
-    local ssh_key=$(generate_ssh_key "test-iot" "$ssh_path")
+    local ssh_key=$(generate_ssh_key "$ssh_key_name" "$ssh_path")
     local generated_file=$(generate_cloud_init_file "$file_path" "$ssh_key")
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # mount all partitions of the SD card
-        diskutil mountDisk "$partition_path" "$TMP_DISK"
+        sudo diskutil mountDisk "$partition_path" "$TMP_DISK"
     else
         # mount all partitions of the SD card
-        mount "$partition_path" "$TMP_DISK"
+        sudo mount "$partition_path" "$TMP_DISK"
     fi
 
-    cat "$generated_file" > "$TMP_DISK/user-data"
+    # sudo cat "$generated_file" > "$TMP_DISK/user-data"
+    sudo cat "$generated_file" | sudo tee "$TMP_DISK/user-data" > /dev/null
 
     # unmount the disk if done
-    umount "$TMP_DISK"
+    sudo umount "$TMP_DISK"
 }
 
-provision_os
+provision_os "iot-key"
 
 # TODO: remove the host from known_hosts
 # ssh-keygen -f "~/.ssh/known_hosts" -R "192.168.1.113"

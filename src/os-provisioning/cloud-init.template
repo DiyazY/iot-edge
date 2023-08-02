@@ -4,7 +4,7 @@ ssh_pwauth: false
 
 # Create my user & SSH keys
 users:
-  - name: rpi-user
+  - name: d-user
     groups: [sudo]
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys:
