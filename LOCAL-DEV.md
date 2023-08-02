@@ -23,3 +23,6 @@ To provision an OS on raspberry pi the next steps are required:
 * specifically, it creates cloud-init file with newly generated ssh-keys and mounts it to `system-boot` partition of SD-card.
 * assemble raspberry pi...
 * ssh to it: `ssh -i ~/.ssh/local-private-ssh-key [rpi-user]@[ip-address]`
+
+### NUC 
+TODO: add description
