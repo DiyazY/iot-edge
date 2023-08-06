@@ -42,6 +42,6 @@ To provision an OS on NUC the next steps are required:
 
 ## OS configuration and software provisioning
 * decided to use ansible for configuration management and software provisioning
-* ping the machines: `ansible iot_cluster -m ping -i src/inventory/iot_cluster/hosts.ini -u [user_name]`
-  * if it doesn't work, check inventory file for correct ip addresses: `ansible-inventory -i src/inventory/iot_cluster/hosts.ini --list`
+* ping the machines: `ansible iot_cluster -m ping -i src/ansible/inventory/hosts.ini`
+  * if it doesn't work, check inventory file for correct ip addresses and user name: `ansible-inventory -i src/ansible/inventory/hosts.ini --list`
 * 
