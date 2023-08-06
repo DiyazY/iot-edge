@@ -25,4 +25,23 @@ To provision an OS on raspberry pi the next steps are required:
 * ssh to it: `ssh -i ~/.ssh/local-private-ssh-key [rpi-user]@[ip-address]`
 
 ### NUC 
-TODO: add description
+To provision an OS on NUC the next steps are required:
+* connect usb-stick #1 to a machine.
+  * run script with sudo permission: `sudo src/os-provisioning/nuc.sh`.
+  * ...wait
+  * take out usb-stick #1
+* connect usb-stick #2 to a machine.
+  * run script with sudo permission: `sudo src/os-provisioning/nuc-cloud-init.sh`.
+  * ...wait
+  * take out usb-stick #2
+* connect both USB-sticks to NUC
+* Boot NUC from USB-stick #1
+  * ...wait (or follow instructions if image was not modified)
+  * when the installation is finished, NUC will shut down
+  * **IMPORTANT: remove USB-sticks and only after that turn on NUC!!!**
+
+## OS configuration and software provisioning
+* decided to use ansible for configuration management and software provisioning
+* add new host to `hosts` file (`/etc/ansible/hosts`)
+* ping the machines: `ansible all -m ping -u [user_name]`
+* 
