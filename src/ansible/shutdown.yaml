@@ -1,0 +1,8 @@
+- name: Shutdown Machines
+  hosts: iot_cluster
+  gather_facts: false
+
+  tasks:
+    - name: Shutdown the machines
+      become: yes
+      shell: shutdown -h now
