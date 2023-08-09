@@ -51,3 +51,6 @@ First change the directory: `cd src/ansible`;
 ### k3s
 * install k3s: `ansible-playbook playbooks/k3s.yaml -i inventory/k3s/hosts.ini`
   * scp [d-user]@[master_ip]:~/.kube/config .kube/k3s-config
+  * check the cluster: `kubectl --kubeconfig .kube/k3s-config get nodes`
+    * I prefer using k9s: `k9s --kubeconfig .kube/k3s-config`
+* 
