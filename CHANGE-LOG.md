@@ -1,6 +1,6 @@
 # LOGS
 * August
-  * 
+  * TODO: decide the monitoring tool and test scenarios
 * July
   * Accidentally, I tore down the whole VM... I confused the disk for installing fresh OS.
   * OS provisioning for raspberry pi is done. It can be found [here](./src/os-provisioning/raspberry-pi.sh).

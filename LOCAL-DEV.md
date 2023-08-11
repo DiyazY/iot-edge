@@ -53,4 +53,5 @@ First change the directory: `cd src/ansible`;
   * scp [d-user]@[master_ip]:~/.kube/config .kube/k3s-config
   * check the cluster: `kubectl --kubeconfig .kube/k3s-config get nodes`
     * I prefer using k9s: `k9s --kubeconfig .kube/k3s-config`
-* 
+* TODO: think how to organize cluster tests (i need to run several different tests on the cluster)
+  * 
