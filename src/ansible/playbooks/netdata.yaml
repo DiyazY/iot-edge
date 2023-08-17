@@ -1,0 +1,8 @@
+- name: monitoring setup
+  hosts: iot_cluster
+  gather_facts: true
+  vars_files:
+    - "../roles/netdata/vars/main.yml"
+  become: true
+  roles:
+    - role: netdata
