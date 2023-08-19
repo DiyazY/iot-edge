@@ -3,3 +3,6 @@
 /src/**/cloud-init.yaml
 *img*
 *.iso
+.kube
+.vscode
+.env

@@ -1,0 +1,17 @@
+---
+- name: Configure Netdata
+
+  block:
+    - name: Template configuration file
+      ansible.builtin.template:
+        src: ../templates/netdata.conf.j2
+        dest: /etc/netdata/netdata.conf
+        owner: root
+        group: root
+        mode: '0644'
+      become: true
+
+- name: Restart Netdata
+  ansible.builtin.service:
+    name: netdata       # Make sure this matches the actual service name
+    state: restarted    # This is the action you want to perform

@@ -1,0 +1,9 @@
+---
+- name: Run tasks from install.yaml
+  include_tasks: ./install.yaml
+
+- name: Run tasks from configure.yaml
+  include_tasks: ./configure.yaml
+
+- name: Run tasks from claim.yaml
+  include_tasks: ./claim.yaml
