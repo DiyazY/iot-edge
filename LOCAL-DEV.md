@@ -53,5 +53,12 @@ First change the directory: `cd src/ansible`;
   * scp [d-user]@[master_ip]:~/.kube/config .kube/k3s-config
   * check the cluster: `kubectl --kubeconfig .kube/k3s-config get nodes`
     * I prefer using k9s: `k9s --kubeconfig .kube/k3s-config`
-* TODO: think how to organize cluster tests (i need to run several different tests on the cluster)
-  * 
+### netdata
+* first of all, provide values in `roles/netdata/vars/main.yaml`:
+  * `claim_token` - token for netdata cloud
+  * `claim_rooms` - room for netdata cloud
+* install netdata: `ansible-playbook playbooks/netdata.yaml -i inventory/hosts.ini`
+* check the metrics in netdata cloud: `https://app.netdata.cloud/spaces/[space_name]`
+* WIP: storage approach will be changed in future.
+
+### k-bench
