@@ -62,3 +62,9 @@ First change the directory: `cd src/ansible`;
 * WIP: storage approach will be changed in future.
 
 ### k-bench
+* install k-bench: `ansible-playbook playbooks/k-bench-install.yaml -i inventory/hosts.ini`
+* TODO: add k-bench configuration during the installation
+
+#### k-bench: execution
+* ssh to master node: `ssh -i ~/.ssh/local-private-ssh-key [d-user]@[master_ip]`
+* TODO: run k-bench on each test suite (run-gather-clean).
