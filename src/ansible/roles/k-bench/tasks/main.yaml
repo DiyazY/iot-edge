@@ -1,0 +1,18 @@
+- name: Clone k-bench repository
+  git:
+    repo: https://github.com/vmware-tanzu/k-bench.git
+    dest: ~/k-bench
+    version: master  # You can specify a branch or tag here
+  register: git_clone_result
+
+- name: Change directory to k-bench
+  shell: cd ~/k-bench
+  args:
+    executable: /bin/bash
+  when: git_clone_result.changed  # Only change directory if the repository was cloned
+
+- name: Run k-bench install script
+  shell: sudo ./install.sh
+  args:
+    chdir: ~/k-bench
+  when: git_clone_result.changed  # Only run the script if the repository was cloned

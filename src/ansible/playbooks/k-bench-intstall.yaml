@@ -1,0 +1,6 @@
+- name: k-bench setup
+  hosts: iot_cluster
+  gather_facts: true
+  become: true
+  roles:
+    - role: k-bench
