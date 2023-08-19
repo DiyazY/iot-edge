@@ -1,0 +1,14 @@
+---
+- name: Run k-bench benchmark
+  hosts: master
+  become: false  # We don't need to run as sudo
+
+  tasks:
+    - name: Run k-bench benchmark
+      command: kbench
+      register: kbench_run_result
+
+    - name: Display k-bench output
+      debug:
+        var: kbench_run_result.stdout_lines
+      when: kbench_run_result.rc == 0  # Only display output if the benchmark ran successfully
