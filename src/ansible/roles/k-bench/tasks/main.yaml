@@ -1,12 +1,12 @@
 - name: Clone k-bench repository
   git:
     repo: https://github.com/vmware-tanzu/k-bench.git
-    dest: ~/k-bench
+    dest: ~{{ ansible_user }}/.k-bench
     version: master  # You can specify a branch or tag here
   register: git_clone_result
 
 - name: Change directory to k-bench
-  shell: cd ~/k-bench
+  shell: cd ~{{ ansible_user }}/.k-bench
   args:
     executable: /bin/bash
   when: git_clone_result.changed  # Only change directory if the repository was cloned
@@ -14,5 +14,23 @@
 - name: Run k-bench install script
   shell: sudo ./install.sh
   args:
-    chdir: ~/k-bench
+    chdir: ~{{ ansible_user }}/.k-bench
   when: git_clone_result.changed  # Only run the script if the repository was cloned
+
+- name: Create config paths
+  file:
+    path: "~{{ ansible_user }}/.k-bench/configs/{{ item.test_name }}"
+    state: directory
+  loop:
+    - { test_name: "cp_light_1client" }
+    # Add more test_name entries as needed
+  # when: "'master' in inventory_hostname"
+
+- name: Copy configuration files
+  template:
+    src: "../etc/{{ item.test_name }}/config.json"
+    dest: "~{{ ansible_user }}/.k-bench/configs/{{ item.test_name }}/config.json"
+  loop:
+    - { test_name: "cp_light_1client" }
+    # Add more test_name entries as needed
+  # when: "'master' in inventory_hostname"
