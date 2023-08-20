@@ -1,14 +1,22 @@
 ---
 - name: Run k-bench benchmark
   hosts: master
-  become: false  # We don't need to run as sudo
+  become: true
 
   tasks:
-    - name: Run k-bench benchmark
-      command: kbench
-      register: kbench_run_result
+    # Add more test_name entries as needed
+    - name: List of test names
+      set_fact:
+        test_names: ["cp_light_1client"]  # Add more test names as needed
+      
+    - name: Create config paths
+      file:
+        path: "~{{ ansible_user }}/.k-bench/test-results/{{ item }}"
+        state: directory
+      loop: "{{ test_names }}"
 
-    - name: Display k-bench output
-      debug:
-        var: kbench_run_result.stdout_lines
-      when: kbench_run_result.rc == 0  # Only display output if the benchmark ran successfully
+    - name: Run kbench command
+      command: kbench -benchconfig "/home/{{ ansible_user }}/.k-bench/configs/{{ item }}/config.json" -outdir "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}" -kubeconfig "/home/{{ ansible_user }}/.kube/config"
+      loop: "{{ test_names }}"
+      async: 3600
+      poll: 0
