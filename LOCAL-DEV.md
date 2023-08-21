@@ -66,5 +66,9 @@ First change the directory: `cd src/ansible`;
 * TODO: add k-bench configuration during the installation
 
 #### k-bench: execution
-* ssh to master node: `ssh -i ~/.ssh/local-private-ssh-key [d-user]@[master_ip]`
-* TODO: run k-bench on each test suite (run-gather-clean).
+* set up the `k8s_distribution` variable in `inventory/hosts.ini` file
+* run `ansible-playbook playbooks/k-bench-run.yaml -i inventory/hosts.ini`
+* To check results 
+  * `cd src/k-bench-results/[k8s_distribution]/[test_name]`
+  * `sed -e 's/.\{47\}//' ./kbench.log | grep -E 'Pod creation throughput|Pod creation average|Deployment Results|Pod Results|Pod startup total latency'`
+* TODO: automate the whole process so that I will do minimum of manual work
