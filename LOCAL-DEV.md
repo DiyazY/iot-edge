@@ -62,3 +62,13 @@ First change the directory: `cd src/ansible`;
 * WIP: storage approach will be changed in future.
 
 ### k-bench
+* install k-bench: `ansible-playbook playbooks/k-bench-install.yaml -i inventory/hosts.ini`
+* TODO: add k-bench configuration during the installation
+
+#### k-bench: execution
+* set up the `k8s_distribution` variable in `inventory/hosts.ini` file
+* run `ansible-playbook playbooks/k-bench-run.yaml -i inventory/hosts.ini`
+* To check results 
+  * `cd src/k-bench-results/[k8s_distribution]/[test_name]`
+  * `sed -e 's/.\{47\}//' ./kbench.log | grep -E 'Pod creation throughput|Pod creation average|Deployment Results|Pod Results|Pod startup total latency'`
+* TODO: automate the whole process so that I will do minimum of manual work

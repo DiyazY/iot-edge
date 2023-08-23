@@ -1,0 +1,39 @@
+---
+- name: Run k-bench benchmark
+  hosts: master
+  become: true
+
+  tasks:
+    # Add more test_name entries as needed
+    - name: List of test names
+      set_fact:
+        test_names: ["cp_light_1client"]  # Add more test names as needed
+      
+    - name: Create config paths
+      file:
+        path: "~{{ ansible_user }}/.k-bench/test-results/{{ item }}"
+        state: directory
+      loop: "{{ test_names }}"
+
+    - name: Run kbench command
+      command: kbench -benchconfig "/home/{{ ansible_user }}/.k-bench/configs/{{ item }}/config.json" -outdir "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}" -kubeconfig "/home/{{ ansible_user }}/.kube/config"
+      loop: "{{ test_names }}"
+
+    - name: Create local directory for test results for {{k8s_distribution}}}
+      ansible.builtin.file:
+        path: ../../k-bench-results/{{k8s_distribution}}/{{ item }}/
+        state: directory
+      loop: "{{ test_names }}"
+        
+    - name: Copy test results to repository
+      fetch:
+        src: "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}/kbench.log"
+        dest: "../../k-bench-results/{{k8s_distribution}}/{{ item }}/"
+        flat: yes
+      loop: "{{ test_names }}"
+    
+    - name: Delete test results on a remote machine
+      file:
+        path: "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}/kbench.log"
+        state: absent
+      loop: "{{ test_names }}"
