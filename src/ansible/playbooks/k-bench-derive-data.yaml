@@ -1,0 +1,24 @@
+---
+- name: k-bench derive data from results
+  hosts: localhost
+  gather_facts: false  # Disable gathering facts for the localhost
+
+  tasks:
+      # Add more test_name entries as needed
+    - name: List of test names
+      set_fact: 
+        test_names: ["cp_light_1client"]  # Add more test names as needed
+        sets: ["namespace", "pod", "deployment", "service"]
+        # TODO: how to share these variables with other playbooks?
+       
+    - name: Generating CSV file
+      delegate_to: localhost
+      # command: ../../utils/latency-statistic.sh {{tag}} {{k8s_distribution}} {{ item.0 }} {{ item.1 }}
+      # command: ../../utils/latency-statistic.sh "k3s-1" "k3s" {{ item.0 }} {{ item.1 }}
+      command: echo $(pwd)
+      with_nested:
+        - "{{ sets }}"
+        - "{{ test_names }}"
+
+
+        ## Maybe I don need this!!!
