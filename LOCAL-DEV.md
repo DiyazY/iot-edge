@@ -75,3 +75,11 @@ First change the directory: `cd src/ansible`;
 
 #### k-bench: derive data
 * WIP: run `ansible-playbook playbooks/k-bench-derive.yaml -i inventory/hosts.ini`
+
+
+### TIPS
+* if router was restarted, it might be necessary to update the ip addresses in `inventory/hosts.ini` file
+  * check the ip addresses in your router settings: they should start with `ubuntu-*` prefixes.
+  * then run `ansible-playbook -i inventory/hosts.ini identify_nodes.yaml`.
+  * this will display what nodes are: master, sidecar and nodes.
+  * update hosts.ini file accordingly.
