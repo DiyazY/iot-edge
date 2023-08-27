@@ -16,3 +16,16 @@ sudo apt-get install -y mongodb-org
 # sudo systemctl daemon-reload
 sudo systemctl start mongod
 
+
+# if connection fails, try:
+# sudo systemctl restart mongod
+# if still fails, try:
+# sudo nano /etc/mongod.conf
+# change bindIp:
+# bindIp: 127.0.0.1,[ip_address]
+# sudo systemctl restart mongod
+# sudo systemctl status mongod
+# sudo netstat -tuln | grep 27017
+
+
+
