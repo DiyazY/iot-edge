@@ -17,20 +17,21 @@
     chdir: ~{{ ansible_user }}/.k-bench
   when: git_clone_result.changed  # Only run the script if the repository was cloned
 
+# Add more test_name entries as needed
+- name: List of test names
+  set_fact:
+    test_names: ["cp_light_1client"]  # Add more test names as needed
+
 - name: Create config paths
   file:
-    path: "~{{ ansible_user }}/.k-bench/configs/{{ item.test_name }}"
+    path: "~{{ ansible_user }}/.k-bench/configs/{{ item }}"
     state: directory
-  loop:
-    - { test_name: "cp_light_1client" }
-    # Add more test_name entries as needed
+  loop: "{{ test_names }}"
   # when: "'master' in inventory_hostname"
 
 - name: Copy configuration files
   template:
     src: "../etc/{{ item.test_name }}/config.json"
-    dest: "~{{ ansible_user }}/.k-bench/configs/{{ item.test_name }}/config.json"
-  loop:
-    - { test_name: "cp_light_1client" }
-    # Add more test_name entries as needed
+    dest: "~{{ ansible_user }}/.k-bench/configs/{{ item }}/config.json"
+  loop: "{{ test_names }}"
   # when: "'master' in inventory_hostname"
