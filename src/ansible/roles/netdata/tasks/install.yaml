@@ -1,17 +1,96 @@
 ---
-- name: Install Netdata
+# - name: Install Netdata
 
-  block:
-  - name: Download the installation script
-    get_url:
-      url: https://my-netdata.io/kickstart.sh
-      dest: ~/kickstart.sh
-      mode: +x
+  # block:
+  # - name: Download the installation script
+  #   get_url:
+  #     url: https://my-netdata.io/kickstart.sh
+  #     dest: ~/kickstart.sh
+  #     mode: +x
 
-  - name: Install Netdata
-    command: ~/kickstart.sh --dont-wait
+  # - name: Install Netdata
+  #   command: ~/kickstart.sh --dont-wait
 
-  - name: Cleanup installation script
-    file:
-      path: ~/kickstart.sh
-      state: absent
+  # - name: Cleanup installation script
+  #   file:
+  #     path: ~/kickstart.sh
+  #     state: absent
+# - name: Download install-required-packages.sh script
+#   get_url:
+#     url: "https://raw.githubusercontent.com/netdata/netdata/master/packaging/installer/install-required-packages.sh"
+#     dest: "/tmp/install-required-packages.sh"
+#     mode: "0755"
+
+# - name: Run install-required-packages.sh
+#   command: "/tmp/install-required-packages.sh -i netdata"
+#   args:
+#     chdir: "/tmp"
+#   register: install_output
+#   changed_when: install_output.stdout_lines | length > 0
+
+# - name: install autotools
+#   command: "apt-get install -y autoconf autogen automake pkg-config"
+
+- name: Replace restart value in needrestart.conf
+  replace:
+    path: /etc/needrestart/needrestart.conf
+    regexp: '^(\$nrconf{restart}\s*=\s*)''i'';$' # TODO: it doesn't work
+    replace: '\1''a'';'
+    # regexp: '^(\$nrconf{restart}\s*=\s*)\'i\';$'
+    # replace: '\1\'a\';'
+
+- name: install libmongoc
+  command: "apt-get install -y libmongoc-1.0-0 libmongoc-dev libbson-dev libbson-1.0-0"
+
+# - name: install prerequisites
+#   expect:
+#       command: "curl -Ss \"https://raw.githubusercontent.com/netdata/netdata/master/packaging/installer/install-required-packages.sh\" >/tmp/install-required-packages.sh && bash /tmp/install-required-packages.sh -i netdata"
+#       responses:
+#         'Press ENTER to run it': "\n"
+- name: Download install-required-packages.sh script
+  get_url:
+    url: "https://raw.githubusercontent.com/netdata/netdata/master/packaging/installer/install-required-packages.sh"
+    dest: "/tmp/install-required-packages.sh"
+    mode: "0755"
+
+- name: Run install-required-packages.sh
+  expect:
+    command: "bash /tmp/install-required-packages.sh -i netdata"
+    responses:
+      'Press ENTER to run it': "\n"
+      'Do you want to continue? [Y/n]': "y"
+  args:
+    chdir: "/tmp"
+  register: install_output
+  changed_when: install_output.stdout_lines | length > 0
+
+# - name: Download the installation script
+#   get_url:
+#     url: https://my-netdata.io/kickstart.sh
+#     dest: ~/kickstart.sh
+#     mode: +x
+
+# - name: Install Netdata
+#   command: ~/kickstart.sh --dont-wait --build-only --local-build-options  --enable-exporting-mongodb --disable-telemetry 
+
+# - name: Cleanup installation script
+#   file:
+#     path: ~/kickstart.sh
+#     state: absent
+
+- name: Clone Netdata repository
+  git:
+    repo: "https://github.com/netdata/netdata.git"
+    dest: "/opt/netdata"
+    depth: 100
+    recursive: yes
+
+- name: Run netdata-installer.sh
+  expect:
+    command: "./netdata-installer.sh --enable-exporting-mongodb --disable-telemetry"
+    responses:
+      'Press ENTER to build and install netdata to your system': "\n"
+  args:
+    chdir: "/opt/netdata"
+  register: installer_output
+  changed_when: installer_output.stdout_lines | length > 0
