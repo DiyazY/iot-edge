@@ -11,6 +11,15 @@
         mode: '0644'
       become: true
 
+    - name: Template exporting file
+      ansible.builtin.template:
+        src: ../templates/export.conf.j2
+        dest: /etc/netdata/exporting.conf
+        owner: root
+        group: root
+        mode: '0644'
+      become: true
+
 - name: Restart Netdata
   ansible.builtin.service:
     name: netdata       # Make sure this matches the actual service name
