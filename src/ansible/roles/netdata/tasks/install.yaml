@@ -34,10 +34,8 @@
 - name: Replace restart value in needrestart.conf
   replace:
     path: /etc/needrestart/needrestart.conf
-    regexp: '^(\$nrconf{restart}\s*=\s*)''i'';$' # TODO: it doesn't work
-    replace: '\1''a'';'
-    # regexp: '^(\$nrconf{restart}\s*=\s*)\'i\';$'
-    # replace: '\1\'a\';'
+    regexp: "nrconf{restart} = 'i'"
+    replace: "nrconf{restart} = 'a'"
 
 - name: install libmongoc
   command: "apt-get install -y libmongoc-1.0-0 libmongoc-dev libbson-dev libbson-1.0-0"
