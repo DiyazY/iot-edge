@@ -31,20 +31,25 @@
 # - name: install autotools
 #   command: "apt-get install -y autoconf autogen automake pkg-config"
 
-- name: Replace restart value in needrestart.conf
-  replace:
-    path: /etc/needrestart/needrestart.conf
-    regexp: "nrconf{restart} = 'i'"
-    replace: "nrconf{restart} = 'a'"
+# this didn't work
+# - name: Replace restart value in needrestart.conf
+#   replace:
+#     path: /etc/needrestart/needrestart.conf
+#     regexp: "nrconf{restart} = 'i'"
+#     replace: "nrconf{restart} = 'a'"
+# - name: olo lo
+#   command: sudo dpkg --configure -a
+- name: Run dpkg --configure -a
+  command: sudo dpkg --configure -a
+  ignore_errors: true
+
+- name: Update apt cache  
+  command: "sudo NEEDRESTART_SUSPEND=1 apt-get dist-upgrade --yes"
+
 
 - name: install libmongoc
   command: "apt-get install -y libmongoc-1.0-0 libmongoc-dev libbson-dev libbson-1.0-0"
 
-# - name: install prerequisites
-#   expect:
-#       command: "curl -Ss \"https://raw.githubusercontent.com/netdata/netdata/master/packaging/installer/install-required-packages.sh\" >/tmp/install-required-packages.sh && bash /tmp/install-required-packages.sh -i netdata"
-#       responses:
-#         'Press ENTER to run it': "\n"
 - name: Download install-required-packages.sh script
   get_url:
     url: "https://raw.githubusercontent.com/netdata/netdata/master/packaging/installer/install-required-packages.sh"
@@ -62,19 +67,6 @@
   register: install_output
   changed_when: install_output.stdout_lines | length > 0
 
-# - name: Download the installation script
-#   get_url:
-#     url: https://my-netdata.io/kickstart.sh
-#     dest: ~/kickstart.sh
-#     mode: +x
-
-# - name: Install Netdata
-#   command: ~/kickstart.sh --dont-wait --build-only --local-build-options  --enable-exporting-mongodb --disable-telemetry 
-
-# - name: Cleanup installation script
-#   file:
-#     path: ~/kickstart.sh
-#     state: absent
 
 - name: Clone Netdata repository
   git:
@@ -83,9 +75,10 @@
     depth: 100
     recursive: yes
 
+# try with error skip true
 - name: Run netdata-installer.sh
   expect:
-    command: "./netdata-installer.sh --enable-exporting-mongodb --disable-telemetry"
+    command: "bash ./netdata-installer.sh --enable-exporting-mongodb --disable-telemetry"
     responses:
       'Press ENTER to build and install netdata to your system': "\n"
   args:

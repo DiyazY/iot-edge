@@ -83,3 +83,8 @@ First change the directory: `cd src/ansible`;
   * then run `ansible-playbook -i inventory/hosts.ini identify_nodes.yaml`.
   * this will display what nodes are: master, sidecar and nodes.
   * update hosts.ini file accordingly.
+
+# TODOs
+* add systemctl start mongod 
+* manual installation of netdata works, but it takes a lot of time. 
+  * node_* installed netdata, but data is not sent yet!
