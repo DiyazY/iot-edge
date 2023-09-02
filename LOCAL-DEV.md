@@ -53,6 +53,11 @@ First change the directory: `cd src/ansible`;
   * scp [d-user]@[master_ip]:~/.kube/config .kube/k3s-config
   * check the cluster: `kubectl --kubeconfig .kube/k3s-config get nodes`
     * I prefer using k9s: `k9s --kubeconfig .kube/k3s-config`
+* if ip addresses are changed, do this on each worker node: (TODO: automate this)
+  * `sudo nano /etc/systemd/system/k3s-node.service` and correct the ip address of a master node
+  * `sudo systemctl daemon-reload`
+  * `sudo systemctl restart k3s-node`
+  * and also change the ip address on a master node in `~/.kube/config` file
 ### netdata
 * first of all, provide values in `roles/netdata/vars/main.yaml`:
   * `claim_token` - token for netdata cloud
