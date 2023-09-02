@@ -7,7 +7,7 @@
 
 
 toCSV(){
-    my_path="../../k-bench-results/$2/$4/kbench-$1.log"
+    my_path="../../k-bench-results/$2/$4/kbench.log"
 
 
     filename="../../k-bench-results/$2/$4/$3-$1.csv"

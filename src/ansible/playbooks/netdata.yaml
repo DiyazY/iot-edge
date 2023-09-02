@@ -6,3 +6,10 @@
   become: true
   roles:
     - role: netdata
+
+
+# TODO DEFINE IT LATER
+# - name: sidecar setting up (mongodb)
+#   hosts: sidecar
+#   become: true
+#   tasks:

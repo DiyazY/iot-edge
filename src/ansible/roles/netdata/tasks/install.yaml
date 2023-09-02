@@ -1,17 +1,52 @@
 ---
-- name: Install Netdata
+# - name: Replace restart value in needrestart.conf
+#   replace:
+#     path: /etc/needrestart/needrestart.conf
+#     regexp: "nrconf{restart} = 'i'"
+#     replace: "nrconf{restart} = 'a'"
+- name: Run dpkg --configure -a
+  command: sudo dpkg --configure -a
+  ignore_errors: true
 
-  block:
-  - name: Download the installation script
-    get_url:
-      url: https://my-netdata.io/kickstart.sh
-      dest: ~/kickstart.sh
-      mode: +x
+- name: Update apt cache  
+  command: "sudo NEEDRESTART_SUSPEND=1 apt-get dist-upgrade --yes"
 
-  - name: Install Netdata
-    command: ~/kickstart.sh --dont-wait
 
-  - name: Cleanup installation script
-    file:
-      path: ~/kickstart.sh
-      state: absent
+- name: install libmongoc
+  command: "apt-get install -y libmongoc-1.0-0 libmongoc-dev libbson-dev libbson-1.0-0"
+
+- name: Download install-required-packages.sh script
+  get_url:
+    url: "https://raw.githubusercontent.com/netdata/netdata/master/packaging/installer/install-required-packages.sh"
+    dest: "/tmp/install-required-packages.sh"
+    mode: "0755"
+
+- name: Run install-required-packages.sh
+  expect:
+    command: "bash /tmp/install-required-packages.sh -i netdata"
+    responses:
+      'Press ENTER to run it': "\n"
+      'Do you want to continue? [Y/n]': "y"
+  args:
+    chdir: "/tmp"
+  register: install_output
+  changed_when: install_output.stdout_lines | length > 0
+
+
+- name: Clone Netdata repository
+  git:
+    repo: "https://github.com/netdata/netdata.git"
+    dest: "/opt/netdata"
+    depth: 100
+    recursive: yes
+
+- name: Run netdata-installer.sh
+  expect:
+    command: "bash ./netdata-installer.sh --enable-exporting-mongodb --disable-telemetry"
+    responses:
+      'Press ENTER to build and install netdata to your system': "\n"
+  args:
+    chdir: "/opt/netdata"
+  register: installer_output
+  changed_when: installer_output.stdout_lines | length > 0
+  ignore_errors: true

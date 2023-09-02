@@ -61,14 +61,35 @@ First change the directory: `cd src/ansible`;
 * check the metrics in netdata cloud: `https://app.netdata.cloud/spaces/[space_name]`
 * WIP: storage approach will be changed in future.
 
-### k-bench
+### k-bench: preliminary work
 * install k-bench: `ansible-playbook playbooks/k-bench-install.yaml -i inventory/hosts.ini`
-* TODO: add k-bench configuration during the installation
+* k-bench configurations might be extended in `roles/k-bench/etc/[config_name]/config.json`
 
 #### k-bench: execution
 * set up the `k8s_distribution` variable in `inventory/hosts.ini` file
+  * and `tag` to indicate the number of runs (e.g. `tag=1`, or `tag=k3s-1`)
 * run `ansible-playbook playbooks/k-bench-run.yaml -i inventory/hosts.ini`
 * To check results 
   * `cd src/k-bench-results/[k8s_distribution]/[test_name]`
-  * `sed -e 's/.\{47\}//' ./kbench.log | grep -E 'Pod creation throughput|Pod creation average|Deployment Results|Pod Results|Pod startup total latency'`
-* TODO: automate the whole process so that I will do minimum of manual work
+  * pod and deployment throughput statistics: `sed -e 's/.\{47\}//' ./kbench.log | grep -E 'Pod creation throughput|Pod creation average|Deployment Results|Pod Results|Pod startup total latency'`
+
+#### k-bench: derive data
+* WIP: run `ansible-playbook playbooks/k-bench-derive.yaml -i inventory/hosts.ini`
+
+
+### TIPS
+* if router was restarted, it might be necessary to update the ip addresses in `inventory/hosts.ini` file
+  * check the ip addresses in your router settings: they should start with `ubuntu-*` prefixes.
+  * then run `ansible-playbook -i inventory/hosts.ini identify_nodes.yaml`.
+  * this will display what nodes are: master, sidecar and nodes.
+  * update hosts.ini file accordingly.
+* failing netdata installation: 
+  * for some reason, ansible fails to install netdata... You can run this task manually on the machine:
+  * run `cd /opt/netdata; sudo bash ./netdata-installer.sh --enable-exporting-mongodb --disable-telemetry`
+  * check if MongoDB is enabled: `netdata -W buildinfo`
+  * after installation run `netdata.yaml` playbook again: `ansible-playbook playbooks/netdata.yaml -i inventory/hosts.ini`
+
+# TODOs
+* add systemctl start mongod 
+* manual installation of netdata works, but it takes a lot of time. 
+  * node_* installed netdata, but data is not sent yet!
