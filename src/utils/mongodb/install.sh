@@ -14,7 +14,8 @@ sudo apt-get install -y mongodb-org
 
 # systemctl enable mongod.service
 # sudo systemctl daemon-reload
-sudo systemctl start mongod
+sudo systemctl enable mongod # enable mongod service
+sudo systemctl start mongod # start mongod service
 
 
 # if connection fails, try:

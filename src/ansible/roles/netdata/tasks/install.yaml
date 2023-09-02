@@ -1,44 +1,9 @@
 ---
-# - name: Install Netdata
-
-  # block:
-  # - name: Download the installation script
-  #   get_url:
-  #     url: https://my-netdata.io/kickstart.sh
-  #     dest: ~/kickstart.sh
-  #     mode: +x
-
-  # - name: Install Netdata
-  #   command: ~/kickstart.sh --dont-wait
-
-  # - name: Cleanup installation script
-  #   file:
-  #     path: ~/kickstart.sh
-  #     state: absent
-# - name: Download install-required-packages.sh script
-#   get_url:
-#     url: "https://raw.githubusercontent.com/netdata/netdata/master/packaging/installer/install-required-packages.sh"
-#     dest: "/tmp/install-required-packages.sh"
-#     mode: "0755"
-
-# - name: Run install-required-packages.sh
-#   command: "/tmp/install-required-packages.sh -i netdata"
-#   args:
-#     chdir: "/tmp"
-#   register: install_output
-#   changed_when: install_output.stdout_lines | length > 0
-
-# - name: install autotools
-#   command: "apt-get install -y autoconf autogen automake pkg-config"
-
-# this didn't work
 # - name: Replace restart value in needrestart.conf
 #   replace:
 #     path: /etc/needrestart/needrestart.conf
 #     regexp: "nrconf{restart} = 'i'"
 #     replace: "nrconf{restart} = 'a'"
-# - name: olo lo
-#   command: sudo dpkg --configure -a
 - name: Run dpkg --configure -a
   command: sudo dpkg --configure -a
   ignore_errors: true
@@ -75,7 +40,6 @@
     depth: 100
     recursive: yes
 
-# try with error skip true
 - name: Run netdata-installer.sh
   expect:
     command: "bash ./netdata-installer.sh --enable-exporting-mongodb --disable-telemetry"
@@ -85,3 +49,4 @@
     chdir: "/opt/netdata"
   register: installer_output
   changed_when: installer_output.stdout_lines | length > 0
+  ignore_errors: true

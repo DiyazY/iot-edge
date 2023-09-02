@@ -83,6 +83,11 @@ First change the directory: `cd src/ansible`;
   * then run `ansible-playbook -i inventory/hosts.ini identify_nodes.yaml`.
   * this will display what nodes are: master, sidecar and nodes.
   * update hosts.ini file accordingly.
+* failing netdata installation: 
+  * for some reason, ansible fails to install netdata... You can run this task manually on the machine:
+  * run `cd /opt/netdata; sudo bash ./netdata-installer.sh --enable-exporting-mongodb --disable-telemetry`
+  * check if MongoDB is enabled: `netdata -W buildinfo`
+  * after installation run `netdata.yaml` playbook again: `ansible-playbook playbooks/netdata.yaml -i inventory/hosts.ini`
 
 # TODOs
 * add systemctl start mongod 
