@@ -66,6 +66,10 @@ First change the directory: `cd src/ansible`;
 * check the metrics in netdata cloud: `https://app.netdata.cloud/spaces/[space_name]`
 * WIP: storage approach will be changed in future.
 
+### sync time
+* install `ansible-galaxy install linux-system-roles.timesync` (run it from `src/ansible` directory)
+* run `ansible-playbook playbooks/timesync.yaml -i inventory/hosts.ini`
+
 ### k-bench: preliminary work
 * install k-bench: `ansible-playbook playbooks/k-bench-install.yaml -i inventory/hosts.ini`
 * k-bench configurations might be extended in `roles/k-bench/etc/[config_name]/config.json`
