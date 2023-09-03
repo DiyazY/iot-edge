@@ -107,3 +107,4 @@ First change the directory: `cd src/ansible`;
 * ~~add systemctl start mongod ~~
 * manual installation of netdata works, but it takes a lot of time. 
   * node_* installed netdata, but data is not sent yet!
+* pass tag through many places to mark test results with an appropriate test execution
