@@ -1,0 +1,33 @@
+---
+- name: Installing kube-bench
+  hosts: master 
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Create directory for kube-bench
+      file:
+        path: /opt/kube-bench
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      become_user: root
+
+    - name: Download kube-bench tarball
+      get_url:
+        url: https://github.com/aquasecurity/kube-bench/releases/download/v0.6.11/kube-bench_0.6.11_linux_amd64.tar.gz
+        dest: /opt/kube-bench.tar.gz
+        mode: '0755'
+      become_user: root
+
+    - name: Extract kube-bench tarball
+      ansible.builtin.unarchive:
+        src: /opt/kube-bench.tar.gz
+        dest: /opt/kube-bench
+        remote_src: yes
+      become_user: root
+
+    - name: Move kube-bench binary to /usr/local/bin
+      command: mv /opt/kube-bench/kube-bench /usr/local/bin/
+      become_user: root

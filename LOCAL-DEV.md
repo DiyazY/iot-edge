@@ -76,6 +76,11 @@ First change the directory: `cd src/ansible`;
 #### k-bench: derive data
 * WIP: run `ansible-playbook playbooks/k-bench-derive.yaml -i inventory/hosts.ini`
 
+### kube-bench (security tests)
+* install run it on a master node: `ansible-playbook playbooks/kube-bench-install.yaml -i inventory/hosts.ini`
+* run security tests: `ansible-playbook playbooks/kube-bench-run.yaml -i inventory/hosts.ini` (it should produce file in repo).
+* TODO: find out how to analyze the results.
+
 
 ### TIPS
 * if router was restarted, it might be necessary to update the ip addresses in `inventory/hosts.ini` file
@@ -90,6 +95,6 @@ First change the directory: `cd src/ansible`;
   * after installation run `netdata.yaml` playbook again: `ansible-playbook playbooks/netdata.yaml -i inventory/hosts.ini`
 
 # TODOs
-* add systemctl start mongod 
+* ~~add systemctl start mongod ~~
 * manual installation of netdata works, but it takes a lot of time. 
   * node_* installed netdata, but data is not sent yet!

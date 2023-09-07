@@ -19,11 +19,11 @@
       command: kbench -benchconfig "/home/{{ ansible_user }}/.k-bench/configs/{{ item }}/config.json" -outdir "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}" -kubeconfig "/home/{{ ansible_user }}/.kube/config"
       loop: "{{ test_names }}"
 
-    - name: Create local directory for test results for {{k8s_distribution}}}
-      ansible.builtin.file:
-        path: ../../k-bench-results/{{k8s_distribution}}/{{ item }}/
-        state: directory
-      loop: "{{ test_names }}"
+    # - name: Create local directory for test results for {{k8s_distribution}}}
+    #   ansible.builtin.file:
+    #     path: ../../k-bench-results/{{k8s_distribution}}/{{ item }}/
+    #     state: directory
+    #   loop: "{{ test_names }}"
         
     - name: Copy test results to repository
       fetch:
