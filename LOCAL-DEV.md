@@ -78,6 +78,8 @@ First change the directory: `cd src/ansible`;
 
 ### kube-bench (security tests)
 * install run it on a master node: `ansible-playbook playbooks/kube-bench-install.yaml -i inventory/hosts.ini`
+* run security tests: `ansible-playbook playbooks/kube-bench-run.yaml -i inventory/hosts.ini` (it should produce file in repo).
+* TODO: find out how to analyze the results.
 
 
 ### TIPS

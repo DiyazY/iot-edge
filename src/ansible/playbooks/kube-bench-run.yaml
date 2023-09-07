@@ -1,0 +1,23 @@
+---
+- name: Run kube-bench
+  hosts: master
+  become: true
+  tasks:
+    - name: Run kube-bench command {{tag}}
+      shell: kube-bench --config-dir /opt/kube-bench/cfg --config /opt/kube-bench/cfg/config.yaml > ~/kube-bench-{{tag}}.report
+
+    # - name: Create local directory for test results for {{k8s_distribution}}}
+    #   ansible.builtin.file:
+    #     path: ../../kube-bench-results/{{k8s_distribution}}/
+    #     state: directory
+        
+    - name: Copy test results to repository
+      fetch:
+        src: "~/kube-bench-{{tag}}.report"
+        dest: "../../kube-bench-results/{{k8s_distribution}}/"
+        flat: yes
+    
+    - name: Delete test results on a remote machine
+      file:
+        path: "/home/{{ ansible_user }}/kube-bench-{{tag}}.report"
+        state: absent
