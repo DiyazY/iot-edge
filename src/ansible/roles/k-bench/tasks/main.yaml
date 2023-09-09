@@ -32,6 +32,6 @@
 - name: Copy configuration files
   template:
     src: "../etc/{{ item.test_name }}/config.json"
-    dest: "~{{ ansible_user }}/.k-bench/configs/{{ item }}/config.json"
+    dest: "~{{ ansible_user }}/.k-bench/configs/{{ item }}/config.json" # TODO: extend to copy everything under {{item}}
   loop: "{{ test_names }}"
   # when: "'master' in inventory_hostname"
