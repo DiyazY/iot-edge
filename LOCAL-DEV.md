@@ -16,9 +16,10 @@
 ### raspberry pi
 To provision an OS on raspberry pi the next steps are required:
 * connect sd-card to a machine.
-* run a script with sudo permission: `sudo src/os-provisioning/raspberry-pi.sh`.
+* go to directory: `cd src/os-provisioning`
+* run a script with sudo permission: `sudo ./raspberry-pi.sh`.
 * if the image is already downloaded, the script will ask which disk to use/format. Otherwise it starts downloading, and then asks.
-* after providing a correct name of disk, it will copy uncompressed image to an SD card
+* after providing a correct name of disk, it will copy uncompressed image to an SD card (check the name of the disk carefully!!!)
 * after preparing bootable SD card it will kick off the configuration process
 * specifically, it creates cloud-init file with newly generated ssh-keys and mounts it to `system-boot` partition of SD-card.
 * assemble raspberry pi...
@@ -53,13 +54,22 @@ First change the directory: `cd src/ansible`;
   * scp [d-user]@[master_ip]:~/.kube/config .kube/k3s-config
   * check the cluster: `kubectl --kubeconfig .kube/k3s-config get nodes`
     * I prefer using k9s: `k9s --kubeconfig .kube/k3s-config`
+* if ip addresses are changed, do this on each worker node: (TODO: automate this)
+  * `sudo nano /etc/systemd/system/k3s-node.service` and correct the ip address of a master node
+  * `sudo systemctl daemon-reload`
+  * `sudo systemctl restart k3s-node`
+  * and also change the ip address on a master node in `~/.kube/config` file
 ### netdata
 * first of all, provide values in `roles/netdata/vars/main.yaml`:
   * `claim_token` - token for netdata cloud
   * `claim_rooms` - room for netdata cloud
 * install netdata: `ansible-playbook playbooks/netdata.yaml -i inventory/hosts.ini`
 * check the metrics in netdata cloud: `https://app.netdata.cloud/spaces/[space_name]`
-* WIP: storage approach will be changed in future.
+* after changing `tag` in `inventory/hosts.ini` file, it is necessary to reflect it in all nodes, run: `ansible-playbook playbooks/netdata-tag-setup.yaml -i inventory/hosts.ini`. After that, netdata will populate metrics data with that tag.
+
+### sync time
+* install `ansible-galaxy install linux-system-roles.timesync` (run it from `src/ansible` directory)
+* run `ansible-playbook playbooks/timesync.yaml -i inventory/hosts.ini`
 
 ### k-bench: preliminary work
 * install k-bench: `ansible-playbook playbooks/k-bench-install.yaml -i inventory/hosts.ini`
@@ -98,3 +108,5 @@ First change the directory: `cd src/ansible`;
 * ~~add systemctl start mongod ~~
 * manual installation of netdata works, but it takes a lot of time. 
   * node_* installed netdata, but data is not sent yet!
+* ~~pass tag through many places to mark test results with an appropriate test execution~~
+* ~~Play with labels: https://learn.netdata.cloud/docs/configuring/organize-systems-metrics-and-alerts~~

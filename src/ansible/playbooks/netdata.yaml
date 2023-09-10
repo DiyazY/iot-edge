@@ -8,7 +8,7 @@
     - role: netdata
 
 
-# TODO DEFINE IT LATER
+# TODO DEFINE IT LATER! Actually, I don't need this! because it is one time setup!
 # - name: sidecar setting up (mongodb)
 #   hosts: sidecar
 #   become: true

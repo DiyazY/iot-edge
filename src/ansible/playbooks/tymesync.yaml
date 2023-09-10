@@ -1,0 +1,26 @@
+- name: Upgrade all packages to the latest version
+  hosts: all
+  become: true
+  tasks:
+    - name: Run dpkg --configure -a
+      command: sudo dpkg --configure -a
+    - name: Update apt cache  
+      command: "sudo apt-get dist-upgrade --yes"
+    - name: install chrony
+      expect:
+        command: sudo apt install chrony
+        responses:
+          'Do you want to continue? [Y/n] Abort.': "Y"
+    - name: touch chrony.conf
+      command: sudo touch /etc/chrony.conf
+
+
+- name: synchronize time using rhel-role 
+  hosts: all
+  vars:
+    timesync_ntp_servers:
+    - hostname: master
+      iburst: yes 
+  roles:
+  - linux-system-roles.timesync
+  become: true

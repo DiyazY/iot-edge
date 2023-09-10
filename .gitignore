@@ -6,3 +6,5 @@
 .kube
 .vscode
 .env
+
+/src/ansible/roles/linux-system-roles.timesync/

@@ -1,0 +1,14 @@
+- name: setuping netdata tags
+  hosts: iot_cluster
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: change the tag to {{tag}}
+      ansible.builtin.lineinfile:
+        path: /etc/netdata/netdata.conf
+        regexp: '^\s*tag\s*=\s*.*$'
+        line: '    tag = {{ tag }}'
+    
+    - name: reload labels
+      command: netdatacli reload-labels
