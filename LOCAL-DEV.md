@@ -16,9 +16,10 @@
 ### raspberry pi
 To provision an OS on raspberry pi the next steps are required:
 * connect sd-card to a machine.
-* run a script with sudo permission: `sudo src/os-provisioning/raspberry-pi.sh`.
+* go to directory: `cd src/os-provisioning`
+* run a script with sudo permission: `sudo ./raspberry-pi.sh`.
 * if the image is already downloaded, the script will ask which disk to use/format. Otherwise it starts downloading, and then asks.
-* after providing a correct name of disk, it will copy uncompressed image to an SD card
+* after providing a correct name of disk, it will copy uncompressed image to an SD card (check the name of the disk carefully!!!)
 * after preparing bootable SD card it will kick off the configuration process
 * specifically, it creates cloud-init file with newly generated ssh-keys and mounts it to `system-boot` partition of SD-card.
 * assemble raspberry pi...
@@ -108,3 +109,4 @@ First change the directory: `cd src/ansible`;
 * manual installation of netdata works, but it takes a lot of time. 
   * node_* installed netdata, but data is not sent yet!
 * pass tag through many places to mark test results with an appropriate test execution
+* Play with labels: https://learn.netdata.cloud/docs/configuring/organize-systems-metrics-and-alerts
