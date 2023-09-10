@@ -65,7 +65,7 @@ First change the directory: `cd src/ansible`;
   * `claim_rooms` - room for netdata cloud
 * install netdata: `ansible-playbook playbooks/netdata.yaml -i inventory/hosts.ini`
 * check the metrics in netdata cloud: `https://app.netdata.cloud/spaces/[space_name]`
-* WIP: storage approach will be changed in future.
+* after changing `tag` in `inventory/hosts.ini` file, it is necessary to reflect it in all nodes, run: `ansible-playbook playbooks/netdata-tag-setup.yaml -i inventory/hosts.ini`. After that, netdata will populate metrics data with that tag.
 
 ### sync time
 * install `ansible-galaxy install linux-system-roles.timesync` (run it from `src/ansible` directory)
@@ -108,5 +108,5 @@ First change the directory: `cd src/ansible`;
 * ~~add systemctl start mongod ~~
 * manual installation of netdata works, but it takes a lot of time. 
   * node_* installed netdata, but data is not sent yet!
-* pass tag through many places to mark test results with an appropriate test execution
-* Play with labels: https://learn.netdata.cloud/docs/configuring/organize-systems-metrics-and-alerts
+* ~~pass tag through many places to mark test results with an appropriate test execution~~
+* ~~Play with labels: https://learn.netdata.cloud/docs/configuring/organize-systems-metrics-and-alerts~~
