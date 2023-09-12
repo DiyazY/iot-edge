@@ -103,10 +103,12 @@ First change the directory: `cd src/ansible`;
   * run `cd /opt/netdata; sudo bash ./netdata-installer.sh --enable-exporting-mongodb --disable-telemetry`
   * check if MongoDB is enabled: `netdata -W buildinfo`
   * after installation run `netdata.yaml` playbook again: `ansible-playbook playbooks/netdata.yaml -i inventory/hosts.ini`
+* Sidecar node:
+  * install mongodb on that machine (see `src/utils/mongodb.sh` script)
 
 # TODOs
 * ~~add systemctl start mongod ~~
 * manual installation of netdata works, but it takes a lot of time. 
-  * node_* installed netdata, but data is not sent yet!
+  * ~~node_* installed netdata, but data is not sent yet!~~
 * ~~pass tag through many places to mark test results with an appropriate test execution~~
 * ~~Play with labels: https://learn.netdata.cloud/docs/configuring/organize-systems-metrics-and-alerts~~
