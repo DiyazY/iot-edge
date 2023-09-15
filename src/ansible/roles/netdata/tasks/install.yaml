@@ -42,7 +42,7 @@
 
 - name: Run netdata-installer.sh
   expect:
-    command: "bash ./netdata-installer.sh --enable-exporting-mongodb --disable-telemetry"
+    command: "bash ./netdata-installer.sh --enable-exporting-mongodb --non-interactive --disable-telemetry --disable-cloud"
     responses:
       'Press ENTER to build and install netdata to your system': "\n"
   args:

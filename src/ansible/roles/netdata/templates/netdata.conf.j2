@@ -4,10 +4,47 @@
   {% if hostvars[inventory_hostname].hostname %}
   hostname = {{ hostvars[inventory_hostname].hostname }}
   {% endif %}
-  dbengine multihost disk space = {{ dbengine_multihost_disk_space }}
+  # dbengine multihost disk space = {{ dbengine_multihost_disk_space }}
+  enable cloud = no
 
 [web]
 	mode = {{ web_mode }}
+  enable gzip compression = no
 
 [host labels]
     tag = {{tag}}
+
+[ml]
+   enabled = no
+
+[backend]
+    enabled = no
+
+[db]
+    mode = none
+
+# this for gathering only CPU, RAM, Disk and Network data
+
+[plugins]
+    # Disable all plugins to start with a clean slate.
+    # Then, enable only what's necessary.
+    enable running new plugins = no
+    # Add your required plugins here:
+    proc = yes
+
+# This will enable CPU data collection
+[plugin:proc:/proc/stat]
+    enable cpu = yes
+
+# This will enable RAM data collection
+[plugin:proc:/proc/meminfo]
+    enable memory = yes
+
+# This will enable Disk data collection
+[plugin:proc:/proc/diskstats]
+    enable disks = yes
+
+# This will enable Network data collection
+[plugin:proc:/proc/net/dev]
+    enable network interfaces = yes
+   
