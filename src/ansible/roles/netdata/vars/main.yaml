@@ -19,7 +19,7 @@ reclaim: false
 # Set Netdata's metrics retention policy via the disk size for the database
 # engine. Value is in MiB. Read more:
 # https://learn.netdata.cloud/docs/store/change-metrics-storage
-# dbengine_multihost_disk_space: 2048
+dbengine_multihost_disk_space: 2048
 
 # Set whether to run the Agent web server/dashboard/API, or disable them.
 # Because we're connecting this node to Netdata Cloud and will view dashboards
