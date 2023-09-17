@@ -4,8 +4,8 @@
   {% if hostvars[inventory_hostname].hostname %}
   hostname = {{ hostvars[inventory_hostname].hostname }}
   {% endif %}
-  # dbengine multihost disk space = {{ dbengine_multihost_disk_space }}
-  enable cloud = no
+  dbengine multihost disk space = {{ dbengine_multihost_disk_space }}
+  enabled = no
 
 [web]
   mode = {{ web_mode }}
@@ -17,11 +17,11 @@
 [ml]
   enabled = no
 
+#[db]
+#  mode = none
+
 [backend]
   enabled = no
-
-[db]
-  mode = none
 
 # this for gathering only CPU, RAM, Disk and Network data
 
