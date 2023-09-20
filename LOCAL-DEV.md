@@ -38,8 +38,13 @@ To provision an OS on NUC the next steps are required:
 * connect both USB-sticks to NUC
 * Boot NUC from USB-stick #1
   * ...wait (or follow instructions if image was not modified)
+    * Ensure the “Try or Install Ubuntu Server” option is highlighted using the up or down arrows.
+    * Press e to edit the grub commands (launches a new screen)
+    * Using the arrow keys, insert `autoinstall quiet` in the line that says `linux /casper/vmlinuz ---` before the dashes resulting in the full line appearing as: `linux /casper/vmlinuz autoinstall quiet ---`
+Press F10 to save and exit
   * when the installation is finished, NUC will shut down
   * **IMPORTANT: remove USB-sticks and only after that turn on NUC!!!**
+* More info can be found in [this great article](https://www.jimangel.io/posts/automate-ubuntu-22-04-lts-bare-metal/#check-ansible-connections)
 
 ## OS configuration and software provisioning
 First change the directory: `cd src/ansible`;
