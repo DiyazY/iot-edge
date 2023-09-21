@@ -10,7 +10,8 @@
       expect:
         command: sudo apt install chrony
         responses:
-          'Do you want to continue? [Y/n] Abort.': "Y"
+          # 'Do you want to continue? [Y/n] Abort.': "Y"
+          'Do you want to continue? [Y/n] ': "Y"
     - name: touch chrony.conf
       command: sudo touch /etc/chrony.conf
 
@@ -19,7 +20,7 @@
   hosts: all
   vars:
     timesync_ntp_servers:
-    - hostname: master
+    - hostname: sidecar
       iburst: yes 
   roles:
   - linux-system-roles.timesync
