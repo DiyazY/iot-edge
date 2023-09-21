@@ -1,0 +1,21 @@
+---
+- name: k-bench derive data from results
+  hosts: sidecar
+  gather_facts: false  # Disable gathering facts for the sidecar
+
+  tasks:  
+
+    - name: List of test names
+      set_fact: 
+        sets: ["cpu", "ram", ]   
+
+    - name: Create test-results paths
+      file:
+        path: "~{{ ansible_user }}/test-results/{{ tag }}"
+        state: directory
+
+    - name: Generating CSV file CPU
+      command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp --query=''{"chart_type": "system", "chart_family": "cpu", "chart_context": "system.cpu", "id": "idle", "labels": {"tag": "k3s-idle-1"} }'' --out=data/{{ tag }}-cpu.csv'
+
+    - name: Generating CSV file Ram
+      command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp --query=''{"chart_type": "system", "chart_family": "ram", "chart_context": "system.ram", "id": "used", "labels": {"tag": "k3s-idle-1"} }'' --out=data/{{ tag }}-ram.csv'
