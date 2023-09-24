@@ -1,0 +1,64 @@
+@startuml
+  !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+AddElementTag("fallback", $bgColor="#c0c0c0")
+AddRelTag("fallback", $textColor="#c0c0c0", $lineColor="#438DD5")
+
+WithoutPropertyHeader()
+
+' calculated legend is used (activated in last line)
+' LAYOUT_WITH_LEGEND()
+
+title Deployment Diagram for K8s cluster
+
+Deployment_Node(plc, "K8s cluster", "k8s, k3s, k0s, kubeEdge, openYort", "Big Bank plc data center"){
+    AddProperty("Machine", "Raspberry Pi 4")
+    AddProperty("CPU", "Arm")
+    AddProperty("RAM", "Arm")
+    Deployment_Node_R(node_1, "node_1", "Ubuntu 20.04 LTS ARM smt", "A worker node in the k8s cluster."){
+        AddProperty("Java Version", "8")
+        AddProperty("Xmx", "512M")
+        AddProperty("Xms", "1024M")
+        Deployment_Node_L(apache, "Apache Tomcat", "Apache Tomcat 8.x", "An open source Java EE web server."){
+            Container(api, "API Application", "Java and Spring MVC", "Provides Internet Banking functionality via a JSON/HTTPS API.")
+        }
+
+        ' add more properties to the node
+        AddProperty("exporting", "yes")
+        Deployment_Node_L(netdata_node_1, "Netdata", "put version", "An open-source, distributed, real-time, performance, and monitoring solution"){
+            Container(netdata_1, "Netdata instance", "put smt here", "Gathers metrics from the host and sends them to the MongoDB database.")
+        }
+    }
+
+    AddProperty("Machine", "NUC")
+    AddProperty("CPU", "Arm")
+    AddProperty("RAM", "Arm")
+    Deployment_Node_R(master, "master", "Ubuntu 20.04 LTS ARM smt", "A worker node in the k8s cluster."){
+        ' AddProperty("Java Version", "8")
+        ' AddProperty("Xmx", "512M")
+        ' AddProperty("Xms", "1024M")
+        ' Deployment_Node_L(apache, "Apache Tomcat", "Apache Tomcat 8.x", "An open source Java EE web server."){
+        '     Container(api, "API Application", "Java and Spring MVC", "Provides Internet Banking functionality via a JSON/HTTPS API.")
+        ' }
+
+        ' add more properties to the node
+        AddProperty("exporting", "yes")
+        Deployment_Node_L(netdata_master, "Netdata", "put version", "An open-source, distributed, real-time, performance, and monitoring solution"){
+            Container(netdata_2, "Netdata instance", "put smt here", "Gathers metrics from the host and sends them to the MongoDB database.")
+        }
+    }
+    
+}
+
+Deployment_Node(comp, "Sidecar computer", "Ubuntu 20.04 LTS", "Standby server, used for gathering metrics from netdata instances."){
+    Deployment_Node(mongodb, "MongoDb", "write version here"){
+        ContainerDb(mongodb1, "netdata", "Document-oriented database", "Stores streamed events from netdata instances in metrics collection.")
+    }
+}
+
+' Rel(api, db, "Reads from and writes to", "JDBC")
+' Rel(api, db2, "Reads from and writes to", "JDBC", $tags="fallback")
+' Rel_R(db, db2, "Replicates data to")
+
+SHOW_LEGEND()
+@enduml
