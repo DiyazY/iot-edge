@@ -50,7 +50,7 @@
   gather_facts: false
   tasks:
     - name: Get Current Date and Time
-      command: date '+%F %T'
+      command:  date '+%F %T %Z'
       register: current_datetime
       delegate_to: localhost
       run_once: true
