@@ -8,8 +8,8 @@
     - name: List of test names
       set_fact: 
         sets: ["cpu", "ram", "disk", "net"]   
-        start_test: 1695925575 # add start timestamp
-        end_test: 1695925903 # add end timestamp
+        start_test: 1695928737 # add start timestamp
+        end_test: 1695929054 # add end timestamp
     # always run query first and check the labels because mongoexport has many problems with nested objects: https://copyprogramming.com/howto/mongoexport-specific-fields-problem-with-json
 
     - name: Generating CSV file CPU
