@@ -18,6 +18,13 @@ sudo systemctl enable mongod # enable mongod service
 sudo systemctl start mongod # start mongod service
 
 
+# remove mongodb
+# sudo service mongod stop
+# sudo apt-get purge mongodb-org*
+# sudo rm -r /var/log/mongodb
+# sudo rm -r /var/lib/mongodb
+
+
 # if connection fails, try:
 # sudo systemctl restart mongod
 # if still fails, try:

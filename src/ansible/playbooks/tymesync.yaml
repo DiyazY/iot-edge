@@ -1,26 +1,67 @@
-- name: Upgrade all packages to the latest version
+# - name: Upgrade all packages to the latest version
+#   hosts: all
+#   become: true
+  # tasks:
+  #   - name: Run dpkg --configure -a
+  #     command: sudo dpkg --configure -a
+  #   - name: Update apt cache  
+  #     command: "sudo apt-get dist-upgrade --yes"
+  #   - name: install chrony
+  #     expect:
+  #       command: sudo apt install chrony
+  #       responses:
+  #         # 'Do you want to continue? [Y/n] Abort.': "Y"
+  #         'Do you want to continue? [Y/n] ': "Y"
+  #   - name: touch chrony.conf
+  #     command: sudo touch /etc/chrony.conf
+
+  #   - name:  chronyd template
+  #     template:
+  #       # src: ../roles/timesync/templates/chrony.j2 
+  #       src: ../roles/timesync/templates/chrony.j2
+  #       dest: /etc/chrony.conf
+  #       owner: root
+  #       group: root
+  #       mode: 0644
+
+  #   - name: Restart chrony
+  #     ansible.builtin.service:
+  #       name: chrony       # Make sure this matches the actual service name
+  #       state: restarted 
+      
+      
+      
+
+
+# - name: synchronize time using rhel-role 
+#   hosts: all
+#   vars:
+#     timesync_ntp_servers:
+#     - hostname: sidecar
+#       iburst: yes 
+#   roles:
+#   - linux-system-roles.timesync
+#   become: true
+
+
+---
+- name: Set Fact with Newly Generated Date
   hosts: all
-  become: true
+  gather_facts: false
   tasks:
-    - name: Run dpkg --configure -a
-      command: sudo dpkg --configure -a
-    - name: Update apt cache  
-      command: "sudo apt-get dist-upgrade --yes"
-    - name: install chrony
-      expect:
-        command: sudo apt install chrony
-        responses:
-          'Do you want to continue? [Y/n] Abort.': "Y"
-    - name: touch chrony.conf
-      command: sudo touch /etc/chrony.conf
+    - name: Get Current Date and Time
+      command:  date '+%F %T %Z'
+      register: current_datetime
+      delegate_to: localhost
+      run_once: true
+      
+    - name: Set fact for current date and time
+      set_fact:
+        current_datetime_fact: "{{ current_datetime.stdout }}"
 
+    - name: Display the set fact
+      command: "sudo date --set='{{ current_datetime_fact }}'"
 
-- name: synchronize time using rhel-role 
-  hosts: all
-  vars:
-    timesync_ntp_servers:
-    - hostname: master
-      iburst: yes 
-  roles:
-  - linux-system-roles.timesync
-  become: true
+    # rpi doesn't have it
+    # - name: Set harware clock
+    #   command: "sudo hwclock --systohc"

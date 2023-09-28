@@ -19,6 +19,16 @@
         group: root
         mode: '0644'
       become: true
+    
+    - name: Template cloud file
+      ansible.builtin.template:
+        src: ../templates/cloud.conf.j2
+        dest: /etc/netdata/cloud.conf
+        owner: root
+        group: root
+        mode: '0644'
+      become: true
+
 
 - name: Restart Netdata
   ansible.builtin.service:

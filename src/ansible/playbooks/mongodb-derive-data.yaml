@@ -1,0 +1,36 @@
+---
+- name: k-bench derive data from results
+  hosts: sidecar
+  gather_facts: false  # Disable gathering facts for the sidecar
+
+  tasks:  
+
+    - name: List of test names
+      set_fact: 
+        sets: ["cpu", "ram", "disk", "net"]   
+        start_test: 1695929375 # add start timestamp
+        end_test: 1695929692 # add end timestamp
+    # always run query first and check the labels because mongoexport has many problems with nested objects: https://copyprogramming.com/howto/mongoexport-specific-fields-problem-with-json
+
+    - name: Generating CSV file CPU
+      command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp --query=''{"chart_type": "system", "chart_family": "cpu", "chart_context": "system.cpu", "id": "idle", "timestamp": {"$gt": {{ start_test }}, "$lt": {{end_test}} }}'' --out=./test-results/{{ tag }}-cpu.csv'
+
+    - name: Generating CSV file Ram
+      command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp --query=''{"chart_type": "system", "chart_family": "ram", "chart_context": "system.ram", "id": "used", "timestamp": {"$gt": {{ start_test }}, "$lt": {{end_test}} }}'' --out=./test-results/{{ tag }}-ram.csv'
+
+
+    # What chart_family should I use for disk? It seems that machines may have different names for chart_family
+    - name: Generating CSV file Disk
+      command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp,chart_family --query=''{"chart_type": "disk_util", "chart_context": "disk.util", "id": "utilization", "timestamp": {"$gt": {{ start_test }}, "$lt": {{end_test}} }}'' --out=./test-results/{{ tag }}-disk.csv'
+
+    - name: Generating CSV file Network
+      command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp,id --query=''{"chart_type": "ipv4","chart_family": "tcp", "chart_context": "ipv4.tcppackets", "timestamp": {"$gt": {{ start_test }}, "$lt": {{end_test}} }}'' --out=./test-results/{{ tag }}-net.csv'
+
+
+    - name: Copy test results to repository
+      fetch:
+        src: "/home/{{ ansible_user }}/test-results/{{ tag }}-{{ item }}.csv"
+        dest: "../../k-bench-results/{{k8s_distribution}}/idle/"
+        # ../../k-bench-results/{{k8s_distribution}}/idle/
+        flat: yes
+      loop: "{{ sets }}"

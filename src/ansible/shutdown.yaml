@@ -1,5 +1,5 @@
 - name: Shutdown Machines
-  hosts: iot_cluster
+  hosts: all
   gather_facts: false
 
   tasks:

@@ -8,9 +8,9 @@
 # Copy those strings into the variables below. `claim_url` should be
 # `https://app.netdata.cloud`. Read more:
 # https://learn.netdata.cloud/docs/agent/claim
-claim_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-claim_rooms: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-claim_url: https://app.netdata.cloud
+# claim_token: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+# claim_rooms: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+# claim_url: https://app.netdata.cloud
 
 # Force re-claiming of nodes to Netdata Cloud. Read more:
 # https://learn.netdata.cloud/docs/agent/claim#remove-and-reclaim-a-node

@@ -9,6 +9,11 @@
         path: /etc/netdata/netdata.conf
         regexp: '^\s*tag\s*=\s*.*$'
         line: '    tag = {{ tag }}'
-    
+
+        
+    # - name: Restart Netdata
+    #   ansible.builtin.service:
+    #     name: netdata       # Make sure this matches the actual service name
+    #     state: restarted    # This is the action you want to perform
     - name: reload labels
       command: netdatacli reload-labels
