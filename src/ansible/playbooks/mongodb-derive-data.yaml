@@ -7,9 +7,9 @@
 
     - name: List of test names
       set_fact: 
-        sets: ["cpu", "ram", "disk"]   
-        start_test: 1695579758 # add start timestamp
-        end_test: 1695580062 # add end timestamp
+        sets: ["cpu", "ram", "disk", "net"]   
+        start_test: 1695925575 # add start timestamp
+        end_test: 1695925903 # add end timestamp
     # always run query first and check the labels because mongoexport has many problems with nested objects: https://copyprogramming.com/howto/mongoexport-specific-fields-problem-with-json
 
     - name: Generating CSV file CPU
@@ -21,7 +21,10 @@
 
     # What chart_family should I use for disk? It seems that machines may have different names for chart_family
     - name: Generating CSV file Disk
-      command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp --query=''{"chart_type": "disk_util", "chart_family": "sda", "chart_context": "disk.util", "id": "utilization", "timestamp": {"$gt": {{ start_test }}, "$lt": {{end_test}} }}'' --out=./test-results/{{ tag }}-disk.csv'
+      command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp,chart_family --query=''{"chart_type": "disk_util", "chart_context": "disk.util", "id": "utilization", "timestamp": {"$gt": {{ start_test }}, "$lt": {{end_test}} }}'' --out=./test-results/{{ tag }}-disk.csv'
+
+    - name: Generating CSV file Network
+      command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp,id --query=''{"chart_type": "ipv4","chart_family": "tcp", "chart_context": "ipv4.tcppackets", "timestamp": {"$gt": {{ start_test }}, "$lt": {{end_test}} }}'' --out=./test-results/{{ tag }}-net.csv'
 
 
     - name: Copy test results to repository
