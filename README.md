@@ -4,3 +4,5 @@
 ## Contents
 * [Local Development](./LOCAL-DEV.md)
 * [Change log](./CHANGE-LOG.md)
+
+![deployment](src/diagrams/deployment_diagram.png)
