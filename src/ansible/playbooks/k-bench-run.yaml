@@ -7,7 +7,8 @@
     # Add more test_name entries as needed
     - name: List of test names
       set_fact:
-        test_names: ["cp_light_1client", "cp_heavy_8client", "cp_heavy_12client", "dp_redis_density"]  # Add more test names as needed
+        # test_names: ["cp_light_1client", "cp_heavy_8client", "cp_heavy_12client", "dp_redis_density"]  # Add more test names as needed
+        test_names: ["cp_light_1client"]
       
     - name: Create config paths
       file:
@@ -15,9 +16,25 @@
         state: directory
       loop: "{{ test_names }}"
 
+    - name: Get before Date and Time
+      command:  date '+%s'
+      register: before_datetime
+      
+    - name: Display the time before test
+      debug:
+        var: before_datetime.stdout
+
     - name: Run kbench command
       command: kbench -benchconfig "/home/{{ ansible_user }}/.k-bench/configs/{{ item }}/config.json" -outdir "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}" -kubeconfig "/home/{{ ansible_user }}/.kube/config"
       loop: "{{ test_names }}"
+
+    - name: Get after Date and Time
+      command:  date '+%s'
+      register: after_datetime
+      
+    - name: Display the time before test
+      debug:
+        var: after_datetime.stdout
 
     # - name: Create local directory for test results for {{k8s_distribution}}}
     #   ansible.builtin.file:
