@@ -11,9 +11,10 @@
         line: '    tag = {{ tag }}'
 
         
-    # - name: Restart Netdata
-    #   ansible.builtin.service:
-    #     name: netdata       # Make sure this matches the actual service name
-    #     state: restarted    # This is the action you want to perform
-    - name: reload labels
-      command: netdatacli reload-labels
+    - name: Restart Netdata
+      ansible.builtin.service:
+        name: netdata       # Make sure this matches the actual service name
+        state: restarted    # This is the action you want to perform
+    # this type of reload sometimes does not work
+    # - name: reload labels
+    #   command: netdatacli reload-labels
