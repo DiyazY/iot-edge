@@ -8,7 +8,7 @@
     - name: List of test names
       set_fact:
         # test_names: ["cp_light_1client", "cp_heavy_8client", "cp_heavy_12client", "dp_redis_density"]  # Add more test names as needed
-        test_names: ["cp_light_1client"]
+        test_names: ["cp_heavy_8client"]
       
     - name: Create config paths
       file:
