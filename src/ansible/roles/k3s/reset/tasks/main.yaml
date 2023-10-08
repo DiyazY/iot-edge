@@ -16,7 +16,7 @@
   failed_when: false
 
 - name: Umount k3s filesystems
-  include_tasks: umount_with_children.yaml
+  include_tasks: ./unmount_with_children.yaml
   with_items:
     - /run/k3s
     - /var/lib/kubelet
