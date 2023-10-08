@@ -1,6 +1,6 @@
 - name: k3s cluster reset
-  hosts: k3s_cluster
+  hosts: iot_cluster
   gather_facts: true
   become: true
   roles:
-    - role: reset
+    - role: k3s/reset
