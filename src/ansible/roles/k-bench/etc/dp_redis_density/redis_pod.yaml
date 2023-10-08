@@ -6,25 +6,25 @@ metadata:
   labels:
     name: myredisserverclient
 spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-            - w4-hs2-k0705.eng.vmware.com
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: kubernetes.io/hostname
+  #           operator: In
+  #           values:
+  #           - w4-hs2-k0705.eng.vmware.com
   containers:
   - image: nginx 
-    resources:
-      limits:
-        memory: "12000Mi"
-        cpu: "2000m"
-      requests:
-        cpu: "50m"
-        memory: "4000Mi"
-        ephemeral-storage: "10Gi"
+    # resources:
+    #   limits:
+    #     memory: "12000Mi"
+    #     cpu: "2000m"
+    #   requests:
+    #     cpu: "50m"
+    #     memory: "2000Mi"
+    #     ephemeral-storage: "10Gi"
     command: ["/bin/sh","-c"]
     args: 
       - apt-get update;

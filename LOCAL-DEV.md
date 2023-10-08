@@ -110,6 +110,8 @@ First change the directory: `cd src/ansible`;
   * after installation run `netdata.yaml` playbook again: `ansible-playbook playbooks/netdata.yaml -i inventory/hosts.ini`
 * Sidecar node:
   * install mongodb on that machine (see `src/utils/mongodb.sh` script)
+* `dp_redis_density` test requires some modification:
+  * in roles/k-bench/etc/dp_redis_density/config.json change `YamlSpec` value to `"YamlSpec": "/home/{user-name}/.k-bench/configs/dp_redis_density/redis_pod.yaml"`
 
 # TODOs
 * ~~add systemctl start mongod ~~

@@ -17,7 +17,7 @@
                         "PodNamePrefix": "myredis",
                         "LabelKey": "podtype",
                         "LabelValue": "redisworker",
-                            "YamlSpec": "./config/dp_redis_density/redis_pod.yaml"
+                            "YamlSpec": "/home/d-user/.k-bench/configs/dp_redis_density/redis_pod.yaml"
                                       }
                            }
                     ],
