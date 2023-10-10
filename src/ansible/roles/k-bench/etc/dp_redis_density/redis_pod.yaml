@@ -30,8 +30,9 @@ spec:
       - apt-get update;
         apt-get install -y redis-server;
         apt-get install -y git libssl-dev build-essential autoconf automake libpcre3-dev libevent-dev pkg-config zlib1g-dev;
+        cd /;
         git clone https://github.com/RedisLabs/memtier_benchmark.git;
-        cd memtier_benchmark/;
+        cd /memtier_benchmark/;
         autoreconf -ivf;
         ./configure;
         make;
