@@ -112,6 +112,8 @@ First change the directory: `cd src/ansible`;
   * install mongodb on that machine (see `src/utils/mongodb.sh` script)
 * `dp_redis_density` test requires some modification:
   * in roles/k-bench/etc/dp_redis_density/config.json change `YamlSpec` value to `"YamlSpec": "/home/{user-name}/.k-bench/configs/dp_redis_density/redis_pod.yaml"`
+  * to get memtier benchmark results: `kubectl cp kbench-pod-namespace/kbench-pod-oid-0-tid-0:tmp/redisoutput ../k-bench-results/k3s/dp_redis_density/k3s-dp-redis-density-[test-number]/ --kubeconfig ../.kube/k3s-config`
+  * and then to clean: on control plane machine `sudo .k-bench/cleanup.sh`
 
 # TODOs
 * ~~add systemctl start mongod ~~
