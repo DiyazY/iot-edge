@@ -23,7 +23,8 @@
     - name: Template cloud file
       ansible.builtin.template:
         src: ../templates/cloud.conf.j2
-        dest: /etc/netdata/cloud.conf
+        # dest: /etc/netdata/cloud.conf
+        dest: /var/lib/netdata/cloud.d/cloud.conf
         owner: root
         group: root
         mode: '0644'
