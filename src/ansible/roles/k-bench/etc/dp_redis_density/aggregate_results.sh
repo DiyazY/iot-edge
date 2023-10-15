@@ -1,5 +1,5 @@
 #/bin/bash
-Num_Instances=25;
+Num_Instances=3;
 
 Agg_throughput=0;
 for((num=0;num < ${Num_Instances};num++))
