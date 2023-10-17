@@ -22,7 +22,7 @@
                            }
                     ],
                     "SleepTimes": [100000],
-                    "Count": 25
+                    "Count": 3
         }
       },
       {
@@ -47,7 +47,7 @@
                            }
                     ],
                     "SleepTimes": [5000],
-                    "Count": 25
+                    "Count": 3
         }
       },
       {
@@ -61,12 +61,12 @@
                         "LabelKey": "podtype",
                         "LabelValue": "redisworker",
                         "MatchGoroutine": true,
-                        "Command": "cd /memtier_benchmark; ./memtier_benchmark --test-time=600 > /tmp/redisoutput/memtier.out 2> /tmp/redisoutput/memtier.err;"
+                        "Command": "cd /memtier_benchmark; ./memtier_benchmark --test-time=600 --hdr-file-prefix=/tmp/redisoutput/memtier.hgrm > /tmp/redisoutput/memtier.out 2> /tmp/redisoutput/memtier.err;"
                                       }
                            }
                     ],
                     "SleepTimes": [5000],
-                    "Count": 25
+                    "Count": 3
         }
       },
       {
@@ -86,7 +86,7 @@
                             }
                      ],
                      "SleepTimes": [20000],
-                     "Count": 25
+                     "Count": 3
             }
       }
     ],
