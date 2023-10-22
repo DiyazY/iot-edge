@@ -114,6 +114,10 @@ First change the directory: `cd src/ansible`;
   * in roles/k-bench/etc/dp_redis_density/config.json change `YamlSpec` value to `"YamlSpec": "/home/{user-name}/.k-bench/configs/dp_redis_density/redis_pod.yaml"`
   * to get memtier benchmark results: `kubectl cp kbench-pod-namespace/kbench-pod-oid-0-tid-0:tmp/redisoutput ../k-bench-results/k3s/dp_redis_density/k3s-dp-redis-density-[test-number]/ --kubeconfig ../.kube/k3s-config`
   * and then to clean: on control plane machine `sudo .k-bench/cleanup.sh`
+* k3s nodes NotReady statuses:
+  * https://github.com/k3s-io/k3s/issues/1857
+  * https://dev.to/arthurkay/k3s-node-status-notready-4j3m
+  * Sometimes they are not ready, but it is possible to run tests anyway.
 
 # TODOs
 * ~~add systemctl start mongod ~~
