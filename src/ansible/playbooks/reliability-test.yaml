@@ -8,6 +8,17 @@
       file:
         path: "~{{ ansible_user }}/reliability/{{ tag }}"
         state: directory
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Get list of all nodes
+      command: kubectl get nodes -o jsonpath='{.items[*].metadata.name}'
+      register: node_names_output
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Split node names into a list
+      set_fact:
+        node_names: "{{ node_names_output.stdout.split() }}"
+      when: inventory_hostname == groups['master'][0]
 
     - name: Backup current cluster state
       shell: |
@@ -43,10 +54,11 @@
     #     state: stopped
     #   when: "'master' in group_names"
 
-    - name: Wait for a specified time (e.g., 10 minutes)
+    - name: Wait for a specified time (e.g., 200 seconds)
       wait_for:
         timeout: 200
         # state: paused
+      when: inventory_hostname == groups['master'][0]
 
     - name: Start kubelet on worker nodes
       systemd:
@@ -61,10 +73,16 @@
     #     state: started
     #   when: "'k8s_control_plane' in group_names"
 
-    - name: Wait for cluster components to stabilize
-      wait_for:
-        timeout: 300
+    # - name: Wait for cluster components to stabilize
+    #   wait_for:
+    #     timeout: 300
         # state: paused
+
+    - name: Wait until all nodes are Ready
+      command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m
+      with_items: "{{ node_names }}" 
+      when: inventory_hostname == groups['master'][0]
+
 
     - name: Get after Date and Time
       command:  date '+%s'
@@ -75,6 +93,17 @@
       debug:
         var: after_datetime.stdout
       when: inventory_hostname == groups['master'][0]
+
+    - name: Calculate recovery duration
+      set_fact:
+        recovery_duration: "{{ (after_datetime.stdout | int) - (before_datetime.stdout | int) }}"
+      when: inventory_hostname == groups['master'][0]
+      
+    - name: Display recovery duration
+      debug:
+        var: recovery_duration
+      when: inventory_hostname == groups['master'][0]
+      
 
     # - name: Measure recovery time
     #   delegate_to: localhost
@@ -100,6 +129,7 @@
     #         var: recovery_duration
 
     - name: Gather post-recovery cluster state
+      shell: |
         sudo kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/reliability/{{ tag }}/{{tag}}-post_recovery_all.yaml
         sudo kubectl get nodes -o yaml > ~{{ ansible_user }}/reliability/{{ tag }}/{{tag}}-post_recovery_nodes.yaml
       when: inventory_hostname == groups['master'][0]
