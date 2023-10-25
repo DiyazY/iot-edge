@@ -35,10 +35,15 @@
       command:  date '+%s'
       register: before_datetime
       when: inventory_hostname == groups['master'][0]
-      
+  
     - name: Display the time before test
       debug:
         var: before_datetime.stdout
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Wait for a specified time (e.g., 200 seconds)
+      wait_for:
+        timeout: 200
       when: inventory_hostname == groups['master'][0]
 
     - name: Simulate node failures (Stopping kubelet/k3s-node)
@@ -78,8 +83,9 @@
     #     timeout: 300
         # state: paused
 
+
     - name: Wait until all nodes are Ready
-      command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m
+      command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m # issue with k3s that it can arbitrarily show nodes as NotReady
       with_items: "{{ node_names }}" 
       when: inventory_hostname == groups['master'][0]
 
