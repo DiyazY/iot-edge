@@ -41,9 +41,9 @@
         var: before_datetime.stdout
       when: inventory_hostname == groups['master'][0]
 
-    - name: Wait for a specified time (e.g., 60 seconds)
+    - name: Wait for a specified time (e.g., 100 seconds)
       wait_for:
-        timeout: 60
+        timeout: 100
       when: inventory_hostname == groups['master'][0]
 
     - name: Simulate master failures (Stopping kubelet/k3s)
@@ -60,9 +60,9 @@
     #     state: stopped
     #   when: "'master' in group_names"
 
-    - name: Wait for a specified time (e.g., 60 seconds)
+    - name: Wait for a specified time (e.g., 100 seconds)
       wait_for:
-        timeout: 60
+        timeout: 100
         # state: paused
       when: inventory_hostname == groups['master'][0]
 
