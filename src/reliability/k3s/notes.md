@@ -4,3 +4,5 @@
   * 214 - recovery_duration
 * 30 test
   * 406 - recovery_duration
+* 30 test
+  * 417 - recovery_duration
