@@ -12,3 +12,5 @@
   * 135 - recovery_duration
 * 36 test
   * 277 - recovery_duration
+* 37 test
+  * 614 - recovery_duration
