@@ -46,12 +46,13 @@
         timeout: 200
       when: inventory_hostname == groups['master'][0]
 
-    - name: Simulate node failures (Stopping kubelet/k3s-node)
+    - name: Simulate master failures (Stopping kubelet/k3s)
       systemd:
+        name: k3s
         # name: kubelet
-        name: k3s-node
+        # name: k3s-node
         state: stopped
-      when: inventory_hostname == groups['node'][0]
+      when: inventory_hostname == groups['master'][0]
 
     # - name: Simulate control plane failure (Stopping kube-apiserver)
     #   systemd:
@@ -67,10 +68,11 @@
 
     - name: Start kubelet on worker nodes
       systemd:
+        name: k3s
         # name: kubelet
-        name: k3s-node
+        # name: k3s-node
         state: started
-      when: inventory_hostname == groups['node'][0]
+      when: inventory_hostname == groups['master'][0]
 
     # - name: Start kube-apiserver on control plane
     #   systemd:
