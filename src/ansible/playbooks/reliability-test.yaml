@@ -41,10 +41,9 @@
         var: before_datetime.stdout
       when: inventory_hostname == groups['master'][0]
 
-    - name: Wait for a specified time (e.g., 150 seconds)
-      wait_for:
-        timeout: 150
-      when: inventory_hostname == groups['master'][0]
+    - name: Wait for a specified time (e.g., 100 seconds)
+      ansible.builtin.pause:
+        seconds: 100
 
     - name: Simulate master failures (Stopping kubelet/k3s)
       systemd:
@@ -60,11 +59,9 @@
     #     state: stopped
     #   when: "'master' in group_names"
 
-    - name: Wait for a specified time (e.g., 100 seconds)
-      wait_for:
-        timeout: 100
-        # state: paused
-      when: inventory_hostname == groups['master'][0]
+    - name: Wait for a specified time (e.g., 60 seconds)
+      ansible.builtin.pause:
+        seconds: 60
 
     - name: Start kubelet on worker nodes
       systemd:
@@ -92,11 +89,9 @@
       when: inventory_hostname == groups['master'][0]
 
 
-    - name: Wait for a specified time (e.g., 150 seconds)
-      wait_for:
-        timeout: 150
-        # state: paused
-      when: inventory_hostname == groups['master'][0]
+    - name: Wait for a specified time (e.g., 100 seconds)
+      ansible.builtin.pause:
+        seconds: 100
 
 
     - name: Get after Date and Time
