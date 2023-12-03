@@ -30,3 +30,5 @@
 # worker recovery durations
 * 47 test
   * 957 - recovery_duration
+* 48 test
+  * 1057 - recovery_duration
