@@ -44,7 +44,7 @@
       shell: |
         ip link set dev eth0 down
         (sleep 100 && ip link set dev eth0 up) &
-      when: inventory_hostname == groups['node'][0]
+      when: inventory_hostname == groups['node'][2]
 
     - name: Wait for a specified time (e.g., 100 seconds)
       ansible.builtin.pause:
