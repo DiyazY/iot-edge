@@ -27,10 +27,12 @@
 * 42 test
   * 963 - recovery_duration
 
-# worker recovery durations
-* 47 test
+# worker recovery durations (waiting 100 sec was unnecessary)
+* 47 test (node_1)
   * 957 - recovery_duration
-* 48 test
+* 48 test (node_1)
   * 1057 - recovery_duration
-* 49 test
+* 49 test (node_2)
+  * 1058
+* 50 test (node_2)
   * 1058
