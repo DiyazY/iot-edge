@@ -17,6 +17,7 @@
 * 38 test
   * 764 - recovery_duration 
 
+# control-plane recovery durations
 * 39 test
   * 964 - recovery_duration
 * 40 test
@@ -25,3 +26,7 @@
   * 963 - recovery_duration
 * 42 test
   * 963 - recovery_duration
+
+# worker recovery durations
+* 47 test
+  * 957 - recovery_duration
