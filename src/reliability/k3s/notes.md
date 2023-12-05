@@ -46,3 +46,8 @@
   * 1060
 * 54 test (node_3)
   * 1059
+
+
+# worker recovery duration long run (no pressure)
+* 55 (node_1)
+  * "recovery_duration": "1230"
