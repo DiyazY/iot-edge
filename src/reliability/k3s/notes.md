@@ -49,5 +49,7 @@
 
 
 # worker recovery duration long run (no pressure)
-* 55 (node_1)
+* 56 (node_1)
   * "recovery_duration": "1230"
+* 57 (node_1)
+  * "recovery_duration": "1006"
