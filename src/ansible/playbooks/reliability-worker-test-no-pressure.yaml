@@ -44,7 +44,7 @@
       shell: |
         ip link set dev eth0 down
         (sleep 500 && ip link set dev eth0 up) &
-      when: inventory_hostname == groups['node'][1]
+      when: inventory_hostname == groups['node'][2]
 
     - name: Wait until all nodes are Ready
       command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m # issue with k3s that it can arbitrarily show nodes as NotReady

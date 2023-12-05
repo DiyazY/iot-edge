@@ -61,3 +61,5 @@
   * "recovery_duration": "1006"
 * 61 (node_2)
   * "recovery_duration": "1006"
+* 62 (node_3) - after it no pods on that node anymore
+  * "recovery_duration": "1006"
