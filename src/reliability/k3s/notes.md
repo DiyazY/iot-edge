@@ -55,3 +55,5 @@
   * "recovery_duration": "1006"
 * 58 (node_1)
   * "recovery_duration": "1120"
+* 59 (node_2)
+  * "recovery_duration": "1006"
