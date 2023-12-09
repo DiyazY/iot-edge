@@ -27,7 +27,7 @@
 * 42 test
   * 963 - recovery_duration
 
-# worker recovery durations (waiting 100 sec was unnecessary)
+# worker recovery durations (waiting 100 sec was unnecessary, TODO: subtract them in final calc)
 * 47 test (node_1)
   * 957 - recovery_duration
 * 48 test (node_1)
