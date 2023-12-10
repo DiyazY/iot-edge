@@ -67,3 +67,7 @@
 # control recovery duration long run (no pressure)
 * 63 (master) failed one!
   * "recovery_duration": "1005"
+
+
+* 64 (master) 
+  * "recovery_duration": "1009"
