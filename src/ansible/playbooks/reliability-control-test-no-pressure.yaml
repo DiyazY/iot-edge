@@ -42,8 +42,8 @@
 
     - name: Simulate worker failure (Stopping network interface)
       shell: |
-        ip link set dev eth0 down
-        (sleep 500 && ip link set dev eth0 up) &
+        ip link set dev eno1 down
+        (sleep 500 && ip link set dev eno1 up) &
       when: inventory_hostname == groups['master'][0]
 
     - name: Wait until all nodes are Ready
