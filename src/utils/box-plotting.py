@@ -48,3 +48,6 @@ create_plots(files, 'CPU heavy - 12 clients', 'Minutes', 'Value (%)', toSave)
 
 files = ['../k-bench-results/k3s/cp_heavy_8client/k3s-cp-heavy-8client-2-cpu.csv', '../k-bench-results/k3s/cp_heavy_8client/k3s-cp-heavy-8client-3-cpu.csv', '../k-bench-results/k3s/cp_heavy_8client/k3s-cp-heavy-8client-4-cpu.csv']
 create_plots(files, 'CPU heavy - 8 clients', 'Minutes', 'Value (%)', toSave)
+
+files = ['../k-bench-results/k3s/dp_redis_density/k3s-dp-redis-density-34/k3s-dp-redis-density-34-cpu.csv', '../k-bench-results/k3s/dp_redis_density/k3s-dp-redis-density-35/k3s-dp-redis-density-35-cpu.csv', '../k-bench-results/k3s/dp_redis_density/k3s-dp-redis-density-36/k3s-dp-redis-density-36-cpu.csv']
+create_plots(files, 'Density', 'Minutes', 'Value (%)', toSave)
