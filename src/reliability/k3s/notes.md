@@ -63,3 +63,7 @@
   * "recovery_duration": "1006"
 * 62 (node_3) - after it no pods on that node anymore
   * "recovery_duration": "1006"
+
+# control recovery duration long run (no pressure)
+* 63 (master) failed one!
+  * "recovery_duration": "1005"
