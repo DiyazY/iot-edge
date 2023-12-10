@@ -125,3 +125,4 @@ First change the directory: `cd src/ansible`;
   * ~~node_* installed netdata, but data is not sent yet!~~
 * ~~pass tag through many places to mark test results with an appropriate test execution~~
 * ~~Play with labels: https://learn.netdata.cloud/docs/configuring/organize-systems-metrics-and-alerts~~
+* there is also new k8s distribution `SuperEdge`

@@ -71,3 +71,5 @@
 
 * 64 (master) 
   * "recovery_duration": "1009"
+* 65 (master) 
+  * "recovery_duration": "1009"
