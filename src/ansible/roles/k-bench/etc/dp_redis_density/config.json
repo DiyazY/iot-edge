@@ -22,7 +22,7 @@
                            }
                     ],
                     "SleepTimes": [100000],
-                    "Count": 3
+                    "Count": 32
         }
       },
       {
@@ -47,7 +47,7 @@
                            }
                     ],
                     "SleepTimes": [5000],
-                    "Count": 3
+                    "Count": 32
         }
       },
       {
@@ -66,7 +66,7 @@
                            }
                     ],
                     "SleepTimes": [5000],
-                    "Count": 3
+                    "Count": 32
         }
       },
       {
@@ -86,7 +86,7 @@
                             }
                      ],
                      "SleepTimes": [20000],
-                     "Count": 3
+                     "Count": 32
             }
       }
     ],

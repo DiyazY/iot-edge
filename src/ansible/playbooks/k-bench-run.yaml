@@ -45,7 +45,7 @@
     - name: Copy test results to repository
       fetch:
         src: "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}/kbench.log"
-        dest: "../../k-bench-results/{{k8s_distribution}}/{{ item }}/ {{ tag }}/"
+        dest: "../../k-bench-results/{{k8s_distribution}}/{{ item }}/{{ tag }}/"
         flat: yes
       loop: "{{ test_names }}"
     

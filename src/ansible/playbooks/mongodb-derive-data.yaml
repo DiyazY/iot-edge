@@ -8,8 +8,8 @@
     - name: List of test names
       set_fact: 
         sets: ["cpu", "ram", "disk", "net"]   
-        start_test: 1696270761 # add start timestamp
-        end_test: 1696272101 # add end timestamp
+        start_test: 1702237311 # add start timestamp
+        end_test: 1702238320 # add end timestamp
     # always run query first and check the labels because mongoexport has many problems with nested objects: https://copyprogramming.com/howto/mongoexport-specific-fields-problem-with-json
 
     - name: Generating CSV file CPU
@@ -30,7 +30,9 @@
     - name: Copy test results to repository
       fetch:
         src: "/home/{{ ansible_user }}/test-results/{{ tag }}-{{ item }}.csv"
-        dest: "../../k-bench-results/{{k8s_distribution}}/dp_redis_density/"
+        dest: "../../reliability/{{k8s_distribution}}/{{tag}}/"
+        # "../../k-bench-results/{{k8s_distribution}}/dp_redis_density/{{tag}}/"
+        # "../../reliability/{{k8s_distribution}}/{{tag}}/"
         # ../../k-bench-results/{{k8s_distribution}}/dp_redis_density/
         # ../../k-bench-results/{{k8s_distribution}}/cp_heavy_12client/
         # ../../k-bench-results/{{k8s_distribution}}/cp_heavy_8client/

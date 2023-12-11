@@ -1,0 +1,57 @@
+3539:C 10 Dec 2023 09:35:24.585 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+3539:C 10 Dec 2023 09:35:24.585 # Redis version=7.0.11, bits=64, commit=00000000, modified=0, pid=3539, just started
+3539:C 10 Dec 2023 09:35:24.585 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+3539:M 10 Dec 2023 09:35:24.586 * monotonic clock: POSIX clock_gettime
+3539:M 10 Dec 2023 09:35:24.586 * Running mode=standalone, port=6379.
+3539:M 10 Dec 2023 09:35:24.586 # Server initialized
+3539:M 10 Dec 2023 09:35:24.587 * Ready to accept connections
+3539:M 10 Dec 2023 09:36:25.043 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:36:25.043 * Background saving started by pid 3555
+3555:C 10 Dec 2023 09:36:25.083 * DB saved on disk
+3555:C 10 Dec 2023 09:36:25.084 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+3539:M 10 Dec 2023 09:36:25.155 * Background saving terminated with success
+3539:M 10 Dec 2023 09:37:26.061 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:37:26.061 * Background saving started by pid 3556
+3556:C 10 Dec 2023 09:37:26.115 * DB saved on disk
+3556:C 10 Dec 2023 09:37:26.116 * Fork CoW for RDB: current 1 MB, peak 1 MB, average 0 MB
+3539:M 10 Dec 2023 09:37:26.164 * Background saving terminated with success
+3539:M 10 Dec 2023 09:38:27.036 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:38:27.037 * Background saving started by pid 3557
+3557:C 10 Dec 2023 09:38:27.078 * DB saved on disk
+3557:C 10 Dec 2023 09:38:27.079 * Fork CoW for RDB: current 1 MB, peak 1 MB, average 1 MB
+3539:M 10 Dec 2023 09:38:27.142 * Background saving terminated with success
+3539:M 10 Dec 2023 09:39:28.001 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:39:28.001 * Background saving started by pid 3558
+3558:C 10 Dec 2023 09:39:28.034 * DB saved on disk
+3558:C 10 Dec 2023 09:39:28.035 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+3539:M 10 Dec 2023 09:39:28.102 * Background saving terminated with success
+3539:M 10 Dec 2023 09:40:29.037 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:40:29.037 * Background saving started by pid 3559
+3559:C 10 Dec 2023 09:40:29.098 * DB saved on disk
+3559:C 10 Dec 2023 09:40:29.099 * Fork CoW for RDB: current 1 MB, peak 1 MB, average 1 MB
+3539:M 10 Dec 2023 09:40:29.145 * Background saving terminated with success
+3539:M 10 Dec 2023 09:41:30.070 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:41:30.070 * Background saving started by pid 3560
+3560:C 10 Dec 2023 09:41:30.135 * DB saved on disk
+3560:C 10 Dec 2023 09:41:30.136 * Fork CoW for RDB: current 1 MB, peak 1 MB, average 1 MB
+3539:M 10 Dec 2023 09:41:30.176 * Background saving terminated with success
+3539:M 10 Dec 2023 09:42:31.029 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:42:31.030 * Background saving started by pid 3561
+3561:C 10 Dec 2023 09:42:31.123 * DB saved on disk
+3561:C 10 Dec 2023 09:42:31.128 * Fork CoW for RDB: current 1 MB, peak 1 MB, average 0 MB
+3539:M 10 Dec 2023 09:42:31.143 * Background saving terminated with success
+3539:M 10 Dec 2023 09:43:32.131 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:43:32.132 * Background saving started by pid 3562
+3562:C 10 Dec 2023 09:43:32.195 * DB saved on disk
+3562:C 10 Dec 2023 09:43:32.196 * Fork CoW for RDB: current 1 MB, peak 1 MB, average 0 MB
+3539:M 10 Dec 2023 09:43:32.237 * Background saving terminated with success
+3539:M 10 Dec 2023 09:44:33.100 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:44:33.100 * Background saving started by pid 3563
+3563:C 10 Dec 2023 09:44:33.195 * DB saved on disk
+3563:C 10 Dec 2023 09:44:33.196 * Fork CoW for RDB: current 1 MB, peak 1 MB, average 1 MB
+3539:M 10 Dec 2023 09:44:33.212 * Background saving terminated with success
+3539:M 10 Dec 2023 09:45:34.016 * 10000 changes in 60 seconds. Saving...
+3539:M 10 Dec 2023 09:45:34.016 * Background saving started by pid 3564
+3564:C 10 Dec 2023 09:45:34.042 * DB saved on disk
+3564:C 10 Dec 2023 09:45:34.043 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+3539:M 10 Dec 2023 09:45:34.116 * Background saving terminated with success

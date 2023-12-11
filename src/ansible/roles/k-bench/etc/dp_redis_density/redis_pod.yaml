@@ -6,15 +6,15 @@ metadata:
   labels:
     name: myredisserverclient
 spec:
-  # affinity:
-  #   nodeAffinity:
-  #     requiredDuringSchedulingIgnoredDuringExecution:
-  #       nodeSelectorTerms:
-  #       - matchExpressions:
-  #         - key: kubernetes.io/hostname
-  #           operator: In
-  #           values:
-  #           - w4-hs2-k0705.eng.vmware.com
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: beta.kubernetes.io/instance-type
+            operator: In
+            values:
+            - k3s
   containers:
   - image: nginx 
     # resources:
