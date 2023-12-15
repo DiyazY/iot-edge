@@ -32,8 +32,8 @@
   copy:
     src: "{{ distros_path.path }}/k0s-{{ k0s_version }}-amd64"
     dest: "{{ k0s_binary_dest }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: root
+    group: root
     mode: 0755
   when: ansible_facts.architecture == "x86_64"
 
@@ -41,7 +41,7 @@
   copy:
     src: "{{ distros_path.path }}/k0s-{{ k0s_version }}-arm64"
     dest: "{{ k0s_binary_dest }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: root
+    group: root
     mode: 0755
   when: ansible_facts.architecture == "aarch64"

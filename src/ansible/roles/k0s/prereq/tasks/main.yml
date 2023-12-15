@@ -6,8 +6,8 @@
     path: "{{ item }}"
     state: directory
     mode: 0755
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: root
+    group: root
   loop:
     - "{{ k0s_config_dir }}"
     - "{{ k0s_data_dir }}"
@@ -17,8 +17,8 @@
   template:
     src: k0s.yaml.j2
     dest: "{{ k0s_config_dir }}/k0s.yaml"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: root
+    group: root
     mode: 0600
   when: k0s_use_custom_config
 
@@ -32,7 +32,7 @@
       copy:
         dest: "{{ k0s_config_dir }}/k0s.yaml"
         content: "{{ default_k0s_config.stdout }}"
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
+        owner: root
+        group: root
         mode: 0600
   when: not k0s_use_custom_config

@@ -9,7 +9,7 @@
 
 - name: Setup custom environment variables for systemd unit
   include_role:
-    name: env_setup
+    name: k0s/env_setup
 
 - name: Enable and check k0s service
   systemd:
