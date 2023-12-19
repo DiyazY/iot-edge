@@ -1,7 +1,7 @@
 #!/bin/bash
 
 distribution="k0s"
-tags=("k0s-test-dry-run-1") #("k0s-idle-1", "k0s-idle-2", "k0s-idle-3","k0s-idle-4")
+tags=("k0s-idle-1", "k0s-idle-2", "k0s-idle-3","k0s-idle-4", "k0s-idle-5")
 test_type="idle"
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
@@ -15,6 +15,7 @@ for tag in "${tags[@]}"; do
     ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/netdata-tag-setup.yaml >> "$output_file" 2>&1
     echo "waiting 30min..."
     sleep 1800 # wait 30 min
+    
     start_time=$(date '+%s')
     echo "start time: $start_time"
     sleep 300 # wait 5 mins
