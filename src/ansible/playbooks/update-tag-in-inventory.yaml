@@ -1,0 +1,11 @@
+---
+- name: Running tests
+  hosts: localhost
+
+  tasks:
+
+    - name: Update tag in hosts.ini
+      replace:
+        path: ../inventory/{{ k8s_distribution }}/hosts.ini  # Replace with the actual path to your hosts.ini file
+        regexp: '^tag=.*$'
+        replace: "tag={{ new_tag }}"

@@ -8,9 +8,13 @@
     - name: List of test names
       set_fact: 
         sets: ["cpu", "ram", "disk", "net"]   
-        start_test: 1702237311 # add start timestamp
-        end_test: 1702238320 # add end timestamp
+        # start_test: 1702237311 # add start timestamp
+        # end_test: 1702238320 # add end timestamp
     # always run query first and check the labels because mongoexport has many problems with nested objects: https://copyprogramming.com/howto/mongoexport-specific-fields-problem-with-json
+
+    - name: Display start and end time
+      debug:
+        msg: "{{ start_test }} - {{ end_test }}"
 
     - name: Generating CSV file CPU
       command: 'mongoexport --db=netdata --collection=metrics --type=csv --fields=hostname,value,timestamp --query=''{"chart_type": "system", "chart_family": "cpu", "chart_context": "system.cpu", "id": "idle", "timestamp": {"$gt": {{ start_test }}, "$lt": {{end_test}} }}'' --out=./test-results/{{ tag }}-cpu.csv'
@@ -30,7 +34,7 @@
     - name: Copy test results to repository
       fetch:
         src: "/home/{{ ansible_user }}/test-results/{{ tag }}-{{ item }}.csv"
-        dest: "../../reliability/{{k8s_distribution}}/{{tag}}/"
+        dest: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{tag}}/"
         # "../../k-bench-results/{{k8s_distribution}}/dp_redis_density/{{tag}}/"
         # "../../reliability/{{k8s_distribution}}/{{tag}}/"
         # ../../k-bench-results/{{k8s_distribution}}/dp_redis_density/
