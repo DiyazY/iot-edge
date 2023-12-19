@@ -48,19 +48,33 @@
 - name: Set Fact with Newly Generated Date
   hosts: all
   gather_facts: false
+  become: true
   tasks:
-    - name: Get Current Date and Time
-      command:  date '+%F %T %Z'
-      register: current_datetime
-      delegate_to: localhost
-      run_once: true
-      
-    - name: Set fact for current date and time
-      set_fact:
-        current_datetime_fact: "{{ current_datetime.stdout }}"
+    - name: Run dpkg --configure -a
+      command: sudo dpkg --configure -a
+      ignore_errors: true
 
-    - name: Display the set fact
-      command: "sudo date --set='{{ current_datetime_fact }}'"
+    - name: Install the NTP daemon to synchronize the clocks to ms.
+      apt: name=ntp
+
+    - name: Make sure ntp is started, and is enabled on restart.
+      service: name=ntp state=started enabled=yes
+
+    - name: Set the timezone to the {{new_host_timezone}} one
+      timezone: "name=Europe/Helsinki"
+
+    # - name: Get Current Date and Time
+    #   command:  date '+%F %T %Z'
+    #   register: current_datetime
+    #   delegate_to: localhost
+    #   run_once: true
+      
+    # - name: Set fact for current date and time
+    #   set_fact:
+    #     current_datetime_fact: "{{ current_datetime.stdout }}"
+
+    # - name: Display the set fact
+    #   command: "sudo date --set='{{ current_datetime_fact }}'"
 
     # rpi doesn't have it
     # - name: Set harware clock
