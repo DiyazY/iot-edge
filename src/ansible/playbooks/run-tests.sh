@@ -27,7 +27,6 @@ for tag in "${tags[@]}"; do
 
     # commit the changes
     git add "../../."
-    git commit -m"${distribution} | ${tag}"
+    git commit -m"${distribution} | ${tag}"  
 done
-
 ansible-playbook -i inventory/${distribution}/hosts.ini shutdown.yaml

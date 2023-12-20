@@ -3,7 +3,7 @@
 # WIP
 
 distribution="k0s"
-test_types=("idle", "cp_light_1client", "cp_heavy_8client", "cp_heavy_12client", "dp_redis_density")
+test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density")
 
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 for test_type in "${test_types[@]}"; do
