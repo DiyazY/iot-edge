@@ -5,16 +5,15 @@
 
   tasks:
     # Add more test_name entries as needed
-    - name: List of test names
-      set_fact:
-        # test_names: ["cp_light_1client", "cp_heavy_8client", "cp_heavy_12client", "dp_redis_density"]  # Add more test names as needed
-        test_names: ["dp_redis_density"]
+    # - name: List of test names
+    #   set_fact:
+    #     # test_names: ["cp_light_1client", "cp_heavy_8client", "cp_heavy_12client", "dp_redis_density"]  # Add more test names as needed
+    #     test_names: ["dp_redis_density"]
       
     - name: Create config paths
       file:
-        path: "~{{ ansible_user }}/.k-bench/test-results/{{ item }}/{{ tag }}"
+        path: "~{{ ansible_user }}/.k-bench/test-results/{{ test_type }}/{{ tag }}"
         state: directory
-      loop: "{{ test_names }}"
 
     - name: Get before Date and Time
       command:  date '+%s'
@@ -23,15 +22,20 @@
     - name: Display the time before test
       debug:
         var: before_datetime.stdout
-    # TODO: test it!
+
     - name: Write variable to file
       copy:
         content: "{{ before_datetime.stdout }}"
         dest: "./tmp-before.txt"
 
+    - name: Copy before time
+      fetch:
+        src: "/home/{{ ansible_user }}/tmp-before.txt"
+        dest: "./"
+        flat: yes
+
     - name: Run kbench command
-      command: kbench -benchconfig "/home/{{ ansible_user }}/.k-bench/configs/{{ item }}/config.json" -outdir "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}" -kubeconfig "/home/{{ ansible_user }}/.kube/config"
-      loop: "{{ test_names }}"
+      command: kbench -benchconfig "/home/{{ ansible_user }}/.k-bench/configs/{{ test_type }}/config.json" -outdir "/home/{{ ansible_user }}/.k-bench/test-results/{{ test_type }}" -kubeconfig "/home/{{ ansible_user }}/.kube/config"
 
     - name: Get after Date and Time
       command:  date '+%s'
@@ -40,27 +44,32 @@
     - name: Display the time before test
       debug:
         var: after_datetime.stdout
-    # TODO: test it!
+
     - name: Write variable to file
+      delegate_to: localhost
       copy:
         content: "{{ after_datetime.stdout }}"
         dest: "./tmp-after.txt"
 
+    - name: Copy after time
+      fetch:
+        src: "/home/{{ ansible_user }}/tmp-before.txt"
+        dest: "./"
+        flat: yes
+
     # - name: Create local directory for test results for {{k8s_distribution}}}
     #   ansible.builtin.file:
-    #     path: ../../k-bench-results/{{k8s_distribution}}/{{ item }}/
+    #     path: ../../k-bench-results/{{k8s_distribution}}/{{ test_type }}/
     #     state: directory
     #   loop: "{{ test_names }}"
         
     - name: Copy test results to repository
       fetch:
-        src: "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}/kbench.log"
-        dest: "../../k-bench-results/{{k8s_distribution}}/{{ item }}/{{ tag }}/"
+        src: "/home/{{ ansible_user }}/.k-bench/test-results/{{ test_type }}/kbench.log"
+        dest: "../../k-bench-results/{{k8s_distribution}}/{{ test_type }}/{{ tag }}/"
         flat: yes
-      loop: "{{ test_names }}"
     
     - name: Delete test results on a remote machine
       file:
-        path: "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}/kbench.log"
+        path: "/home/{{ ansible_user }}/.k-bench/test-results/{{ test_type }}/kbench.log"
         state: absent
-      loop: "{{ test_names }}"
