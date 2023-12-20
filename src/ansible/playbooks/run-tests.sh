@@ -1,7 +1,7 @@
 #!/bin/bash
 
 distribution="k0s"
-tags=("k0s-idle-1", "k0s-idle-2", "k0s-idle-3","k0s-idle-4", "k0s-idle-5")
+tags=("k0s-idle-1" "k0s-idle-2" "k0s-idle-3" "k0s-idle-4" "k0s-idle-5")
 test_type="idle"
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
