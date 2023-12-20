@@ -23,6 +23,11 @@
     - name: Display the time before test
       debug:
         var: before_datetime.stdout
+    # TODO: test it!
+    - name: Write variable to file
+      copy:
+        content: "{{ before_datetime.stdout }}"
+        dest: "./tmp-before.txt"
 
     - name: Run kbench command
       command: kbench -benchconfig "/home/{{ ansible_user }}/.k-bench/configs/{{ item }}/config.json" -outdir "/home/{{ ansible_user }}/.k-bench/test-results/{{ item }}" -kubeconfig "/home/{{ ansible_user }}/.kube/config"
@@ -35,6 +40,11 @@
     - name: Display the time before test
       debug:
         var: after_datetime.stdout
+    # TODO: test it!
+    - name: Write variable to file
+      copy:
+        content: "{{ after_datetime.stdout }}"
+        dest: "./tmp-after.txt"
 
     # - name: Create local directory for test results for {{k8s_distribution}}}
     #   ansible.builtin.file:
