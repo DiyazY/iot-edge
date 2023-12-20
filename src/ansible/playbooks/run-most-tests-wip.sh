@@ -28,7 +28,7 @@ for test_type in "${test_types[@]}"; do
             echo "end time: $end_time"
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/mongodb-derive-data.yaml --extra-vars "start_test=${start_time} end_test=${end_time} test_type=${test_type}" >> "$output_file" 2>&1 
         else
-            ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml >> "$output_file" 2>&1
+            ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml --extra-vars "test_type=${test_type}" >> "$output_file">> "$output_file" 2>&1
             start_time=$(cat ./tmp-before.txt)
             echo "start time: $start_time"
             end_time=$(cat ./tmp-after.txt)
