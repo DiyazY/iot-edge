@@ -46,14 +46,13 @@
         var: after_datetime.stdout
 
     - name: Write variable to file
-      delegate_to: localhost
       copy:
         content: "{{ after_datetime.stdout }}"
         dest: "./tmp-after.txt"
 
     - name: Copy after time
       fetch:
-        src: "/home/{{ ansible_user }}/tmp-before.txt"
+        src: "/home/{{ ansible_user }}/tmp-after.txt"
         dest: "./"
         flat: yes
 
