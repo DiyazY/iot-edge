@@ -66,14 +66,14 @@
 - name: Copy config file to user home directory
   copy:
     src: "{{ k0s_data_dir }}/pki/admin.conf"
-    dest: ~{{ ansible_user }}/k0s-kubeconfig.yml
+    dest: ~{{ ansible_user }}/.kube/config
     remote_src: yes
     owner: "{{ ansible_user }}"
     mode: 0644
 
 - name: Set controller IP in kubeconfig
   replace:
-    path: ~{{ ansible_user }}/k0s-kubeconfig.yml
+    path: ~{{ ansible_user }}/.kube/config
     regexp: 'localhost'
     replace: "{{ ansible_host }}"
 
