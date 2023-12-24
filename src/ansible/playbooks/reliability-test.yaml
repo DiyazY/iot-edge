@@ -59,8 +59,8 @@
 
     - name: Simulate {{machine}} failure (Stopping network interface)
       shell: |
-        ip link set dev eth0 down
-        (sleep 100 && ip link set dev eth0 up) &
+        ip link set dev {{eth_interface}} down
+        (sleep 100 && ip link set dev {{eth_interface}} up) &
       when: inventory_hostname == specific_node
 
     - name: Wait until all nodes are Ready
