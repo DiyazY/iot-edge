@@ -1,3 +1,4 @@
+# TODO: remove it, obsolete!
 ---
 - name: Kubernetes Recovery Testing
   hosts: iot_cluster  # This could target all your nodes, both worker and control plane.

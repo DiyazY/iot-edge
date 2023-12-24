@@ -60,7 +60,7 @@
     - name: Simulate {{machine}} failure (Stopping network interface)
       shell: |
         ip link set dev {{eth_interface}} down
-        (sleep 100 && ip link set dev {{eth_interface}} up) &
+        (sleep {{sleep_time}} && ip link set dev {{eth_interface}} up) &
       when: inventory_hostname == specific_node
 
     - name: Wait until all nodes are Ready
@@ -70,7 +70,7 @@
 
     - name: Wait for a specified time (e.g., 600 seconds)
       ansible.builtin.pause:
-        seconds: 600
+        seconds: "{{wait_time}}"
 
     - name: Get after Date and Time
       command:  date '+%s'
