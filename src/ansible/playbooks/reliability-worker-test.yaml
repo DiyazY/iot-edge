@@ -5,7 +5,7 @@
   tasks:
     - name: Set fact for the hostname at the given index
       set_fact:
-        specific_node: "{{ groups['node'][node_index] }}"
+        specific_node: "{{ groups[machine][node_index] }}"
       run_once: true
 
     - name: Create reliability test directory
@@ -57,7 +57,7 @@
       ansible.builtin.pause:
         seconds: 250
 
-    - name: Simulate worker failure (Stopping network interface)
+    - name: Simulate {{machine}} failure (Stopping network interface)
       shell: |
         ip link set dev eth0 down
         (sleep 100 && ip link set dev eth0 up) &
