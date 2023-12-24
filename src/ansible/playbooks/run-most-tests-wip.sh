@@ -37,7 +37,7 @@ for test_type in "${test_types[@]}"; do
         fi
 
         if [[ "$test_type" == "dp_redis_density" ]]; then
-            kubectl cp kbench-pod-namespace/kbench-pod-oid-0-tid-0:tmp/redisoutput ../../k-bench-results/${distribution}/${test_type}/${tag}/ --kubeconfig ../../.kube/${distribution}-config
+            kubectl cp kbench-pod-namespace/kbench-pod-oid-0-tid-0:tmp/redisoutput ../k-bench-results/${distribution}/${test_type}/${tag}/ --kubeconfig ../.kube/${distribution}-config
         fi
 
         # TODO: check step
