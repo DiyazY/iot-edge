@@ -118,7 +118,8 @@ First change the directory: `cd src/ansible`;
   * https://github.com/k3s-io/k3s/issues/1857
   * https://dev.to/arthurkay/k3s-node-status-notready-4j3m
   * Sometimes they are not ready, but it is possible to run tests anyway.
-* dp_redis_density test needs the intervention in a master node. In `~/.k-bench/configs/dp_redis_density/redis_pod.yaml`, change line #17 to targeted distribution name.
+* dp_redis_density test needs the intervention in a master node. In `~/.k-bench/configs/dp_redis_density/redis_pod.yaml`, change line #17 to `worker`.
+* before each run `kubectl --kubeconfig ../.kube/k0s-config label  nodes <node-name>  beta.kubernetes.io/instance-type=worker`
 
 # TODOs
 * ~~add systemctl start mongod ~~
