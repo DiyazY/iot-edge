@@ -126,3 +126,7 @@ First change the directory: `cd src/ansible`;
 * ~~pass tag through many places to mark test results with an appropriate test execution~~
 * ~~Play with labels: https://learn.netdata.cloud/docs/configuring/organize-systems-metrics-and-alerts~~
 * there is also new k8s distribution `SuperEdge`
+* reduce the number of tests for density tests to 3 pods. Also make k3s's control plane act as a control machine, not worker. Try this:
+  * kubectl taint nodes <control-plane-node-name> node-role.kubernetes.io/master=:NoSchedule
+  * kubectl drain <control-plane-node-name> --ignore-daemonsets --delete-local-data
+  * kubectl get pods -o wide
