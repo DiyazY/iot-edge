@@ -5,6 +5,9 @@
 distribution="k0s"
 test_types=("dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
 
+# ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
+
+# TODO: automate this part kubectl --kubeconfig ../.kube/k0s-config label  nodes <node-name>  beta.kubernetes.io/instance-type=worker
 
 for test_type in "${test_types[@]}"; do
     for i in {1..5}; do
