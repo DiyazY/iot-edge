@@ -67,7 +67,7 @@ for test_type in "${test_types[@]}"; do
             echo "end time: $end_time"
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/mongodb-derive-data.yaml --extra-vars "start_test=${start_time} end_test=${end_time} test_type=${test_type}" >> "$output_file" 2>&1 
         else
-            ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml --extra-vars "test_type=${test_type}" >> "$output_file">> "$output_file" 2>&1
+            ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml --extra-vars "test_type=${test_type}" >> "$output_file" 2>&1
             start_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-before.txt)
             echo "start time: $start_time"
             end_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-after.txt)
@@ -76,7 +76,7 @@ for test_type in "${test_types[@]}"; do
         fi
 
         if [[ "$test_type" == "dp_redis_density" || "$test_type" == "reliability-control" || "$test_type" == "reliability-worker" ]]; then
-            kubectl cp kbench-pod-namespace/kbench-pod-oid-0-tid-0:tmp/redisoutput ../k-bench-results/${distribution}/${test_type}/${tag}/ --kubeconfig ../.kube/${distribution}-config
+            kubectl cp kbench-pod-namespace/kbench-pod-oid-0-tid-0:tmp/redisoutput ../k-bench-results/${distribution}/${test_type}/${tag}/ --kubeconfig ../.kube/${distribution}-config >> "$output_file" 2>&1
         fi
 
         # TODO: check step
