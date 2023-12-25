@@ -118,3 +118,12 @@ changed: [192.168.1.113] => (item=net)
 PLAY RECAP *********************************************************************
 192.168.1.113              : ok=7    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
+
+PLAY [Clean redis test] ********************************************************
+
+TASK [Run clean up script] *****************************************************
+changed: [192.168.1.106]
+
+PLAY RECAP *********************************************************************
+192.168.1.106              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
