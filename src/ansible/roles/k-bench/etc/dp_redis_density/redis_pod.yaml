@@ -14,7 +14,7 @@ spec:
           - key: beta.kubernetes.io/instance-type
             operator: In
             values:
-            - k3s
+            - k0s # change it by distribution-wise
   containers:
   - image: nginx 
     # resources:
