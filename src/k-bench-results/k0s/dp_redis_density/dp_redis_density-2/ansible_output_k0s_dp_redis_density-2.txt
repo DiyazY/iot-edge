@@ -1,0 +1,108 @@
+[WARNING]:  * Failed to parse /home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini with ini plugin:
+/home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini:22: Expected key=value, got: s
+[WARNING]: Unable to parse /home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini as an inventory source
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+PLAY [Running tests] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Update tag in hosts.ini] *************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[WARNING]:  * Failed to parse /home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini with ini plugin:
+/home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini:22: Expected key=value, got: s
+[WARNING]: Unable to parse /home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini as an inventory source
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+PLAY [setuping netdata tags] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.1.106]
+ok: [192.168.1.101]
+ok: [192.168.1.100]
+ok: [192.168.1.102]
+
+TASK [change the tag to dp_redis_density-2] ************************************
+changed: [192.168.1.106]
+changed: [192.168.1.100]
+changed: [192.168.1.102]
+changed: [192.168.1.101]
+
+TASK [Restart Netdata] *********************************************************
+changed: [192.168.1.100]
+changed: [192.168.1.101]
+changed: [192.168.1.102]
+changed: [192.168.1.106]
+
+PLAY RECAP *********************************************************************
+192.168.1.100              : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.1.101              : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.1.102              : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.1.106              : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[WARNING]:  * Failed to parse /home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini with ini plugin:
+/home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini:22: Expected key=value, got: s
+[WARNING]: Unable to parse /home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini as an inventory source
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+PLAY [Run k-bench benchmark] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.1.106]
+
+TASK [Create config paths] *****************************************************
+ok: [192.168.1.106]
+
+TASK [Get before Date and Time] ************************************************
+changed: [192.168.1.106]
+
+TASK [Display the time before test] ********************************************
+ok: [192.168.1.106] => {
+    "before_datetime.stdout": "1703499639"
+}
+
+TASK [Write variable to file] **************************************************
+changed: [192.168.1.106]
+
+TASK [Copy before time] ********************************************************
+changed: [192.168.1.106]
+
+TASK [Run kbench command] ******************************************************
+ [ERROR]: User interrupted execution
+[WARNING]:  * Failed to parse /home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini with ini plugin:
+/home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini:22: Expected key=value, got: s
+[WARNING]: Unable to parse /home/parallels/Documents/projects/iot-
+edge/src/ansible/inventory/k0s/hosts.ini as an inventory source
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: sidecar
+
+PLAY [k-bench derive data from results] ****************************************
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Error from server (BadRequest): pod kbench-pod-oid-0-tid-0 does not have a host assigned
