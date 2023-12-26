@@ -24,9 +24,11 @@ for test_type in "${test_types[@]}"; do
 
         machine="control"
         eth_interface="eno1"
+        node_type="master"
         if [[ "$test_type" == *"worker"* ]]; then
             machine = "worker"
             eth_interface="eth0"
+            node_type="node"
         fi
 
         if [[ "$test_type" == "idle" ]]; then
@@ -45,8 +47,8 @@ for test_type in "${test_types[@]}"; do
             wait_time=600
             echo "Start testing of $machine: $random_number" > "$output_file"
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml --extra-vars "test_type=dp_redis_density" > "${output_file}-density" 2>&1 &
-            ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/reliability-test.yaml --extra-vars "node_index=$random_number machine=$machine eth_interface=$eth_interface" >> "$output_file" 2>&1
-
+            ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/reliability-test.yaml --extra-vars "node_index=$random_number machine=$node_type eth_interface=$eth_interface" >> "$output_file" 2>&1
+            wait
             start_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-before.txt)
             echo "start time: $start_time"
             end_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-after.txt)
@@ -62,8 +64,8 @@ for test_type in "${test_types[@]}"; do
 
             echo "Start testing of $machine: $random_number" > "$output_file"
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml --extra-vars "test_type=dp_redis_density" > "${output_file}-density" 2>&1 &
-            ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/reliability-test.yaml --extra-vars "node_index=$random_number machine=$machine eth_interface=$eth_interface" >> "$output_file" 2>&1
-
+            ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/reliability-test.yaml --extra-vars "node_index=$random_number machine=$node_type eth_interface=$eth_interface" >> "$output_file" 2>&1
+            wait
             start_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-before.txt)
             echo "start time: $start_time"
             end_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-after.txt)
