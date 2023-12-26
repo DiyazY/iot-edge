@@ -63,9 +63,9 @@ for test_type in "${test_types[@]}"; do
             wait_time=200
 
             echo "Start testing of $machine: $random_number" > "$output_file"
-            ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml --extra-vars "test_type=dp_redis_density" > "${output_file}-density" 2>&1 &
+            # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml --extra-vars "test_type=dp_redis_density" > "${output_file}-density" 2>&1 &
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/reliability-test.yaml --extra-vars "node_index=$random_number machine=$node_type eth_interface=$eth_interface test_type=$test_type sleep_time=$sleep_time wait_time=$wait_time" >> "$output_file" 2>&1
-            wait
+            # wait
             start_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-before.txt)
             echo "start time: $start_time"
             end_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-after.txt)
