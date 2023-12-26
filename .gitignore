@@ -9,3 +9,4 @@
 
 /src/ansible/roles/linux-system-roles.timesync/
 /src/ansible/playbooks/distros/
+/src/ansible/playbooks/test.sh
