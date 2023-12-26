@@ -36,3 +36,12 @@ fatal: [192.168.1.113]: FAILED! => {"ansible_facts": {"discovered_interpreter_py
 PLAY RECAP *********************************************************************
 192.168.1.113              : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
 
+
+PLAY [Clean redis test] ********************************************************
+
+TASK [Run clean up script] *****************************************************
+changed: [192.168.1.106]
+
+PLAY RECAP *********************************************************************
+192.168.1.106              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
