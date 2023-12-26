@@ -26,7 +26,7 @@ for test_type in "${test_types[@]}"; do
         eth_interface="eno1"
         node_type="master"
         if [[ "$test_type" == *"worker"* ]]; then
-            machine = "worker"
+            machine="worker"
             eth_interface="eth0"
             node_type="node"
         fi
@@ -41,7 +41,7 @@ for test_type in "${test_types[@]}"; do
         elif [[ "$test_type" == "reliability-control" || "$test_type" == "reliability-worker" ]]; then
             random_number=$((RANDOM % 3))
             if [[ "$machine" == "control" ]]; then
-                random_number = 0
+                random_number=0
             fi
             sleep_time=100
             wait_time=600
@@ -57,7 +57,7 @@ for test_type in "${test_types[@]}"; do
         elif [[ "$test_type" == "reliability-control-no-pressure-long" || "$test_type" == "reliability-worker-no-pressure-long" ]]; then
             random_number=$((RANDOM % 3))
             if [[ "$machine" == "control" ]]; then
-                random_number = 0
+                random_number=0
             fi
             sleep_time=500
             wait_time=200
