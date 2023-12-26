@@ -5,7 +5,7 @@
   tasks:
     - name: Set fact for the hostname at the given index
       set_fact:
-        specific_node: "{{ groups[machine][node_index] }}"
+        specific_node: "{{ groups[machine][(node_index | int)] }}"
       run_once: true
 
     - name: Create reliability test directory
