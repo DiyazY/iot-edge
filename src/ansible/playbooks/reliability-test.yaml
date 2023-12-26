@@ -112,7 +112,7 @@
     
     - name: Write recovery to file
       copy:
-        content: "{{ recovery_duration.stdout }}"
+        content: "{{ recovery_duration }}"
         dest: "./tmp-recovery.txt"
       when: inventory_hostname == groups['master'][0]
 
