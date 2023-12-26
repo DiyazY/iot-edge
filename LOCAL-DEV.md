@@ -120,6 +120,7 @@ First change the directory: `cd src/ansible`;
   * Sometimes they are not ready, but it is possible to run tests anyway.
 * dp_redis_density test needs the intervention in a master node. In `~/.k-bench/configs/dp_redis_density/redis_pod.yaml`, change line #17 to `worker`.
 * before each run `kubectl --kubeconfig ../.kube/k0s-config label  nodes <node-name>  beta.kubernetes.io/instance-type=worker`
+* k0s wraps kubectl, thus, it should be reached out by `k0s kubectl`
 
 # TODOs
 * ~~add systemctl start mongod ~~

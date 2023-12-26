@@ -1,3 +1,4 @@
+# k0s prefix before prior to kubectl is required for k0s
 ---
 - name: Kubernetes Recovery Testing
   hosts: iot_cluster
@@ -15,7 +16,8 @@
       when: inventory_hostname == groups['master'][0]
 
     - name: Get list of all nodes
-      command: kubectl get nodes -o jsonpath='{.items[*].metadata.name}'
+      # command: kubectl get nodes -o jsonpath='{.items[*].metadata.name}'
+      command: k0s kubectl get nodes -o jsonpath='{.items[*].metadata.name}'
       register: node_names_output
       when: inventory_hostname == groups['master'][0]
 
@@ -26,8 +28,10 @@
 
     - name: Backup current cluster state
       shell: |
-        sudo kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_all.yaml
-        sudo kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_nodes.yaml
+        sudo k0s kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_all.yaml
+        sudo k0s kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_nodes.yaml
+        # sudo kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_all.yaml
+        # sudo kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_nodes.yaml
       when: inventory_hostname == groups['master'][0]
 
     - name: Get before Date and Time
@@ -64,7 +68,8 @@
       when: inventory_hostname == specific_node
 
     - name: Wait until all nodes are Ready
-      command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m # issue with k3s that it can arbitrarily show nodes as NotReady
+      # command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m # issue with k3s that it can arbitrarily show nodes as NotReady
+      command: k0s kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m
       with_items: "{{ node_names }}" 
       when: inventory_hostname == groups['master'][0]
 
@@ -120,8 +125,10 @@
 
     - name: Gather post-recovery cluster state
       shell: |
-        sudo kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_all.yaml
-        sudo kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_nodes.yaml
+        sudo k0s kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_all.yaml
+        sudo k0s kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_nodes.yaml
+        # sudo kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_all.yaml
+        # sudo kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_nodes.yaml
       when: inventory_hostname == groups['master'][0]
 
     - name: Copy test results to repository
