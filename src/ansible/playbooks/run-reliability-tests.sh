@@ -3,7 +3,7 @@
 # WIP
 
 distribution="k0s"
-test_types=("dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
+test_types=("reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
 
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
@@ -40,7 +40,7 @@ for test_type in "${test_types[@]}"; do
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/mongodb-derive-data.yaml --extra-vars "start_test=${start_time} end_test=${end_time} test_type=${test_type}" >> "$output_file" 2>&1 
         elif [[ "$test_type" == "reliability-control" || "$test_type" == "reliability-worker" ]]; then
             random_number=$((RANDOM % 3))
-            if [["$machine" == "control"]]; then
+            if [[ "$machine" == "control" ]]; then
                 random_number = 0
             fi
             sleep_time=100
@@ -56,7 +56,7 @@ for test_type in "${test_types[@]}"; do
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/mongodb-derive-data.yaml --extra-vars "start_test=${start_time} end_test=${end_time} test_type=${test_type}" >> "$output_file" 2>&1 
         elif [[ "$test_type" == "reliability-control-no-pressure-long" || "$test_type" == "reliability-worker-no-pressure-long" ]]; then
             random_number=$((RANDOM % 3))
-            if [["$machine" == "control"]]; then
+            if [[ "$machine" == "control" ]]; then
                 random_number = 0
             fi
             sleep_time=500
