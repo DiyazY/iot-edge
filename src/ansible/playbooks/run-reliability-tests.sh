@@ -30,7 +30,7 @@ for test_type in "${test_types[@]}"; do
             eth_interface="eth0"
             node_type="node"
         fi
-
+        echo "Test is going..."
         if [[ "$test_type" == "idle" ]]; then
             start_time=$(date '+%s')
             echo "$start_time" > ../k-bench-results/${distribution}/${tag}/tmp-before.txt
@@ -48,7 +48,7 @@ for test_type in "${test_types[@]}"; do
             echo "Start testing of $machine: $random_number" > "$output_file"
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml --extra-vars "test_type=dp_redis_density" > "${output_file}-density" 2>&1 &
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/reliability-test.yaml --extra-vars "node_index=$random_number machine=$node_type eth_interface=$eth_interface test_type=$test_type sleep_time=$sleep_time wait_time=$wait_time" >> "$output_file" 2>&1
-            wait
+            # wait
             start_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-before.txt)
             echo "start time: $start_time"
             end_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-after.txt)
