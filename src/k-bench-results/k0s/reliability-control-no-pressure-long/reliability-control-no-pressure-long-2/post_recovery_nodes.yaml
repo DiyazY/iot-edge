@@ -1,0 +1,356 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2023-12-19T20:23:34Z"
+    labels:
+      beta.kubernetes.io/arch: arm64
+      beta.kubernetes.io/instance-type: worker
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: arm64
+      kubernetes.io/hostname: ubuntu-host-4688b2
+      kubernetes.io/os: linux
+    name: ubuntu-host-4688b2
+    resourceVersion: "769224"
+    uid: 598cdaba-92af-4d02-b105-ad22c055bbcd
+  spec:
+    podCIDR: 10.244.2.0/24
+    podCIDRs:
+    - 10.244.2.0/24
+  status:
+    addresses:
+    - address: 192.168.1.101
+      type: InternalIP
+    - address: ubuntu-host-4688b2
+      type: Hostname
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: "56399796541"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3778592Ki
+      pods: "110"
+    capacity:
+      cpu: "4"
+      ephemeral-storage: 61197696Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2023-12-27T13:50:36Z"
+      lastTransitionTime: "2023-12-27T13:50:36Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2023-12-27T13:50:36Z"
+      lastTransitionTime: "2023-12-27T13:50:36Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2023-12-27T13:50:36Z"
+      lastTransitionTime: "2023-12-27T13:50:36Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2023-12-27T13:50:36Z"
+      lastTransitionTime: "2023-12-27T13:50:36Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - docker.io/library/nginx@sha256:2bdc49f2f8ae8d8dc50ed00f2ee56d00385c6f8bc8a8b320d0a294d9e3b49026
+      - docker.io/library/nginx:latest
+      sizeBytes: 67219394
+    - names:
+      - quay.io/k0sproject/cni-node@sha256:8345c4103027bb12acaa01cb9d463e7028f9827a9b5f92c5a26190c43bb289e3
+      - quay.io/k0sproject/cni-node:1.1.1-k0s.1
+      sizeBytes: 41034859
+    - names:
+      - quay.io/k0sproject/kube-router@sha256:76f45c3b8c139f8ffdae179d206a088ff0faf21c02b85983170f3301e008f243
+      - quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      sizeBytes: 27390282
+    - names:
+      - quay.io/k0sproject/kube-proxy@sha256:fe109fc6b9c89dcc464bbf704fa88dc5df9f73c41f758f5602370773cf6b96ed
+      - quay.io/k0sproject/kube-proxy:v1.28.4
+      sizeBytes: 23270435
+    - names:
+      - quay.io/k0sproject/apiserver-network-proxy-agent@sha256:99752affee2737563ad667dd5331742c195132969d735af023e5192dddaa9c41
+      - quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+      sizeBytes: 9283886
+    - names:
+      - registry.k8s.io/pause@sha256:9001185023633d17a2f98ff69b6ff2615b8ea02a825adffa40422f51dfdcde9d
+      - registry.k8s.io/pause:3.8
+      sizeBytes: 268403
+    - names:
+      - k8s.gcr.io/pause@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea
+      - k8s.gcr.io/pause:3.1
+      sizeBytes: 264644
+    nodeInfo:
+      architecture: arm64
+      bootID: 0a4be72f-1b8e-4674-9469-82e617003ad5
+      containerRuntimeVersion: containerd://1.7.8
+      kernelVersion: 5.15.0-1044-raspi
+      kubeProxyVersion: v1.28.4+k0s
+      kubeletVersion: v1.28.4+k0s
+      machineID: b25b45888ada4fe993320843655393e3
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: b25b45888ada4fe993320843655393e3
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2023-12-19T20:23:31Z"
+    labels:
+      beta.kubernetes.io/arch: arm64
+      beta.kubernetes.io/instance-type: worker
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: arm64
+      kubernetes.io/hostname: ubuntu-host-7c2a54
+      kubernetes.io/os: linux
+    name: ubuntu-host-7c2a54
+    resourceVersion: "769208"
+    uid: 77ca3ecc-e528-4f5a-8fc3-239565466283
+  spec:
+    podCIDR: 10.244.0.0/24
+    podCIDRs:
+    - 10.244.0.0/24
+  status:
+    addresses:
+    - address: 192.168.1.100
+      type: InternalIP
+    - address: ubuntu-host-7c2a54
+      type: Hostname
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: "54972850085"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3778592Ki
+      pods: "110"
+    capacity:
+      cpu: "4"
+      ephemeral-storage: 59649360Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2023-12-27T13:50:31Z"
+      lastTransitionTime: "2023-12-27T13:50:31Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2023-12-27T13:50:31Z"
+      lastTransitionTime: "2023-12-27T13:50:31Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2023-12-27T13:50:31Z"
+      lastTransitionTime: "2023-12-27T13:50:31Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2023-12-27T13:50:31Z"
+      lastTransitionTime: "2023-12-27T13:50:31Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - docker.io/library/nginx@sha256:2bdc49f2f8ae8d8dc50ed00f2ee56d00385c6f8bc8a8b320d0a294d9e3b49026
+      - docker.io/library/nginx:latest
+      sizeBytes: 67219394
+    - names:
+      - quay.io/k0sproject/cni-node@sha256:8345c4103027bb12acaa01cb9d463e7028f9827a9b5f92c5a26190c43bb289e3
+      - quay.io/k0sproject/cni-node:1.1.1-k0s.1
+      sizeBytes: 41034859
+    - names:
+      - registry.k8s.io/metrics-server/metrics-server@sha256:ee4304963fb035239bb5c5e8c10f2f38ee80efc16ecbdb9feb7213c17ae2e86e
+      - registry.k8s.io/metrics-server/metrics-server:v0.6.4
+      sizeBytes: 27956442
+    - names:
+      - quay.io/k0sproject/kube-router@sha256:76f45c3b8c139f8ffdae179d206a088ff0faf21c02b85983170f3301e008f243
+      - quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      sizeBytes: 27390282
+    - names:
+      - quay.io/k0sproject/kube-proxy@sha256:fe109fc6b9c89dcc464bbf704fa88dc5df9f73c41f758f5602370773cf6b96ed
+      - quay.io/k0sproject/kube-proxy:v1.28.4
+      sizeBytes: 23270435
+    - names:
+      - quay.io/k0sproject/coredns@sha256:737a3dff9b04427059609596f20e0178166becb21802cc3c8e75cafe14200c81
+      - quay.io/k0sproject/coredns:1.11.1
+      sizeBytes: 15655364
+    - names:
+      - quay.io/k0sproject/apiserver-network-proxy-agent@sha256:99752affee2737563ad667dd5331742c195132969d735af023e5192dddaa9c41
+      - quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+      sizeBytes: 9283886
+    - names:
+      - registry.k8s.io/pause@sha256:9001185023633d17a2f98ff69b6ff2615b8ea02a825adffa40422f51dfdcde9d
+      - registry.k8s.io/pause:3.8
+      sizeBytes: 268403
+    - names:
+      - k8s.gcr.io/pause@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea
+      - k8s.gcr.io/pause:3.1
+      sizeBytes: 264644
+    nodeInfo:
+      architecture: arm64
+      bootID: 08faf1d2-44de-4128-a8dd-5db8158e2c29
+      containerRuntimeVersion: containerd://1.7.8
+      kernelVersion: 5.15.0-1044-raspi
+      kubeProxyVersion: v1.28.4+k0s
+      kubeletVersion: v1.28.4+k0s
+      machineID: dfb55bb639884d709ecbcc72f54df8d0
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: dfb55bb639884d709ecbcc72f54df8d0
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2023-12-19T20:23:33Z"
+    labels:
+      beta.kubernetes.io/arch: arm64
+      beta.kubernetes.io/instance-type: worker
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: arm64
+      kubernetes.io/hostname: ubuntu-host-e93031
+      kubernetes.io/os: linux
+    name: ubuntu-host-e93031
+    resourceVersion: "769204"
+    uid: 28e9a209-1138-4a1c-9120-e1717ad726ab
+  spec:
+    podCIDR: 10.244.1.0/24
+    podCIDRs:
+    - 10.244.1.0/24
+  status:
+    addresses:
+    - address: 192.168.1.102
+      type: InternalIP
+    - address: ubuntu-host-e93031
+      type: Hostname
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: "56399796541"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3778592Ki
+      pods: "110"
+    capacity:
+      cpu: "4"
+      ephemeral-storage: 61197696Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2023-12-27T13:50:31Z"
+      lastTransitionTime: "2023-12-27T13:50:31Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2023-12-27T13:50:31Z"
+      lastTransitionTime: "2023-12-27T13:50:31Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2023-12-27T13:50:31Z"
+      lastTransitionTime: "2023-12-27T13:50:31Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2023-12-27T13:50:31Z"
+      lastTransitionTime: "2023-12-27T13:50:31Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - docker.io/library/nginx@sha256:2bdc49f2f8ae8d8dc50ed00f2ee56d00385c6f8bc8a8b320d0a294d9e3b49026
+      - docker.io/library/nginx:latest
+      sizeBytes: 67219394
+    - names:
+      - quay.io/k0sproject/cni-node@sha256:8345c4103027bb12acaa01cb9d463e7028f9827a9b5f92c5a26190c43bb289e3
+      - quay.io/k0sproject/cni-node:1.1.1-k0s.1
+      sizeBytes: 41034859
+    - names:
+      - quay.io/k0sproject/kube-router@sha256:76f45c3b8c139f8ffdae179d206a088ff0faf21c02b85983170f3301e008f243
+      - quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      sizeBytes: 27390282
+    - names:
+      - quay.io/k0sproject/kube-proxy@sha256:fe109fc6b9c89dcc464bbf704fa88dc5df9f73c41f758f5602370773cf6b96ed
+      - quay.io/k0sproject/kube-proxy:v1.28.4
+      sizeBytes: 23270435
+    - names:
+      - quay.io/k0sproject/coredns@sha256:737a3dff9b04427059609596f20e0178166becb21802cc3c8e75cafe14200c81
+      - quay.io/k0sproject/coredns:1.11.1
+      sizeBytes: 15655364
+    - names:
+      - quay.io/k0sproject/apiserver-network-proxy-agent@sha256:99752affee2737563ad667dd5331742c195132969d735af023e5192dddaa9c41
+      - quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+      sizeBytes: 9283886
+    - names:
+      - registry.k8s.io/pause@sha256:9001185023633d17a2f98ff69b6ff2615b8ea02a825adffa40422f51dfdcde9d
+      - registry.k8s.io/pause:3.8
+      sizeBytes: 268403
+    - names:
+      - k8s.gcr.io/pause@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea
+      - k8s.gcr.io/pause:3.1
+      sizeBytes: 264644
+    nodeInfo:
+      architecture: arm64
+      bootID: e9b2bc18-ad6a-4387-98b5-60ca1907c76b
+      containerRuntimeVersion: containerd://1.7.8
+      kernelVersion: 5.15.0-1044-raspi
+      kubeProxyVersion: v1.28.4+k0s
+      kubeletVersion: v1.28.4+k0s
+      machineID: adb83ed20f464e5e8ebc215868f76260
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: adb83ed20f464e5e8ebc215868f76260
+kind: List
+metadata:
+  resourceVersion: ""
