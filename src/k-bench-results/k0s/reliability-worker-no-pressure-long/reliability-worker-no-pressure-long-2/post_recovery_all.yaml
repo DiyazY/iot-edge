@@ -1,0 +1,3423 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "9153"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-27T21:04:15Z"
+    generateName: coredns-85df575cdb-
+    labels:
+      k8s-app: kube-dns
+      pod-template-hash: 85df575cdb
+    name: coredns-85df575cdb-2mbpp
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: coredns-85df575cdb
+      uid: bd4bcf34-cc1b-4504-8175-bc42ff350ee5
+    resourceVersion: "823790"
+    uid: 58ac44f0-6fef-4819-a994-6c1dc7557d93
+  spec:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: k8s-app
+              operator: In
+              values:
+              - kube-dns
+          topologyKey: kubernetes.io/hostname
+    containers:
+    - args:
+      - -conf
+      - /etc/coredns/Corefile
+      image: quay.io/k0sproject/coredns:1.11.1
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: coredns
+      ports:
+      - containerPort: 53
+        name: dns
+        protocol: UDP
+      - containerPort: 53
+        name: dns-tcp
+        protocol: TCP
+      - containerPort: 9153
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ready
+          port: 8181
+          scheme: HTTP
+        periodSeconds: 2
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          memory: 170Mi
+        requests:
+          cpu: 100m
+          memory: 70Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          add:
+          - NET_BIND_SERVICE
+          drop:
+          - all
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/coredns
+        name: config-volume
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-pndzc
+        readOnly: true
+    dnsPolicy: Default
+    enableServiceLinks: true
+    nodeName: ubuntu-host-e93031
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: coredns
+    serviceAccountName: coredns
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: Corefile
+          path: Corefile
+        name: coredns
+      name: config-volume
+    - name: kube-api-access-pndzc
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T21:04:15Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T21:04:16Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T21:04:16Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T21:04:15Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://4bbfd6cb5e277075fc86754ec98d0fe4888484cfc4e1edd5be1f6e7892f09969
+      image: quay.io/k0sproject/coredns:1.11.1
+      imageID: quay.io/k0sproject/coredns@sha256:737a3dff9b04427059609596f20e0178166becb21802cc3c8e75cafe14200c81
+      lastState: {}
+      name: coredns
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-27T21:04:16Z"
+    hostIP: 192.168.1.102
+    phase: Running
+    podIP: 10.244.1.87
+    podIPs:
+    - ip: 10.244.1.87
+    qosClass: Burstable
+    startTime: "2023-12-27T21:04:15Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "9153"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:18Z"
+    generateName: coredns-85df575cdb-
+    labels:
+      k8s-app: kube-dns
+      pod-template-hash: 85df575cdb
+    name: coredns-85df575cdb-np2hv
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: coredns-85df575cdb
+      uid: bd4bcf34-cc1b-4504-8175-bc42ff350ee5
+    resourceVersion: "799799"
+    uid: 82b85846-1f39-4dd2-89a4-37ba42055a07
+  spec:
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: k8s-app
+              operator: In
+              values:
+              - kube-dns
+          topologyKey: kubernetes.io/hostname
+    containers:
+    - args:
+      - -conf
+      - /etc/coredns/Corefile
+      image: quay.io/k0sproject/coredns:1.11.1
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: coredns
+      ports:
+      - containerPort: 53
+        name: dns
+        protocol: UDP
+      - containerPort: 53
+        name: dns-tcp
+        protocol: TCP
+      - containerPort: 9153
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ready
+          port: 8181
+          scheme: HTTP
+        periodSeconds: 2
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          memory: 170Mi
+        requests:
+          cpu: 100m
+          memory: 70Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          add:
+          - NET_BIND_SERVICE
+          drop:
+          - all
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/coredns
+        name: config-volume
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-ss478
+        readOnly: true
+    dnsPolicy: Default
+    enableServiceLinks: true
+    nodeName: ubuntu-host-7c2a54
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: coredns
+    serviceAccountName: coredns
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: Corefile
+          path: Corefile
+        name: coredns
+      name: config-volume
+    - name: kube-api-access-ss478
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:34Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:01:04Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:01:04Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:34Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://38f51167943a4e45b11c95825dc314bb4803ba99c2b51e3084301279a36519cc
+      image: quay.io/k0sproject/coredns:1.11.1
+      imageID: quay.io/k0sproject/coredns@sha256:737a3dff9b04427059609596f20e0178166becb21802cc3c8e75cafe14200c81
+      lastState:
+        terminated:
+          containerID: containerd://784ccd3b5468aed7fd0b27572746336d27b6d47d070b135c43f1d6fa1e6f6bc5
+          exitCode: 255
+          finishedAt: "2023-12-25T16:00:12Z"
+          reason: Unknown
+          startedAt: "2023-12-25T08:28:29Z"
+      name: coredns
+      ready: true
+      restartCount: 6
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-25T16:00:23Z"
+    hostIP: 192.168.1.100
+    phase: Running
+    podIP: 10.244.0.125
+    podIPs:
+    - ip: 10.244.0.125
+    qosClass: Burstable
+    startTime: "2023-12-19T20:23:34Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "8093"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:34Z"
+    generateName: konnectivity-agent-
+    labels:
+      controller-revision-hash: 5845f84797
+      k8s-app: konnectivity-agent
+      pod-template-generation: "2"
+    name: konnectivity-agent-dk5xs
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: konnectivity-agent
+      uid: 5e074325-81ce-4c3f-98c1-5d9218963ac2
+    resourceVersion: "824174"
+    uid: ebc92aec-21f4-4635-b7ac-e9eb3a0e1522
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-4688b2
+    containers:
+    - args:
+      - --logtostderr=true
+      - --ca-cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      - --proxy-server-host=192.168.1.106
+      - --proxy-server-port=8132
+      - --service-account-token-path=/var/run/secrets/tokens/konnectivity-agent-token
+      - --agent-identifiers=host=$(NODE_IP)
+      - --agent-id=$(NODE_IP)
+      command:
+      - /proxy-agent
+      env:
+      - name: K0S_CONTROLLER_COUNT
+        value: "1"
+      - name: NODE_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.hostIP
+      image: quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8093
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      name: konnectivity-agent
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/tokens
+        name: konnectivity-agent-token
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xz49g
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ubuntu-host-4688b2
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: konnectivity-agent
+    serviceAccountName: konnectivity-agent
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - name: konnectivity-agent-token
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            audience: system:konnectivity-server
+            expirationSeconds: 3600
+            path: konnectivity-agent-token
+    - name: kube-api-access-xz49g
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:35Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:11Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:11Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:34Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://85098af50593c2e698e66a2f3b60c8466f47e0e735fbc85c507331674538dc2b
+      image: quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+      imageID: quay.io/k0sproject/apiserver-network-proxy-agent@sha256:99752affee2737563ad667dd5331742c195132969d735af023e5192dddaa9c41
+      lastState:
+        terminated:
+          containerID: containerd://8246baabc84a9789cdc0587ce05fb7fcbf32c774eb3b4cd854512979645fe1d7
+          exitCode: 255
+          finishedAt: "2023-12-25T16:00:04Z"
+          reason: Unknown
+          startedAt: "2023-12-25T08:30:28Z"
+      name: konnectivity-agent
+      ready: true
+      restartCount: 6
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-25T16:00:10Z"
+    hostIP: 192.168.1.101
+    phase: Running
+    podIP: 10.244.2.168
+    podIPs:
+    - ip: 10.244.2.168
+    qosClass: BestEffort
+    startTime: "2023-12-19T20:23:35Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "8093"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:31Z"
+    generateName: konnectivity-agent-
+    labels:
+      controller-revision-hash: 5845f84797
+      k8s-app: konnectivity-agent
+      pod-template-generation: "2"
+    name: konnectivity-agent-gnc4z
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: konnectivity-agent
+      uid: 5e074325-81ce-4c3f-98c1-5d9218963ac2
+    resourceVersion: "799806"
+    uid: f70b5726-ecb9-4c3e-a910-d1a96b8d90e5
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-7c2a54
+    containers:
+    - args:
+      - --logtostderr=true
+      - --ca-cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      - --proxy-server-host=192.168.1.106
+      - --proxy-server-port=8132
+      - --service-account-token-path=/var/run/secrets/tokens/konnectivity-agent-token
+      - --agent-identifiers=host=$(NODE_IP)
+      - --agent-id=$(NODE_IP)
+      command:
+      - /proxy-agent
+      env:
+      - name: K0S_CONTROLLER_COUNT
+        value: "1"
+      - name: NODE_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.hostIP
+      image: quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8093
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      name: konnectivity-agent
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/tokens
+        name: konnectivity-agent-token
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-hw9t4
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ubuntu-host-7c2a54
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: konnectivity-agent
+    serviceAccountName: konnectivity-agent
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - name: konnectivity-agent-token
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            audience: system:konnectivity-server
+            expirationSeconds: 3600
+            path: konnectivity-agent-token
+    - name: kube-api-access-hw9t4
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:32Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:24Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:24Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://853852bd03be5e7b7abf9bc2d28274dcbed3ef10b06c7c5dc88f70bffc5f4097
+      image: quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+      imageID: quay.io/k0sproject/apiserver-network-proxy-agent@sha256:99752affee2737563ad667dd5331742c195132969d735af023e5192dddaa9c41
+      lastState:
+        terminated:
+          containerID: containerd://489a8acaeae0450722c10f42db868aa50e7fec067976cb46c690fe8fd3d079e1
+          exitCode: 255
+          finishedAt: "2023-12-25T16:00:12Z"
+          reason: Unknown
+          startedAt: "2023-12-25T08:28:30Z"
+      name: konnectivity-agent
+      ready: true
+      restartCount: 6
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-25T16:00:23Z"
+    hostIP: 192.168.1.100
+    phase: Running
+    podIP: 10.244.0.126
+    podIPs:
+    - ip: 10.244.0.126
+    qosClass: BestEffort
+    startTime: "2023-12-19T20:23:32Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "8093"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:33Z"
+    generateName: konnectivity-agent-
+    labels:
+      controller-revision-hash: 5845f84797
+      k8s-app: konnectivity-agent
+      pod-template-generation: "2"
+    name: konnectivity-agent-qm2rf
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: konnectivity-agent
+      uid: 5e074325-81ce-4c3f-98c1-5d9218963ac2
+    resourceVersion: "813899"
+    uid: 49c27a47-d6b5-406b-9b0c-f9ba8dd0f44b
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-e93031
+    containers:
+    - args:
+      - --logtostderr=true
+      - --ca-cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      - --proxy-server-host=192.168.1.106
+      - --proxy-server-port=8132
+      - --service-account-token-path=/var/run/secrets/tokens/konnectivity-agent-token
+      - --agent-identifiers=host=$(NODE_IP)
+      - --agent-id=$(NODE_IP)
+      command:
+      - /proxy-agent
+      env:
+      - name: K0S_CONTROLLER_COUNT
+        value: "1"
+      - name: NODE_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.hostIP
+      image: quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 8093
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 15
+      name: konnectivity-agent
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/tokens
+        name: konnectivity-agent-token
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-z89hn
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ubuntu-host-e93031
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: konnectivity-agent
+    serviceAccountName: konnectivity-agent
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    volumes:
+    - name: konnectivity-agent-token
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            audience: system:konnectivity-server
+            expirationSeconds: 3600
+            path: konnectivity-agent-token
+    - name: kube-api-access-z89hn
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:34Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:11Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:11Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:33Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://cf33d2c601f5ff2d34979bb6d1f225829811bb89ed125478d97810731820f1cd
+      image: quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+      imageID: quay.io/k0sproject/apiserver-network-proxy-agent@sha256:99752affee2737563ad667dd5331742c195132969d735af023e5192dddaa9c41
+      lastState:
+        terminated:
+          containerID: containerd://9f178a3727a4821696dd7e7b66d80d4d4312c1e20ef17c1eb9c57bd66eb195a5
+          exitCode: 255
+          finishedAt: "2023-12-25T16:00:05Z"
+          reason: Unknown
+          startedAt: "2023-12-25T08:28:36Z"
+      name: konnectivity-agent
+      ready: true
+      restartCount: 6
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-25T16:00:11Z"
+    hostIP: 192.168.1.102
+    phase: Running
+    podIP: 10.244.1.80
+    podIPs:
+    - ip: 10.244.1.80
+    qosClass: BestEffort
+    startTime: "2023-12-19T20:23:34Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "10249"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:34Z"
+    generateName: kube-proxy-
+    labels:
+      controller-revision-hash: 84f945976c
+      k8s-app: kube-proxy
+      pod-template-generation: "1"
+    name: kube-proxy-rmn96
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: kube-proxy
+      uid: 2ddb2dce-defe-47bb-b945-cb639019381b
+    resourceVersion: "824176"
+    uid: a8f40a89-e611-4a8a-a0f4-09a60678142a
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-4688b2
+    containers:
+    - command:
+      - /usr/local/bin/kube-proxy
+      - --config=/var/lib/kube-proxy/config.conf
+      - --hostname-override=$(NODE_NAME)
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/k0sproject/kube-proxy:v1.28.4
+      imagePullPolicy: IfNotPresent
+      name: kube-proxy
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kube-proxy
+        name: kube-proxy
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qr6rf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: ubuntu-host-4688b2
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: kube-proxy
+    serviceAccountName: kube-proxy
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: kube-proxy
+      name: kube-proxy
+    - hostPath:
+        path: /run/xtables.lock
+        type: FileOrCreate
+      name: xtables-lock
+    - hostPath:
+        path: /lib/modules
+        type: ""
+      name: lib-modules
+    - name: kube-api-access-qr6rf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:35Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:11Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:11Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:34Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://c2b5cea7b80a445469127e5a60501403a03290023cba301820b01a5d37afec98
+      image: quay.io/k0sproject/kube-proxy:v1.28.4
+      imageID: quay.io/k0sproject/kube-proxy@sha256:fe109fc6b9c89dcc464bbf704fa88dc5df9f73c41f758f5602370773cf6b96ed
+      lastState:
+        terminated:
+          containerID: containerd://53b186745a2ccbe28bb6e41c7d5e4509a3e3c2a23e10bee241c6d891ad335cf5
+          exitCode: 255
+          finishedAt: "2023-12-25T16:00:04Z"
+          reason: Unknown
+          startedAt: "2023-12-25T08:30:28Z"
+      name: kube-proxy
+      ready: true
+      restartCount: 6
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-25T16:00:10Z"
+    hostIP: 192.168.1.101
+    phase: Running
+    podIP: 192.168.1.101
+    podIPs:
+    - ip: 192.168.1.101
+    qosClass: BestEffort
+    startTime: "2023-12-19T20:23:35Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "10249"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:31Z"
+    generateName: kube-proxy-
+    labels:
+      controller-revision-hash: 84f945976c
+      k8s-app: kube-proxy
+      pod-template-generation: "1"
+    name: kube-proxy-rqf64
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: kube-proxy
+      uid: 2ddb2dce-defe-47bb-b945-cb639019381b
+    resourceVersion: "799804"
+    uid: 5af151ff-50b1-462e-8ea8-ffae0de47fc7
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-7c2a54
+    containers:
+    - command:
+      - /usr/local/bin/kube-proxy
+      - --config=/var/lib/kube-proxy/config.conf
+      - --hostname-override=$(NODE_NAME)
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/k0sproject/kube-proxy:v1.28.4
+      imagePullPolicy: IfNotPresent
+      name: kube-proxy
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kube-proxy
+        name: kube-proxy
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-k987q
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: ubuntu-host-7c2a54
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: kube-proxy
+    serviceAccountName: kube-proxy
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: kube-proxy
+      name: kube-proxy
+    - hostPath:
+        path: /run/xtables.lock
+        type: FileOrCreate
+      name: xtables-lock
+    - hostPath:
+        path: /lib/modules
+        type: ""
+      name: lib-modules
+    - name: kube-api-access-k987q
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:32Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:24Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:24Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://afda41a8627fdc7d0934700c6a170da1ec6c11202be795aed9eda77279e7c12a
+      image: quay.io/k0sproject/kube-proxy:v1.28.4
+      imageID: quay.io/k0sproject/kube-proxy@sha256:fe109fc6b9c89dcc464bbf704fa88dc5df9f73c41f758f5602370773cf6b96ed
+      lastState:
+        terminated:
+          containerID: containerd://4f581ae6c3560570830854238f5ee0e795d0d9062dd2a66076a1a7f5ad11923f
+          exitCode: 255
+          finishedAt: "2023-12-25T16:00:12Z"
+          reason: Unknown
+          startedAt: "2023-12-25T08:28:30Z"
+      name: kube-proxy
+      ready: true
+      restartCount: 6
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-25T16:00:23Z"
+    hostIP: 192.168.1.100
+    phase: Running
+    podIP: 192.168.1.100
+    podIPs:
+    - ip: 192.168.1.100
+    qosClass: BestEffort
+    startTime: "2023-12-19T20:23:32Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "10249"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:33Z"
+    generateName: kube-proxy-
+    labels:
+      controller-revision-hash: 84f945976c
+      k8s-app: kube-proxy
+      pod-template-generation: "1"
+    name: kube-proxy-tqhfh
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: kube-proxy
+      uid: 2ddb2dce-defe-47bb-b945-cb639019381b
+    resourceVersion: "813901"
+    uid: c240079d-c524-404e-aa4e-2847580cfe07
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-e93031
+    containers:
+    - command:
+      - /usr/local/bin/kube-proxy
+      - --config=/var/lib/kube-proxy/config.conf
+      - --hostname-override=$(NODE_NAME)
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: quay.io/k0sproject/kube-proxy:v1.28.4
+      imagePullPolicy: IfNotPresent
+      name: kube-proxy
+      resources: {}
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kube-proxy
+        name: kube-proxy
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-ttrrt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    nodeName: ubuntu-host-e93031
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: kube-proxy
+    serviceAccountName: kube-proxy
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: kube-proxy
+      name: kube-proxy
+    - hostPath:
+        path: /run/xtables.lock
+        type: FileOrCreate
+      name: xtables-lock
+    - hostPath:
+        path: /lib/modules
+        type: ""
+      name: lib-modules
+    - name: kube-api-access-ttrrt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:34Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:12Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-25T16:00:12Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:33Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://01a74c13fdb59f732ff5b999d3d312e286dd7190c8f5d59d9b494589c8e778f8
+      image: quay.io/k0sproject/kube-proxy:v1.28.4
+      imageID: quay.io/k0sproject/kube-proxy@sha256:fe109fc6b9c89dcc464bbf704fa88dc5df9f73c41f758f5602370773cf6b96ed
+      lastState:
+        terminated:
+          containerID: containerd://f8fa29543c46acf14b546ff39b477ff57aac468322c55f7b8ad22ea37bb6137d
+          exitCode: 255
+          finishedAt: "2023-12-25T16:00:05Z"
+          reason: Unknown
+          startedAt: "2023-12-25T08:28:35Z"
+      name: kube-proxy
+      ready: true
+      restartCount: 6
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-25T16:00:11Z"
+    hostIP: 192.168.1.102
+    phase: Running
+    podIP: 192.168.1.102
+    podIPs:
+    - ip: 192.168.1.102
+    qosClass: BestEffort
+    startTime: "2023-12-19T20:23:34Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "8080"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:34Z"
+    generateName: kube-router-
+    labels:
+      controller-revision-hash: 5dc4dd8f49
+      k8s-app: kube-router
+      pod-template-generation: "1"
+      tier: node
+    name: kube-router-j4c7x
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: kube-router
+      uid: fab09f65-88b3-48cf-b871-bd76a4ef18ce
+    resourceVersion: "824143"
+    uid: f621182f-1334-4a8d-802f-a8df750a72d2
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-4688b2
+    containers:
+    - args:
+      - --run-router=true
+      - --run-firewall=true
+      - --run-service-proxy=false
+      - --bgp-graceful-restart=true
+      - --metrics-port=8080
+      - --hairpin-mode=true
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: KUBE_ROUTER_CNI_CONF_FILE
+        value: /etc/cni/net.d/10-kuberouter.conflist
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 20244
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 3
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: kube-router
+      resources:
+        requests:
+          cpu: 250m
+          memory: 16Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /etc/cni/net.d
+        name: cni-conf-dir
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-g77ch
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    initContainers:
+    - args:
+      - install
+      image: quay.io/k0sproject/cni-node:1.1.1-k0s.1
+      imagePullPolicy: IfNotPresent
+      name: install-cni-bins
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host/opt/cni/bin
+        name: cni-bin
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-g77ch
+        readOnly: true
+    - command:
+      - /bin/sh
+      - -c
+      - set -e -x; if [ ! -f /etc/cni/net.d/10-kuberouter.conflist ]; then if [ -f
+        /etc/cni/net.d/*.conf ]; then rm -f /etc/cni/net.d/*.conf; fi; TMP=/etc/cni/net.d/.tmp-kuberouter-cfg;
+        cp /etc/kube-router/cni-conf.json ${TMP}; mv ${TMP} /etc/cni/net.d/10-kuberouter.conflist;
+        fi
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imagePullPolicy: IfNotPresent
+      name: install-cniconf
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/cni/net.d
+        name: cni-conf-dir
+      - mountPath: /etc/kube-router
+        name: kube-router-cfg
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-g77ch
+        readOnly: true
+    nodeName: ubuntu-host-4688b2
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: kube-router
+    serviceAccountName: kube-router
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /lib/modules
+        type: ""
+      name: lib-modules
+    - hostPath:
+        path: /etc/cni/net.d
+        type: ""
+      name: cni-conf-dir
+    - hostPath:
+        path: /opt/cni/bin
+        type: DirectoryOrCreate
+      name: cni-bin
+    - configMap:
+        defaultMode: 420
+        name: kube-router-cfg
+      name: kube-router-cfg
+    - hostPath:
+        path: /run/xtables.lock
+        type: FileOrCreate
+      name: xtables-lock
+    - name: kube-api-access-g77ch
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:25:11Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T21:05:18Z"
+      message: 'containers with unready status: [kube-router]'
+      reason: ContainersNotReady
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T21:05:18Z"
+      message: 'containers with unready status: [kube-router]'
+      reason: ContainersNotReady
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:34Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://1d694e35a060bf9344c143a8910e87a2f5f998a2e91595254bf12fca65826add
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imageID: quay.io/k0sproject/kube-router@sha256:76f45c3b8c139f8ffdae179d206a088ff0faf21c02b85983170f3301e008f243
+      lastState:
+        terminated:
+          containerID: containerd://1d694e35a060bf9344c143a8910e87a2f5f998a2e91595254bf12fca65826add
+          exitCode: 2
+          finishedAt: "2023-12-27T21:05:18Z"
+          reason: Error
+          startedAt: "2023-12-27T21:05:00Z"
+      name: kube-router
+      ready: false
+      restartCount: 20
+      started: false
+      state:
+        waiting:
+          message: back-off 5m0s restarting failed container=kube-router pod=kube-router-j4c7x_kube-system(f621182f-1334-4a8d-802f-a8df750a72d2)
+          reason: CrashLoopBackOff
+    hostIP: 192.168.1.101
+    initContainerStatuses:
+    - containerID: containerd://3a004b69d4bcfbe68d49038e07d68cf55020c7a6821e9310802a61ab8f677d74
+      image: quay.io/k0sproject/cni-node:1.1.1-k0s.1
+      imageID: quay.io/k0sproject/cni-node@sha256:8345c4103027bb12acaa01cb9d463e7028f9827a9b5f92c5a26190c43bb289e3
+      lastState: {}
+      name: install-cni-bins
+      ready: true
+      restartCount: 6
+      started: false
+      state:
+        terminated:
+          containerID: containerd://3a004b69d4bcfbe68d49038e07d68cf55020c7a6821e9310802a61ab8f677d74
+          exitCode: 0
+          finishedAt: "2023-12-25T16:00:14Z"
+          reason: Completed
+          startedAt: "2023-12-25T16:00:10Z"
+    - containerID: containerd://3273933135f5b42a77c3f2f279c9a9183db55a5d051ef8cad9e9e2b122b7e848
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imageID: quay.io/k0sproject/kube-router@sha256:76f45c3b8c139f8ffdae179d206a088ff0faf21c02b85983170f3301e008f243
+      lastState: {}
+      name: install-cniconf
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://3273933135f5b42a77c3f2f279c9a9183db55a5d051ef8cad9e9e2b122b7e848
+          exitCode: 0
+          finishedAt: "2023-12-25T16:00:21Z"
+          reason: Completed
+          startedAt: "2023-12-25T16:00:21Z"
+    phase: Running
+    podIP: 192.168.1.101
+    podIPs:
+    - ip: 192.168.1.101
+    qosClass: Burstable
+    startTime: "2023-12-19T20:23:35Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "8080"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:33Z"
+    generateName: kube-router-
+    labels:
+      controller-revision-hash: 5dc4dd8f49
+      k8s-app: kube-router
+      pod-template-generation: "1"
+      tier: node
+    name: kube-router-ml2vm
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: kube-router
+      uid: fab09f65-88b3-48cf-b871-bd76a4ef18ce
+    resourceVersion: "814238"
+    uid: ccc9f946-c476-47b8-a7c2-d7bf61af0e77
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-e93031
+    containers:
+    - args:
+      - --run-router=true
+      - --run-firewall=true
+      - --run-service-proxy=false
+      - --bgp-graceful-restart=true
+      - --metrics-port=8080
+      - --hairpin-mode=true
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: KUBE_ROUTER_CNI_CONF_FILE
+        value: /etc/cni/net.d/10-kuberouter.conflist
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 20244
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 3
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: kube-router
+      resources:
+        requests:
+          cpu: 250m
+          memory: 16Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /etc/cni/net.d
+        name: cni-conf-dir
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-x4ws6
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    initContainers:
+    - args:
+      - install
+      image: quay.io/k0sproject/cni-node:1.1.1-k0s.1
+      imagePullPolicy: IfNotPresent
+      name: install-cni-bins
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host/opt/cni/bin
+        name: cni-bin
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-x4ws6
+        readOnly: true
+    - command:
+      - /bin/sh
+      - -c
+      - set -e -x; if [ ! -f /etc/cni/net.d/10-kuberouter.conflist ]; then if [ -f
+        /etc/cni/net.d/*.conf ]; then rm -f /etc/cni/net.d/*.conf; fi; TMP=/etc/cni/net.d/.tmp-kuberouter-cfg;
+        cp /etc/kube-router/cni-conf.json ${TMP}; mv ${TMP} /etc/cni/net.d/10-kuberouter.conflist;
+        fi
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imagePullPolicy: IfNotPresent
+      name: install-cniconf
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/cni/net.d
+        name: cni-conf-dir
+      - mountPath: /etc/kube-router
+        name: kube-router-cfg
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-x4ws6
+        readOnly: true
+    nodeName: ubuntu-host-e93031
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: kube-router
+    serviceAccountName: kube-router
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /lib/modules
+        type: ""
+      name: lib-modules
+    - hostPath:
+        path: /etc/cni/net.d
+        type: ""
+      name: cni-conf-dir
+    - hostPath:
+        path: /opt/cni/bin
+        type: DirectoryOrCreate
+      name: cni-bin
+    - configMap:
+        defaultMode: 420
+        name: kube-router-cfg
+      name: kube-router-cfg
+    - hostPath:
+        path: /run/xtables.lock
+        type: FileOrCreate
+      name: xtables-lock
+    - name: kube-api-access-x4ws6
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:25:28Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T19:48:23Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T19:48:23Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:33Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://ebf889575ca8dc5eadd856e090051cd86d781d3f1bee457e2ed19ab9191c8112
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imageID: quay.io/k0sproject/kube-router@sha256:76f45c3b8c139f8ffdae179d206a088ff0faf21c02b85983170f3301e008f243
+      lastState:
+        terminated:
+          containerID: containerd://c816d6b7e1f3acb323ae2c66b52c1c579f8c8b461ab8229b80e34fbe06082b37
+          exitCode: 2
+          finishedAt: "2023-12-27T19:43:14Z"
+          reason: Error
+          startedAt: "2023-12-27T19:42:58Z"
+      name: kube-router
+      ready: true
+      restartCount: 17
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-27T19:48:22Z"
+    hostIP: 192.168.1.102
+    initContainerStatuses:
+    - containerID: containerd://22cb6440bbf660672cd0455718f4903f6dd3c8e1ed2b5f88f51590bc6fc20e75
+      image: quay.io/k0sproject/cni-node:1.1.1-k0s.1
+      imageID: quay.io/k0sproject/cni-node@sha256:8345c4103027bb12acaa01cb9d463e7028f9827a9b5f92c5a26190c43bb289e3
+      lastState: {}
+      name: install-cni-bins
+      ready: true
+      restartCount: 6
+      started: false
+      state:
+        terminated:
+          containerID: containerd://22cb6440bbf660672cd0455718f4903f6dd3c8e1ed2b5f88f51590bc6fc20e75
+          exitCode: 0
+          finishedAt: "2023-12-25T16:00:19Z"
+          reason: Completed
+          startedAt: "2023-12-25T16:00:11Z"
+    - containerID: containerd://a8622bb6a04763c8cb4cd66246e828cc058ef64d530cbd4ba58d28a2a02d2e19
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imageID: quay.io/k0sproject/kube-router@sha256:76f45c3b8c139f8ffdae179d206a088ff0faf21c02b85983170f3301e008f243
+      lastState: {}
+      name: install-cniconf
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://a8622bb6a04763c8cb4cd66246e828cc058ef64d530cbd4ba58d28a2a02d2e19
+          exitCode: 0
+          finishedAt: "2023-12-25T16:00:25Z"
+          reason: Completed
+          startedAt: "2023-12-25T16:00:25Z"
+    phase: Running
+    podIP: 192.168.1.102
+    podIPs:
+    - ip: 192.168.1.102
+    qosClass: Burstable
+    startTime: "2023-12-19T20:23:34Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/port: "8080"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:31Z"
+    generateName: kube-router-
+    labels:
+      controller-revision-hash: 5dc4dd8f49
+      k8s-app: kube-router
+      pod-template-generation: "1"
+      tier: node
+    name: kube-router-x8m65
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: kube-router
+      uid: fab09f65-88b3-48cf-b871-bd76a4ef18ce
+    resourceVersion: "799808"
+    uid: 16c05789-82cd-495c-bf13-6dc3682e4e55
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-7c2a54
+    containers:
+    - args:
+      - --run-router=true
+      - --run-firewall=true
+      - --run-service-proxy=false
+      - --bgp-graceful-restart=true
+      - --metrics-port=8080
+      - --hairpin-mode=true
+      env:
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      - name: KUBE_ROUTER_CNI_CONF_FILE
+        value: /etc/cni/net.d/10-kuberouter.conflist
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 20244
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 3
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: kube-router
+      resources:
+        requests:
+          cpu: 250m
+          memory: 16Mi
+      securityContext:
+        privileged: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: lib-modules
+        readOnly: true
+      - mountPath: /etc/cni/net.d
+        name: cni-conf-dir
+      - mountPath: /run/xtables.lock
+        name: xtables-lock
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-75wkt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostNetwork: true
+    initContainers:
+    - args:
+      - install
+      image: quay.io/k0sproject/cni-node:1.1.1-k0s.1
+      imagePullPolicy: IfNotPresent
+      name: install-cni-bins
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /host/opt/cni/bin
+        name: cni-bin
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-75wkt
+        readOnly: true
+    - command:
+      - /bin/sh
+      - -c
+      - set -e -x; if [ ! -f /etc/cni/net.d/10-kuberouter.conflist ]; then if [ -f
+        /etc/cni/net.d/*.conf ]; then rm -f /etc/cni/net.d/*.conf; fi; TMP=/etc/cni/net.d/.tmp-kuberouter-cfg;
+        cp /etc/kube-router/cni-conf.json ${TMP}; mv ${TMP} /etc/cni/net.d/10-kuberouter.conflist;
+        fi
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imagePullPolicy: IfNotPresent
+      name: install-cniconf
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/cni/net.d
+        name: cni-conf-dir
+      - mountPath: /etc/kube-router
+        name: kube-router-cfg
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-75wkt
+        readOnly: true
+    nodeName: ubuntu-host-7c2a54
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: kube-router
+    serviceAccountName: kube-router
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      operator: Exists
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoExecute
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/network-unavailable
+      operator: Exists
+    volumes:
+    - hostPath:
+        path: /lib/modules
+        type: ""
+      name: lib-modules
+    - hostPath:
+        path: /etc/cni/net.d
+        type: ""
+      name: cni-conf-dir
+    - hostPath:
+        path: /opt/cni/bin
+        type: DirectoryOrCreate
+      name: cni-bin
+    - configMap:
+        defaultMode: 420
+        name: kube-router-cfg
+      name: kube-router-cfg
+    - hostPath:
+        path: /run/xtables.lock
+        type: FileOrCreate
+      name: xtables-lock
+    - name: kube-api-access-75wkt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:25:02Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T07:49:03Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T07:49:03Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://7f488e279c645c14a3bc8dd3c42a60480bb0b974526b7bbb2e680f8c56b40fa2
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imageID: quay.io/k0sproject/kube-router@sha256:76f45c3b8c139f8ffdae179d206a088ff0faf21c02b85983170f3301e008f243
+      lastState:
+        terminated:
+          containerID: containerd://5a39f007dafa7ba4e512cdef635a1c5717e6ebfe81ff6e9e318259f5abb9b07f
+          exitCode: 2
+          finishedAt: "2023-12-27T07:49:19Z"
+          reason: Error
+          startedAt: "2023-12-27T07:49:03Z"
+      name: kube-router
+      ready: true
+      restartCount: 14
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-27T07:49:20Z"
+    hostIP: 192.168.1.100
+    initContainerStatuses:
+    - containerID: containerd://63881b9b46f19b6314b74ceccf820ee70d20c9c1d996263e15c65bb8b94fc796
+      image: quay.io/k0sproject/cni-node:1.1.1-k0s.1
+      imageID: quay.io/k0sproject/cni-node@sha256:8345c4103027bb12acaa01cb9d463e7028f9827a9b5f92c5a26190c43bb289e3
+      lastState: {}
+      name: install-cni-bins
+      ready: true
+      restartCount: 6
+      started: false
+      state:
+        terminated:
+          containerID: containerd://63881b9b46f19b6314b74ceccf820ee70d20c9c1d996263e15c65bb8b94fc796
+          exitCode: 0
+          finishedAt: "2023-12-25T16:00:28Z"
+          reason: Completed
+          startedAt: "2023-12-25T16:00:23Z"
+    - containerID: containerd://8cd041ef6a0f72b9b53633c2c34cb29a095983afa7bf8f2cde1d2e2b4da5cb34
+      image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+      imageID: quay.io/k0sproject/kube-router@sha256:76f45c3b8c139f8ffdae179d206a088ff0faf21c02b85983170f3301e008f243
+      lastState: {}
+      name: install-cniconf
+      ready: true
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://8cd041ef6a0f72b9b53633c2c34cb29a095983afa7bf8f2cde1d2e2b4da5cb34
+          exitCode: 0
+          finishedAt: "2023-12-25T16:00:33Z"
+          reason: Completed
+          startedAt: "2023-12-25T16:00:33Z"
+    phase: Running
+    podIP: 192.168.1.100
+    podIPs:
+    - ip: 192.168.1.100
+    qosClass: Burstable
+    startTime: "2023-12-19T20:23:32Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2023-12-19T20:23:18Z"
+    generateName: metrics-server-7556957bb7-
+    labels:
+      k8s-app: metrics-server
+      pod-template-hash: 7556957bb7
+    name: metrics-server-7556957bb7-qjrnv
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: metrics-server-7556957bb7
+      uid: e35829ef-b3f2-4420-b68a-45ff69603ec2
+    resourceVersion: "799819"
+    uid: b074ce91-a570-4076-ae79-76053ef9090f
+  spec:
+    containers:
+    - args:
+      - --cert-dir=/tmp
+      - --secure-port=10250
+      - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+      - --kubelet-use-node-status-port
+      - --metric-resolution=15s
+      image: registry.k8s.io/metrics-server/metrics-server:v0.6.4
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /livez
+          port: https
+          scheme: HTTPS
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: metrics-server
+      ports:
+      - containerPort: 10250
+        name: https
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /readyz
+          port: https
+          scheme: HTTPS
+        initialDelaySeconds: 20
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        requests:
+          cpu: 10m
+          memory: 30M
+      securityContext:
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /tmp
+        name: tmp-dir
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-jd8pk
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ubuntu-host-7c2a54
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: metrics-server
+    serviceAccountName: metrics-server
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - emptyDir: {}
+      name: tmp-dir
+    - name: kube-api-access-jd8pk
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:34Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T17:54:13Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-27T17:54:13Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-12-19T20:23:34Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://b7b030423086bdcbfe2a4563f17f599fbc5d1161fd46322e832f1c488a9e8f3c
+      image: registry.k8s.io/metrics-server/metrics-server:v0.6.4
+      imageID: registry.k8s.io/metrics-server/metrics-server@sha256:ee4304963fb035239bb5c5e8c10f2f38ee80efc16ecbdb9feb7213c17ae2e86e
+      lastState:
+        terminated:
+          containerID: containerd://8301c407ad3e2115b9f362ab4cb4d8ba3a4e80b66611ec1b9ef55d9e1303cfe6
+          exitCode: 2
+          finishedAt: "2023-12-25T16:01:02Z"
+          reason: Error
+          startedAt: "2023-12-25T16:00:23Z"
+      name: metrics-server
+      ready: true
+      restartCount: 13
+      started: true
+      state:
+        running:
+          startedAt: "2023-12-25T16:01:03Z"
+    hostIP: 192.168.1.100
+    phase: Running
+    podIP: 10.244.0.127
+    podIPs:
+    - ip: 10.244.0.127
+    qosClass: Burstable
+    startTime: "2023-12-19T20:23:34Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2023-12-19T20:23:01Z"
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "191"
+    uid: 50856ef3-a383-41f3-8ca3-edd7e8f59abd
+  spec:
+    clusterIP: 10.96.0.1
+    clusterIPs:
+    - 10.96.0.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 6443
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      k0s.k0sproject.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"prometheus.io/port":"9153","prometheus.io/scrape":"true"},"labels":{"k8s-app":"kube-dns","kubernetes.io/cluster-service":"true","kubernetes.io/name":"CoreDNS"},"name":"kube-dns","namespace":"kube-system"},"spec":{"clusterIP":"10.96.0.10","ports":[{"name":"dns","port":53,"protocol":"UDP"},{"name":"dns-tcp","port":53,"protocol":"TCP"},{"name":"metrics","port":9153,"protocol":"TCP"}],"selector":{"k8s-app":"kube-dns"}}}
+      k0s.k0sproject.io/stack-checksum: b3b87b209fc7c401e5e236adb6958b72
+      prometheus.io/port: "9153"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2023-12-19T20:23:08Z"
+    labels:
+      k0s.k0sproject.io/stack: coredns
+      k8s-app: kube-dns
+      kubernetes.io/cluster-service: "true"
+      kubernetes.io/name: CoreDNS
+    name: kube-dns
+    namespace: kube-system
+    resourceVersion: "262"
+    uid: f8f5c6fb-c04e-43c9-9015-62724faad3a2
+  spec:
+    clusterIP: 10.96.0.10
+    clusterIPs:
+    - 10.96.0.10
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: dns
+      port: 53
+      protocol: UDP
+      targetPort: 53
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53
+    - name: metrics
+      port: 9153
+      protocol: TCP
+      targetPort: 9153
+    selector:
+      k8s-app: kube-dns
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      k0s.k0sproject.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"labels":{"k8s-app":"metrics-server"},"name":"metrics-server","namespace":"kube-system"},"spec":{"ports":[{"name":"https","port":443,"protocol":"TCP","targetPort":"https"}],"selector":{"k8s-app":"metrics-server"}}}
+      k0s.k0sproject.io/stack-checksum: 4153d417c6f7acc5a1b8b38047c49d1f
+    creationTimestamp: "2023-12-19T20:23:14Z"
+    labels:
+      k0s.k0sproject.io/stack: metricserver
+      k8s-app: metrics-server
+    name: metrics-server
+    namespace: kube-system
+    resourceVersion: "300"
+    uid: e187b0ad-afc5-48f1-8e3d-aa5329863903
+  spec:
+    clusterIP: 10.101.112.236
+    clusterIPs:
+    - 10.101.112.236
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+    selector:
+      k8s-app: metrics-server
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "14"
+      k0s.k0sproject.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"labels":{"k8s-app":"konnectivity-agent"},"name":"konnectivity-agent","namespace":"kube-system"},"spec":{"selector":{"matchLabels":{"k8s-app":"konnectivity-agent"}},"template":{"metadata":{"annotations":{"prometheus.io/port":"8093","prometheus.io/scrape":"true"},"labels":{"k8s-app":"konnectivity-agent"}},"spec":{"containers":[{"args":["--logtostderr=true","--ca-cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt","--proxy-server-host=192.168.1.106","--proxy-server-port=8132","--service-account-token-path=/var/run/secrets/tokens/konnectivity-agent-token","--agent-identifiers=host=$(NODE_IP)","--agent-id=$(NODE_IP)"],"command":["/proxy-agent"],"env":[{"name":"K0S_CONTROLLER_COUNT","value":"1"},{"name":"NODE_IP","valueFrom":{"fieldRef":{"fieldPath":"status.hostIP"}}}],"image":"quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4","imagePullPolicy":"IfNotPresent","livenessProbe":{"httpGet":{"path":"/healthz","port":8093},"initialDelaySeconds":15,"timeoutSeconds":15},"name":"konnectivity-agent","volumeMounts":[{"mountPath":"/var/run/secrets/tokens","name":"konnectivity-agent-token"}]}],"nodeSelector":{"kubernetes.io/os":"linux"},"priorityClassName":"system-cluster-critical","serviceAccountName":"konnectivity-agent","tolerations":[{"operator":"Exists"}],"volumes":[{"name":"konnectivity-agent-token","projected":{"sources":[{"serviceAccountToken":{"audience":"system:konnectivity-server","path":"konnectivity-agent-token"}}]}}]}}}}
+      k0s.k0sproject.io/stack-checksum: 5d1de61510856ab50c0122bcda7e11ce
+    creationTimestamp: "2023-12-19T20:23:08Z"
+    generation: 14
+    labels:
+      k0s.k0sproject.io/stack: konnectivity
+      k8s-app: konnectivity-agent
+    name: konnectivity-agent
+    namespace: kube-system
+    resourceVersion: "824175"
+    uid: 5e074325-81ce-4c3f-98c1-5d9218963ac2
+  spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: konnectivity-agent
+    template:
+      metadata:
+        annotations:
+          prometheus.io/port: "8093"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          k8s-app: konnectivity-agent
+      spec:
+        containers:
+        - args:
+          - --logtostderr=true
+          - --ca-cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          - --proxy-server-host=192.168.1.106
+          - --proxy-server-port=8132
+          - --service-account-token-path=/var/run/secrets/tokens/konnectivity-agent-token
+          - --agent-identifiers=host=$(NODE_IP)
+          - --agent-id=$(NODE_IP)
+          command:
+          - /proxy-agent
+          env:
+          - name: K0S_CONTROLLER_COUNT
+            value: "1"
+          - name: NODE_IP
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.hostIP
+          image: quay.io/k0sproject/apiserver-network-proxy-agent:v0.1.4
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8093
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 15
+          name: konnectivity-agent
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/run/secrets/tokens
+            name: konnectivity-agent-token
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: konnectivity-agent
+        serviceAccountName: konnectivity-agent
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - operator: Exists
+        volumes:
+        - name: konnectivity-agent-token
+          projected:
+            defaultMode: 420
+            sources:
+            - serviceAccountToken:
+                audience: system:konnectivity-server
+                expirationSeconds: 3600
+                path: konnectivity-agent-token
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+  status:
+    currentNumberScheduled: 3
+    desiredNumberScheduled: 3
+    numberAvailable: 3
+    numberMisscheduled: 0
+    numberReady: 3
+    observedGeneration: 14
+    updatedNumberScheduled: 3
+- apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+      k0s.k0sproject.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"labels":{"k8s-app":"kube-proxy"},"name":"kube-proxy","namespace":"kube-system"},"spec":{"selector":{"matchLabels":{"k8s-app":"kube-proxy"}},"template":{"metadata":{"annotations":{"prometheus.io/port":"10249","prometheus.io/scrape":"true"},"labels":{"k8s-app":"kube-proxy"}},"spec":{"containers":[{"command":["/usr/local/bin/kube-proxy","--config=/var/lib/kube-proxy/config.conf","--hostname-override=$(NODE_NAME)"],"env":[{"name":"NODE_NAME","valueFrom":{"fieldRef":{"fieldPath":"spec.nodeName"}}}],"image":"quay.io/k0sproject/kube-proxy:v1.28.4","imagePullPolicy":"IfNotPresent","name":"kube-proxy","securityContext":{"privileged":true},"volumeMounts":[{"mountPath":"/var/lib/kube-proxy","name":"kube-proxy"},{"mountPath":"/run/xtables.lock","name":"xtables-lock","readOnly":false},{"mountPath":"/lib/modules","name":"lib-modules","readOnly":true}]}],"hostNetwork":true,"nodeSelector":{"kubernetes.io/os":"linux"},"priorityClassName":"system-node-critical","serviceAccountName":"kube-proxy","tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"operator":"Exists"},{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}],"volumes":[{"configMap":{"name":"kube-proxy"},"name":"kube-proxy"},{"hostPath":{"path":"/run/xtables.lock","type":"FileOrCreate"},"name":"xtables-lock"},{"hostPath":{"path":"/lib/modules"},"name":"lib-modules"}]}},"updateStrategy":{"type":"RollingUpdate"}}}
+      k0s.k0sproject.io/stack-checksum: ca08ff5dabafb54656c6d60ed243b784
+    creationTimestamp: "2023-12-19T20:23:08Z"
+    generation: 1
+    labels:
+      k0s.k0sproject.io/stack: kubeproxy
+      k8s-app: kube-proxy
+    name: kube-proxy
+    namespace: kube-system
+    resourceVersion: "824177"
+    uid: 2ddb2dce-defe-47bb-b945-cb639019381b
+  spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: kube-proxy
+    template:
+      metadata:
+        annotations:
+          prometheus.io/port: "10249"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          k8s-app: kube-proxy
+      spec:
+        containers:
+        - command:
+          - /usr/local/bin/kube-proxy
+          - --config=/var/lib/kube-proxy/config.conf
+          - --hostname-override=$(NODE_NAME)
+          env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          image: quay.io/k0sproject/kube-proxy:v1.28.4
+          imagePullPolicy: IfNotPresent
+          name: kube-proxy
+          resources: {}
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kube-proxy
+            name: kube-proxy
+          - mountPath: /run/xtables.lock
+            name: xtables-lock
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        hostNetwork: true
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-proxy
+        serviceAccountName: kube-proxy
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: kube-proxy
+          name: kube-proxy
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: xtables-lock
+        - hostPath:
+            path: /lib/modules
+            type: ""
+          name: lib-modules
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+  status:
+    currentNumberScheduled: 3
+    desiredNumberScheduled: 3
+    numberAvailable: 3
+    numberMisscheduled: 0
+    numberReady: 3
+    observedGeneration: 1
+    updatedNumberScheduled: 3
+- apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    annotations:
+      deprecated.daemonset.template.generation: "1"
+      k0s.k0sproject.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"labels":{"k8s-app":"kube-router","tier":"node"},"name":"kube-router","namespace":"kube-system"},"spec":{"selector":{"matchLabels":{"k8s-app":"kube-router","tier":"node"}},"template":{"metadata":{"annotations":{"prometheus.io/port":"8080","prometheus.io/scrape":"true"},"labels":{"k8s-app":"kube-router","tier":"node"}},"spec":{"containers":[{"args":["--run-router=true","--run-firewall=true","--run-service-proxy=false","--bgp-graceful-restart=true","--metrics-port=8080","--hairpin-mode=true"],"env":[{"name":"NODE_NAME","valueFrom":{"fieldRef":{"fieldPath":"spec.nodeName"}}},{"name":"KUBE_ROUTER_CNI_CONF_FILE","value":"/etc/cni/net.d/10-kuberouter.conflist"}],"image":"quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0","imagePullPolicy":"IfNotPresent","livenessProbe":{"httpGet":{"path":"/healthz","port":20244},"initialDelaySeconds":10,"periodSeconds":3},"name":"kube-router","resources":{"requests":{"cpu":"250m","memory":"16Mi"}},"securityContext":{"privileged":true},"volumeMounts":[{"mountPath":"/lib/modules","name":"lib-modules","readOnly":true},{"mountPath":"/etc/cni/net.d","name":"cni-conf-dir"},{"mountPath":"/run/xtables.lock","name":"xtables-lock","readOnly":false}]}],"hostNetwork":true,"initContainers":[{"args":["install"],"image":"quay.io/k0sproject/cni-node:1.1.1-k0s.1","imagePullPolicy":"IfNotPresent","name":"install-cni-bins","volumeMounts":[{"mountPath":"/host/opt/cni/bin","name":"cni-bin"}]},{"command":["/bin/sh","-c","set -e -x; if [ ! -f /etc/cni/net.d/10-kuberouter.conflist ]; then if [ -f /etc/cni/net.d/*.conf ]; then rm -f /etc/cni/net.d/*.conf; fi; TMP=/etc/cni/net.d/.tmp-kuberouter-cfg; cp /etc/kube-router/cni-conf.json ${TMP}; mv ${TMP} /etc/cni/net.d/10-kuberouter.conflist; fi"],"image":"quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0","imagePullPolicy":"IfNotPresent","name":"install-cniconf","volumeMounts":[{"mountPath":"/etc/cni/net.d","name":"cni-conf-dir"},{"mountPath":"/etc/kube-router","name":"kube-router-cfg"}]}],"priorityClassName":"system-node-critical","serviceAccountName":"kube-router","tolerations":[{"effect":"NoSchedule","operator":"Exists"},{"key":"CriticalAddonsOnly","operator":"Exists"},{"effect":"NoExecute","operator":"Exists"},{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}],"volumes":[{"hostPath":{"path":"/lib/modules"},"name":"lib-modules"},{"hostPath":{"path":"/etc/cni/net.d"},"name":"cni-conf-dir"},{"hostPath":{"path":"/opt/cni/bin","type":"DirectoryOrCreate"},"name":"cni-bin"},{"configMap":{"name":"kube-router-cfg"},"name":"kube-router-cfg"},{"hostPath":{"path":"/run/xtables.lock","type":"FileOrCreate"},"name":"xtables-lock"}]}}}}
+      k0s.k0sproject.io/stack-checksum: 7a552135f2dd1e657ebf73102bd3a011
+    creationTimestamp: "2023-12-19T20:23:05Z"
+    generation: 1
+    labels:
+      k0s.k0sproject.io/stack: kuberouter
+      k8s-app: kube-router
+      tier: node
+    name: kube-router
+    namespace: kube-system
+    resourceVersion: "823151"
+    uid: fab09f65-88b3-48cf-b871-bd76a4ef18ce
+  spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: kube-router
+        tier: node
+    template:
+      metadata:
+        annotations:
+          prometheus.io/port: "8080"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          k8s-app: kube-router
+          tier: node
+      spec:
+        containers:
+        - args:
+          - --run-router=true
+          - --run-firewall=true
+          - --run-service-proxy=false
+          - --bgp-graceful-restart=true
+          - --metrics-port=8080
+          - --hairpin-mode=true
+          env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          - name: KUBE_ROUTER_CNI_CONF_FILE
+            value: /etc/cni/net.d/10-kuberouter.conflist
+          image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 20244
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: kube-router
+          resources:
+            requests:
+              cpu: 250m
+              memory: 16Mi
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+          - mountPath: /etc/cni/net.d
+            name: cni-conf-dir
+          - mountPath: /run/xtables.lock
+            name: xtables-lock
+        dnsPolicy: ClusterFirst
+        hostNetwork: true
+        initContainers:
+        - args:
+          - install
+          image: quay.io/k0sproject/cni-node:1.1.1-k0s.1
+          imagePullPolicy: IfNotPresent
+          name: install-cni-bins
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /host/opt/cni/bin
+            name: cni-bin
+        - command:
+          - /bin/sh
+          - -c
+          - set -e -x; if [ ! -f /etc/cni/net.d/10-kuberouter.conflist ]; then if
+            [ -f /etc/cni/net.d/*.conf ]; then rm -f /etc/cni/net.d/*.conf; fi; TMP=/etc/cni/net.d/.tmp-kuberouter-cfg;
+            cp /etc/kube-router/cni-conf.json ${TMP}; mv ${TMP} /etc/cni/net.d/10-kuberouter.conflist;
+            fi
+          image: quay.io/k0sproject/kube-router:v1.6.0-iptables1.8.9-0
+          imagePullPolicy: IfNotPresent
+          name: install-cniconf
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/cni/net.d
+            name: cni-conf-dir
+          - mountPath: /etc/kube-router
+            name: kube-router-cfg
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: kube-router
+        serviceAccountName: kube-router
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          operator: Exists
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoExecute
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - hostPath:
+            path: /lib/modules
+            type: ""
+          name: lib-modules
+        - hostPath:
+            path: /etc/cni/net.d
+            type: ""
+          name: cni-conf-dir
+        - hostPath:
+            path: /opt/cni/bin
+            type: DirectoryOrCreate
+          name: cni-bin
+        - configMap:
+            defaultMode: 420
+            name: kube-router-cfg
+          name: kube-router-cfg
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: xtables-lock
+    updateStrategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+  status:
+    currentNumberScheduled: 3
+    desiredNumberScheduled: 3
+    numberAvailable: 2
+    numberMisscheduled: 0
+    numberReady: 2
+    numberUnavailable: 1
+    observedGeneration: 1
+    updatedNumberScheduled: 3
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      k0s.k0sproject.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"labels":{"k8s-app":"kube-dns","kubernetes.io/name":"CoreDNS"},"name":"coredns","namespace":"kube-system"},"spec":{"replicas":2,"selector":{"matchLabels":{"k8s-app":"kube-dns"}},"strategy":{"rollingUpdate":{"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"prometheus.io/port":"9153","prometheus.io/scrape":"true"},"labels":{"k8s-app":"kube-dns"}},"spec":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"k8s-app","operator":"In","values":["kube-dns"]}]},"topologyKey":"kubernetes.io/hostname"}]}},"containers":[{"args":["-conf","/etc/coredns/Corefile"],"image":"quay.io/k0sproject/coredns:1.11.1","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health","port":8080,"scheme":"HTTP"},"initialDelaySeconds":60,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"coredns","ports":[{"containerPort":53,"name":"dns","protocol":"UDP"},{"containerPort":53,"name":"dns-tcp","protocol":"TCP"},{"containerPort":9153,"name":"metrics","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/ready","port":8181,"scheme":"HTTP"},"initialDelaySeconds":0,"periodSeconds":2,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"memory":"170Mi"},"requests":{"cpu":"100m","memory":"70Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"add":["NET_BIND_SERVICE"],"drop":["all"]},"readOnlyRootFilesystem":true},"volumeMounts":[{"mountPath":"/etc/coredns","name":"config-volume","readOnly":true}]}],"dnsPolicy":"Default","nodeSelector":{"kubernetes.io/os":"linux"},"serviceAccountName":"coredns","tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}],"volumes":[{"configMap":{"items":[{"key":"Corefile","path":"Corefile"}],"name":"coredns"},"name":"config-volume"}]}}}}
+      k0s.k0sproject.io/stack-checksum: b1d93e2f4cee9ce8725ba27b490935c6
+    creationTimestamp: "2023-12-19T20:23:06Z"
+    generation: 2
+    labels:
+      k0s.k0sproject.io/stack: coredns
+      k8s-app: kube-dns
+      kubernetes.io/name: CoreDNS
+    name: coredns
+    namespace: kube-system
+    resourceVersion: "823794"
+    uid: 23b9861d-037c-4712-8c12-867a9eb2e60a
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: kube-dns
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/port: "9153"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          k8s-app: kube-dns
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: k8s-app
+                  operator: In
+                  values:
+                  - kube-dns
+              topologyKey: kubernetes.io/hostname
+        containers:
+        - args:
+          - -conf
+          - /etc/coredns/Corefile
+          image: quay.io/k0sproject/coredns:1.11.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: coredns
+          ports:
+          - containerPort: 53
+            name: dns
+            protocol: UDP
+          - containerPort: 53
+            name: dns-tcp
+            protocol: TCP
+          - containerPort: 9153
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ready
+              port: 8181
+              scheme: HTTP
+            periodSeconds: 2
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: 170Mi
+            requests:
+              cpu: 100m
+              memory: 70Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/coredns
+            name: config-volume
+            readOnly: true
+        dnsPolicy: Default
+        nodeSelector:
+          kubernetes.io/os: linux
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: coredns
+        serviceAccountName: coredns
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: Corefile
+              path: Corefile
+            name: coredns
+          name: config-volume
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2023-12-19T20:23:18Z"
+      lastUpdateTime: "2023-12-19T20:25:47Z"
+      message: ReplicaSet "coredns-85df575cdb" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2023-12-27T17:54:08Z"
+      lastUpdateTime: "2023-12-27T17:54:08Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      k0s.k0sproject.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"labels":{"k8s-app":"metrics-server"},"name":"metrics-server","namespace":"kube-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"k8s-app":"metrics-server"}},"strategy":{"rollingUpdate":{"maxUnavailable":0}},"template":{"metadata":{"labels":{"k8s-app":"metrics-server"}},"spec":{"containers":[{"args":["--cert-dir=/tmp","--secure-port=10250","--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname","--kubelet-use-node-status-port","--metric-resolution=15s"],"image":"registry.k8s.io/metrics-server/metrics-server:v0.6.4","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/livez","port":"https","scheme":"HTTPS"},"periodSeconds":10},"name":"metrics-server","ports":[{"containerPort":10250,"name":"https","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/readyz","port":"https","scheme":"HTTPS"},"initialDelaySeconds":20,"periodSeconds":10},"resources":{"requests":{"cpu":"10m","memory":"30M"}},"securityContext":{"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1000},"volumeMounts":[{"mountPath":"/tmp","name":"tmp-dir"}]}],"nodeSelector":{"kubernetes.io/os":"linux"},"priorityClassName":"system-cluster-critical","serviceAccountName":"metrics-server","tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}],"volumes":[{"emptyDir":{},"name":"tmp-dir"}]}}}}
+      k0s.k0sproject.io/stack-checksum: a098d7cbac62dfccae5b5736d876e8b2
+    creationTimestamp: "2023-12-19T20:23:14Z"
+    generation: 1
+    labels:
+      k0s.k0sproject.io/stack: metricserver
+      k8s-app: metrics-server
+    name: metrics-server
+    namespace: kube-system
+    resourceVersion: "799823"
+    uid: 2f55153b-2bdb-4344-b240-326158739a0a
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: metrics-server
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 0
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          k8s-app: metrics-server
+      spec:
+        containers:
+        - args:
+          - --cert-dir=/tmp
+          - --secure-port=10250
+          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+          - --kubelet-use-node-status-port
+          - --metric-resolution=15s
+          image: registry.k8s.io/metrics-server/metrics-server:v0.6.4
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /livez
+              port: https
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: metrics-server
+          ports:
+          - containerPort: 10250
+            name: https
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: https
+              scheme: HTTPS
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 30M
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp-dir
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: metrics-server
+        serviceAccountName: metrics-server
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - emptyDir: {}
+          name: tmp-dir
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2023-12-19T20:23:18Z"
+      lastUpdateTime: "2023-12-19T20:25:34Z"
+      message: ReplicaSet "metrics-server-7556957bb7" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2023-12-27T17:54:13Z"
+      lastUpdateTime: "2023-12-27T17:54:13Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "1"
+      k0s.k0sproject.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"labels":{"k8s-app":"kube-dns","kubernetes.io/name":"CoreDNS"},"name":"coredns","namespace":"kube-system"},"spec":{"replicas":2,"selector":{"matchLabels":{"k8s-app":"kube-dns"}},"strategy":{"rollingUpdate":{"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"prometheus.io/port":"9153","prometheus.io/scrape":"true"},"labels":{"k8s-app":"kube-dns"}},"spec":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"k8s-app","operator":"In","values":["kube-dns"]}]},"topologyKey":"kubernetes.io/hostname"}]}},"containers":[{"args":["-conf","/etc/coredns/Corefile"],"image":"quay.io/k0sproject/coredns:1.11.1","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health","port":8080,"scheme":"HTTP"},"initialDelaySeconds":60,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"coredns","ports":[{"containerPort":53,"name":"dns","protocol":"UDP"},{"containerPort":53,"name":"dns-tcp","protocol":"TCP"},{"containerPort":9153,"name":"metrics","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/ready","port":8181,"scheme":"HTTP"},"initialDelaySeconds":0,"periodSeconds":2,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"memory":"170Mi"},"requests":{"cpu":"100m","memory":"70Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"add":["NET_BIND_SERVICE"],"drop":["all"]},"readOnlyRootFilesystem":true},"volumeMounts":[{"mountPath":"/etc/coredns","name":"config-volume","readOnly":true}]}],"dnsPolicy":"Default","nodeSelector":{"kubernetes.io/os":"linux"},"serviceAccountName":"coredns","tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}],"volumes":[{"configMap":{"items":[{"key":"Corefile","path":"Corefile"}],"name":"coredns"},"name":"config-volume"}]}}}}
+      k0s.k0sproject.io/stack-checksum: b1d93e2f4cee9ce8725ba27b490935c6
+    creationTimestamp: "2023-12-19T20:23:18Z"
+    generation: 2
+    labels:
+      k8s-app: kube-dns
+      pod-template-hash: 85df575cdb
+    name: coredns-85df575cdb
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: coredns
+      uid: 23b9861d-037c-4712-8c12-867a9eb2e60a
+    resourceVersion: "823793"
+    uid: bd4bcf34-cc1b-4504-8175-bc42ff350ee5
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        k8s-app: kube-dns
+        pod-template-hash: 85df575cdb
+    template:
+      metadata:
+        annotations:
+          prometheus.io/port: "9153"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          k8s-app: kube-dns
+          pod-template-hash: 85df575cdb
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: k8s-app
+                  operator: In
+                  values:
+                  - kube-dns
+              topologyKey: kubernetes.io/hostname
+        containers:
+        - args:
+          - -conf
+          - /etc/coredns/Corefile
+          image: quay.io/k0sproject/coredns:1.11.1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: coredns
+          ports:
+          - containerPort: 53
+            name: dns
+            protocol: UDP
+          - containerPort: 53
+            name: dns-tcp
+            protocol: TCP
+          - containerPort: 9153
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ready
+              port: 8181
+              scheme: HTTP
+            periodSeconds: 2
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: 170Mi
+            requests:
+              cpu: 100m
+              memory: 70Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/coredns
+            name: config-volume
+            readOnly: true
+        dnsPolicy: Default
+        nodeSelector:
+          kubernetes.io/os: linux
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: coredns
+        serviceAccountName: coredns
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: Corefile
+              path: Corefile
+            name: coredns
+          name: config-volume
+  status:
+    availableReplicas: 2
+    fullyLabeledReplicas: 2
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+      k0s.k0sproject.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"labels":{"k8s-app":"metrics-server"},"name":"metrics-server","namespace":"kube-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"k8s-app":"metrics-server"}},"strategy":{"rollingUpdate":{"maxUnavailable":0}},"template":{"metadata":{"labels":{"k8s-app":"metrics-server"}},"spec":{"containers":[{"args":["--cert-dir=/tmp","--secure-port=10250","--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname","--kubelet-use-node-status-port","--metric-resolution=15s"],"image":"registry.k8s.io/metrics-server/metrics-server:v0.6.4","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/livez","port":"https","scheme":"HTTPS"},"periodSeconds":10},"name":"metrics-server","ports":[{"containerPort":10250,"name":"https","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/readyz","port":"https","scheme":"HTTPS"},"initialDelaySeconds":20,"periodSeconds":10},"resources":{"requests":{"cpu":"10m","memory":"30M"}},"securityContext":{"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1000},"volumeMounts":[{"mountPath":"/tmp","name":"tmp-dir"}]}],"nodeSelector":{"kubernetes.io/os":"linux"},"priorityClassName":"system-cluster-critical","serviceAccountName":"metrics-server","tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"}],"volumes":[{"emptyDir":{},"name":"tmp-dir"}]}}}}
+      k0s.k0sproject.io/stack-checksum: a098d7cbac62dfccae5b5736d876e8b2
+    creationTimestamp: "2023-12-19T20:23:18Z"
+    generation: 1
+    labels:
+      k8s-app: metrics-server
+      pod-template-hash: 7556957bb7
+    name: metrics-server-7556957bb7
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: metrics-server
+      uid: 2f55153b-2bdb-4344-b240-326158739a0a
+    resourceVersion: "799822"
+    uid: e35829ef-b3f2-4420-b68a-45ff69603ec2
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        k8s-app: metrics-server
+        pod-template-hash: 7556957bb7
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          k8s-app: metrics-server
+          pod-template-hash: 7556957bb7
+      spec:
+        containers:
+        - args:
+          - --cert-dir=/tmp
+          - --secure-port=10250
+          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+          - --kubelet-use-node-status-port
+          - --metric-resolution=15s
+          image: registry.k8s.io/metrics-server/metrics-server:v0.6.4
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /livez
+              port: https
+              scheme: HTTPS
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: metrics-server
+          ports:
+          - containerPort: 10250
+            name: https
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /readyz
+              port: https
+              scheme: HTTPS
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 30M
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp-dir
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: metrics-server
+        serviceAccountName: metrics-server
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        volumes:
+        - emptyDir: {}
+          name: tmp-dir
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
