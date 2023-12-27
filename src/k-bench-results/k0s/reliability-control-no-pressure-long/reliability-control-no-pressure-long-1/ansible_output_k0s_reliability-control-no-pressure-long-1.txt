@@ -1,4 +1,4 @@
-Start testing of worker: 2
+Start testing of control: 0
 
 PLAY [Kubernetes Recovery Testing] *********************************************
 
@@ -26,8 +26,8 @@ changed: [192.168.1.106]
 TASK [Split node names into a list] ********************************************
 ok: [192.168.1.106]
 skipping: [192.168.1.100]
-skipping: [192.168.1.102]
 skipping: [192.168.1.101]
+skipping: [192.168.1.102]
 
 TASK [Backup current cluster state] ********************************************
 skipping: [192.168.1.100]
@@ -42,10 +42,10 @@ skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
 TASK [Display the time before test] ********************************************
-ok: [192.168.1.106] => {
-    "before_datetime.stdout": "1703672703"
-}
 skipping: [192.168.1.100]
+ok: [192.168.1.106] => {
+    "before_datetime.stdout": "1703679420"
+}
 skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 
@@ -66,11 +66,11 @@ Pausing for 250 seconds
 (ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
 ok: [192.168.1.106]
 
-TASK [Simulate node failure (Stopping network interface)] **********************
-skipping: [192.168.1.106]
+TASK [Simulate master failure (Stopping network interface)] ********************
 skipping: [192.168.1.100]
 skipping: [192.168.1.102]
-changed: [192.168.1.101]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
 
 TASK [Wait until all nodes are Ready] ******************************************
 skipping: [192.168.1.100]
@@ -81,7 +81,7 @@ changed: [192.168.1.106] => (item=ubuntu-host-7c2a54)
 changed: [192.168.1.106] => (item=ubuntu-host-e93031)
 
 TASK [Wait for a specified time (e.g., 600 seconds)] ***************************
-Pausing for 600 seconds
+Pausing for 200 seconds
 (ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
 ok: [192.168.1.106]
 
@@ -93,7 +93,7 @@ changed: [192.168.1.106]
 
 TASK [Display the time after test] *********************************************
 ok: [192.168.1.106] => {
-    "after_datetime.stdout": "1703673671"
+    "after_datetime.stdout": "1703680380"
 }
 skipping: [192.168.1.100]
 skipping: [192.168.1.102]
@@ -101,8 +101,8 @@ skipping: [192.168.1.101]
 
 TASK [Write variable to file] **************************************************
 skipping: [192.168.1.100]
-skipping: [192.168.1.101]
 skipping: [192.168.1.102]
+skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
 TASK [Copy after time] *********************************************************
@@ -112,28 +112,28 @@ skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
 TASK [Calculate recovery duration] *********************************************
+ok: [192.168.1.106]
 skipping: [192.168.1.100]
 skipping: [192.168.1.102]
 skipping: [192.168.1.101]
-ok: [192.168.1.106]
 
 TASK [Display recovery duration] ***********************************************
 ok: [192.168.1.106] => {
-    "recovery_duration": "968"
+    "recovery_duration": "960"
 }
-skipping: [192.168.1.102]
 skipping: [192.168.1.100]
+skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 
 TASK [Write recovery to file] **************************************************
-skipping: [192.168.1.102]
 skipping: [192.168.1.100]
+skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
 TASK [Copy recovery time] ******************************************************
-skipping: [192.168.1.100]
 skipping: [192.168.1.102]
+skipping: [192.168.1.100]
 skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
@@ -149,16 +149,16 @@ skipping: [192.168.1.100] => (item={'file': 'backup_all'})
 skipping: [192.168.1.100] => (item={'file': 'post_recovery_nodes'}) 
 skipping: [192.168.1.100] => (item={'file': 'post_recovery_all'}) 
 skipping: [192.168.1.100]
-skipping: [192.168.1.101] => (item={'file': 'backup_nodes'}) 
-skipping: [192.168.1.101] => (item={'file': 'backup_all'}) 
-skipping: [192.168.1.101] => (item={'file': 'post_recovery_nodes'}) 
 skipping: [192.168.1.102] => (item={'file': 'backup_nodes'}) 
-skipping: [192.168.1.101] => (item={'file': 'post_recovery_all'}) 
-skipping: [192.168.1.101]
 skipping: [192.168.1.102] => (item={'file': 'backup_all'}) 
 skipping: [192.168.1.102] => (item={'file': 'post_recovery_nodes'}) 
 skipping: [192.168.1.102] => (item={'file': 'post_recovery_all'}) 
 skipping: [192.168.1.102]
+skipping: [192.168.1.101] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.101]
 changed: [192.168.1.106] => (item={'file': 'backup_nodes'})
 changed: [192.168.1.106] => (item={'file': 'backup_all'})
 changed: [192.168.1.106] => (item={'file': 'post_recovery_nodes'})
@@ -175,10 +175,10 @@ skipping: [192.168.1.102] => (item={'file': 'backup_nodes'})
 skipping: [192.168.1.102] => (item={'file': 'backup_all'}) 
 skipping: [192.168.1.102] => (item={'file': 'post_recovery_nodes'}) 
 skipping: [192.168.1.102] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.102]
 skipping: [192.168.1.101] => (item={'file': 'backup_all'}) 
 skipping: [192.168.1.101] => (item={'file': 'post_recovery_nodes'}) 
 skipping: [192.168.1.101] => (item={'file': 'post_recovery_all'}) 
-skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 changed: [192.168.1.106] => (item={'file': 'backup_nodes'})
 changed: [192.168.1.106] => (item={'file': 'backup_all'})
@@ -187,9 +187,9 @@ changed: [192.168.1.106] => (item={'file': 'post_recovery_all'})
 
 PLAY RECAP *********************************************************************
 192.168.1.100              : ok=1    changed=0    unreachable=0    failed=0    skipped=21   rescued=0    ignored=0   
-192.168.1.101              : ok=2    changed=1    unreachable=0    failed=0    skipped=20   rescued=0    ignored=0   
+192.168.1.101              : ok=1    changed=0    unreachable=0    failed=0    skipped=21   rescued=0    ignored=0   
 192.168.1.102              : ok=1    changed=0    unreachable=0    failed=0    skipped=21   rescued=0    ignored=0   
-192.168.1.106              : ok=24   changed=15   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+192.168.1.106              : ok=25   changed=16   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
 
 PLAY [k-bench derive data from results] ****************************************
@@ -199,7 +199,7 @@ ok: [192.168.1.113]
 
 TASK [Display start and end time] **********************************************
 ok: [192.168.1.113] => {
-    "msg": "1703672703 - 1703673671"
+    "msg": "1703679420 - 1703680380"
 }
 
 TASK [Generating CSV file CPU] *************************************************
@@ -222,13 +222,4 @@ changed: [192.168.1.113] => (item=net)
 
 PLAY RECAP *********************************************************************
 192.168.1.113              : ok=7    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-
-
-PLAY [Clean redis test] ********************************************************
-
-TASK [Run clean up script] *****************************************************
-changed: [192.168.1.106]
-
-PLAY RECAP *********************************************************************
-192.168.1.106              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
