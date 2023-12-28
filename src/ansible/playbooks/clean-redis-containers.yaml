@@ -1,0 +1,9 @@
+---
+- name: Clean redis test
+  hosts: master
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Run clean up script
+      command: sudo /home/{{ ansible_user }}/.k-bench/cleanup-k0s.sh
+      # command: sudo /home/{{ ansible_user }}/.k-bench/cleanup.sh

@@ -9,7 +9,6 @@
       set_fact: 
         test_names: ["cp_light_1client", "cp_heavy_8client", "cp_heavy_12client", "dp_redis_density"]  # Add more test names as needed
         sets: ["namespace", "pod", "deployment", "service"]
-        # TODO: how to share these variables with other playbooks?
        
     - name: Generating CSV file
       delegate_to: localhost

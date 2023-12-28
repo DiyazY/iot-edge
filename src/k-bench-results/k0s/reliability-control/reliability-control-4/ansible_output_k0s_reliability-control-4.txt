@@ -1,0 +1,225 @@
+Start testing of control: 0
+
+PLAY [Kubernetes Recovery Testing] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.1.106]
+ok: [192.168.1.101]
+ok: [192.168.1.102]
+ok: [192.168.1.100]
+
+TASK [Set fact for the hostname at the given index] ****************************
+ok: [192.168.1.106]
+
+TASK [Create reliability test directory] ***************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Get list of all nodes] ***************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+skipping: [192.168.1.102]
+changed: [192.168.1.106]
+
+TASK [Split node names into a list] ********************************************
+ok: [192.168.1.106]
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Backup current cluster state] ********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Get before Date and Time] ************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Display the time before test] ********************************************
+ok: [192.168.1.106] => {
+    "before_datetime.stdout": "1703641971"
+}
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Write variable to file] **************************************************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Copy before time] ********************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Wait for a specified time (e.g., 250 seconds)] ***************************
+Pausing for 250 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [192.168.1.106]
+
+TASK [Simulate master failure (Stopping network interface)] ********************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Wait until all nodes are Ready] ******************************************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+changed: [192.168.1.106] => (item=ubuntu-host-4688b2)
+changed: [192.168.1.106] => (item=ubuntu-host-7c2a54)
+changed: [192.168.1.106] => (item=ubuntu-host-e93031)
+
+TASK [Wait for a specified time (e.g., 600 seconds)] ***************************
+Pausing for 600 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [192.168.1.106]
+
+TASK [Get after Date and Time] *************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Display the time after test] *********************************************
+ok: [192.168.1.106] => {
+    "after_datetime.stdout": "1703642929"
+}
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Write variable to file] **************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Copy after time] *********************************************************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Calculate recovery duration] *********************************************
+ok: [192.168.1.106]
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Display recovery duration] ***********************************************
+ok: [192.168.1.106] => {
+    "recovery_duration": "958"
+}
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Write recovery to file] **************************************************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Copy recovery time] ******************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Gather post-recovery cluster state] **************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Copy test results to repository] *****************************************
+skipping: [192.168.1.100] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.100] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.100] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.100] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.102] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.100]
+skipping: [192.168.1.102] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.102] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.102] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.102]
+skipping: [192.168.1.101] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.101]
+changed: [192.168.1.106] => (item={'file': 'backup_nodes'})
+changed: [192.168.1.106] => (item={'file': 'backup_all'})
+changed: [192.168.1.106] => (item={'file': 'post_recovery_nodes'})
+changed: [192.168.1.106] => (item={'file': 'post_recovery_all'})
+
+TASK [Delete test results on a remote machine] *********************************
+skipping: [192.168.1.100] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.100] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.100] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.100] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.100]
+skipping: [192.168.1.102] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.102] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.102] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.102] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.102]
+skipping: [192.168.1.101] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.101]
+changed: [192.168.1.106] => (item={'file': 'backup_nodes'})
+changed: [192.168.1.106] => (item={'file': 'backup_all'})
+changed: [192.168.1.106] => (item={'file': 'post_recovery_nodes'})
+changed: [192.168.1.106] => (item={'file': 'post_recovery_all'})
+
+PLAY RECAP *********************************************************************
+192.168.1.100              : ok=1    changed=0    unreachable=0    failed=0    skipped=21   rescued=0    ignored=0   
+192.168.1.101              : ok=1    changed=0    unreachable=0    failed=0    skipped=21   rescued=0    ignored=0   
+192.168.1.102              : ok=1    changed=0    unreachable=0    failed=0    skipped=21   rescued=0    ignored=0   
+192.168.1.106              : ok=25   changed=16   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+PLAY [k-bench derive data from results] ****************************************
+
+TASK [List of test names] ******************************************************
+ok: [192.168.1.113]
+
+TASK [Display start and end time] **********************************************
+ok: [192.168.1.113] => {
+    "msg": "1703641971 - 1703642929"
+}
+
+TASK [Generating CSV file CPU] *************************************************
+changed: [192.168.1.113]
+
+TASK [Generating CSV file Ram] *************************************************
+changed: [192.168.1.113]
+
+TASK [Generating CSV file Disk] ************************************************
+changed: [192.168.1.113]
+
+TASK [Generating CSV file Network] *********************************************
+changed: [192.168.1.113]
+
+TASK [Copy test results to repository] *****************************************
+changed: [192.168.1.113] => (item=cpu)
+changed: [192.168.1.113] => (item=ram)
+changed: [192.168.1.113] => (item=disk)
+changed: [192.168.1.113] => (item=net)
+
+PLAY RECAP *********************************************************************
+192.168.1.113              : ok=7    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

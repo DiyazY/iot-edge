@@ -1,0 +1,46 @@
+
+PLAY [Run k-bench benchmark] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.1.106]
+
+TASK [Create config paths] *****************************************************
+ok: [192.168.1.106]
+
+TASK [Get before Date and Time] ************************************************
+changed: [192.168.1.106]
+
+TASK [Display the time before test] ********************************************
+ok: [192.168.1.106] => {
+    "before_datetime.stdout": "1703646739"
+}
+
+TASK [Write variable to file] **************************************************
+changed: [192.168.1.106]
+
+TASK [Copy before time] ********************************************************
+changed: [192.168.1.106]
+
+TASK [Run kbench command] ******************************************************
+changed: [192.168.1.106]
+
+TASK [Get after Date and Time] *************************************************
+changed: [192.168.1.106]
+
+TASK [Display the time before test] ********************************************
+ok: [192.168.1.106] => {
+    "after_datetime.stdout": "1703680182"
+}
+
+TASK [Write variable to file] **************************************************
+ok: [192.168.1.106]
+
+TASK [Copy after time] *********************************************************
+changed: [192.168.1.106]
+
+TASK [Copy test results to repository] *****************************************
+fatal: [192.168.1.106]: FAILED! => {"changed": false, "msg": "the remote file does not exist, not transferring, ignored"}
+
+PLAY RECAP *********************************************************************
+192.168.1.106              : ok=11   changed=6    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+

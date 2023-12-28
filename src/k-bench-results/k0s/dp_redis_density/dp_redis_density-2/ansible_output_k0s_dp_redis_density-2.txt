@@ -21,15 +21,15 @@ ok: [192.168.1.100]
 
 TASK [change the tag to dp_redis_density-2] ************************************
 changed: [192.168.1.106]
-changed: [192.168.1.101]
 changed: [192.168.1.102]
+changed: [192.168.1.101]
 changed: [192.168.1.100]
 
 TASK [Restart Netdata] *********************************************************
-changed: [192.168.1.106]
 changed: [192.168.1.100]
-changed: [192.168.1.102]
 changed: [192.168.1.101]
+changed: [192.168.1.102]
+changed: [192.168.1.106]
 
 PLAY RECAP *********************************************************************
 192.168.1.100              : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
@@ -44,14 +44,14 @@ TASK [Gathering Facts] *********************************************************
 ok: [192.168.1.106]
 
 TASK [Create config paths] *****************************************************
-changed: [192.168.1.106]
+ok: [192.168.1.106]
 
 TASK [Get before Date and Time] ************************************************
 changed: [192.168.1.106]
 
 TASK [Display the time before test] ********************************************
 ok: [192.168.1.106] => {
-    "before_datetime.stdout": "1703214885"
+    "before_datetime.stdout": "1703528990"
 }
 
 TASK [Write variable to file] **************************************************
@@ -68,7 +68,7 @@ changed: [192.168.1.106]
 
 TASK [Display the time before test] ********************************************
 ok: [192.168.1.106] => {
-    "after_datetime.stdout": "1703216021"
+    "after_datetime.stdout": "1703529784"
 }
 
 TASK [Write variable to file] **************************************************
@@ -84,7 +84,7 @@ TASK [Delete test results on a remote machine] *********************************
 changed: [192.168.1.106]
 
 PLAY RECAP *********************************************************************
-192.168.1.106              : ok=13   changed=10   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.1.106              : ok=13   changed=9    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
 
 PLAY [k-bench derive data from results] ****************************************
@@ -94,7 +94,7 @@ ok: [192.168.1.113]
 
 TASK [Display start and end time] **********************************************
 ok: [192.168.1.113] => {
-    "msg": "1703214885 - 1703216021"
+    "msg": "1703528990 - 1703529784"
 }
 
 TASK [Generating CSV file CPU] *************************************************

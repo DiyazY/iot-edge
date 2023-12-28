@@ -31,7 +31,7 @@
     - name: Copy before time
       fetch:
         src: "/home/{{ ansible_user }}/tmp-before.txt"
-        dest: "./"
+        dest: "../../k-bench-results/{{k8s_distribution}}/{{ test_type }}/{{ tag }}/"
         flat: yes
 
     - name: Run kbench command
@@ -53,7 +53,7 @@
     - name: Copy after time
       fetch:
         src: "/home/{{ ansible_user }}/tmp-after.txt"
-        dest: "./"
+        dest: "../../k-bench-results/{{k8s_distribution}}/{{ test_type }}/{{ tag }}/"
         flat: yes
 
     # - name: Create local directory for test results for {{k8s_distribution}}}

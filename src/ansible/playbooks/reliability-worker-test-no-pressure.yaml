@@ -1,8 +1,14 @@
+# TODO: remove it, obsolete!
 ---
 - name: Kubernetes Recovery Testing
   hosts: iot_cluster  # This could target all your nodes, both worker and control plane.
   become: true
   tasks:
+
+    - name: Set fact for the hostname at the given index
+      set_fact:
+        specific_node: "{{ groups[machine][node_index] }}"
+      run_once: true
 
     - name: Create reliability test directory
       file:
@@ -40,11 +46,11 @@
       ansible.builtin.pause:
         seconds: 250
 
-    - name: Simulate worker failure (Stopping network interface)
+    - name: Simulate {{machine}} failure (Stopping network interface)
       shell: |
-        ip link set dev eth0 down
-        (sleep 500 && ip link set dev eth0 up) &
-      when: inventory_hostname == groups['node'][2]
+        ip link set dev {{eth_interface}} down
+        (sleep 500 && ip link set dev {{eth_interface}} up) &
+      when: inventory_hostname == specific_node
 
     - name: Wait until all nodes are Ready
       command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m # issue with k3s that it can arbitrarily show nodes as NotReady

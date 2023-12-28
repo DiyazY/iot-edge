@@ -118,6 +118,9 @@ First change the directory: `cd src/ansible`;
   * https://github.com/k3s-io/k3s/issues/1857
   * https://dev.to/arthurkay/k3s-node-status-notready-4j3m
   * Sometimes they are not ready, but it is possible to run tests anyway.
+* dp_redis_density test needs the intervention in a master node. In `~/.k-bench/configs/dp_redis_density/redis_pod.yaml`, change line #17 to `worker`.
+* before each run `kubectl --kubeconfig ../.kube/k0s-config label  nodes <node-name>  beta.kubernetes.io/instance-type=worker`
+* k0s wraps kubectl, thus, it should be reached out by `k0s kubectl`
 
 # TODOs
 * ~~add systemctl start mongod ~~
@@ -126,3 +129,7 @@ First change the directory: `cd src/ansible`;
 * ~~pass tag through many places to mark test results with an appropriate test execution~~
 * ~~Play with labels: https://learn.netdata.cloud/docs/configuring/organize-systems-metrics-and-alerts~~
 * there is also new k8s distribution `SuperEdge`
+* reduce the number of tests for density tests to 3 pods. Also make k3s's control plane act as a control machine, not worker. Try this:
+  * kubectl taint nodes <control-plane-node-name> node-role.kubernetes.io/master=:NoSchedule
+  * kubectl drain <control-plane-node-name> --ignore-daemonsets --delete-local-data
+  * kubectl get pods -o wide
