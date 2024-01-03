@@ -1,0 +1,12 @@
+---
+# Use this to overwrite the role defaults
+k8s_version: v1.28
+ansible_user: d-user
+pod_nw_cidr: 10.244.0.0/16
+# artifacts_dir: "{{ inventory_dir }}/artifacts"
+# systemd_dest: /etc/systemd/system
+# k8s_binary_dest: /usr/local/bin/k0s
+# k8s_config_dir: /etc/k0s
+# k8s_data_dir: /var/lib/k0s
+# k8s_libexec_dir: /usr/libexec/k0s/
+# k8s_use_custom_config: false

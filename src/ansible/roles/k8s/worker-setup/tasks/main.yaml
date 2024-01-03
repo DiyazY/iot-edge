@@ -1,0 +1,37 @@
+---
+- name: Check if nodes has joined the cluster already
+  ansible.builtin.stat:
+    path: /etc/kubernetes/kubelet.conf
+  ignore_errors: true
+  register: kubeconf_info
+
+- name: Check result
+  ansible.builtin.debug:
+    msg: "Node {{ ansible_host }} is {{ 'already a part of the cluster.' if kubeconf_info.stat.exists else 'not a part of the cluster.' }}"
+
+- name: Joining the K8S Cluster
+  when: not kubeconf_info.stat.exists
+  block:
+    - name: Check the join_cluster script availability
+      ansible.builtin.stat:
+        path: /tmp/join_cluster.sh
+      register: file_result
+
+    - name: Copy the cluster joining script
+      when: not file_result.stat.exists
+      ansible.builtin.copy:
+        src: join_cluster.sh
+        dest: /tmp/join_cluster.sh
+        mode: '755'
+
+    - name: Join k8s cluster
+      ansible.builtin.shell: |
+        sh /tmp/join_cluster.sh
+        sleep 30
+      register: cluster_join
+      changed_when: true
+
+    - name: Check result for cluster
+      ansible.builtin.debug:
+        msg: "Node {{ ansible_host }} has {{ 'joined the cluster.' if cluster_join.rc == 0 else 'failed to join the cluster.' }} "
+

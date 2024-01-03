@@ -1,0 +1,8 @@
+# remove this : /etc/sysctl.d/11-k8s.conf
+# remove this: kubeadm & kubectl
+# remove this: kubelet
+# remove this: /usr/share/keyrings/kubernetes-archive-keyring.asc
+# remove this: contianerd.io
+# remove this: /etc/containerd/
+# remove this: /etc/kubernetes/
+# remove this: /tmp/join_cluster.sh
