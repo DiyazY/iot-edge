@@ -6,3 +6,17 @@
 # remove this: /etc/containerd/
 # remove this: /etc/kubernetes/
 # remove this: /tmp/join_cluster.sh
+
+# enable swap
+# - name: Enable swap
+#   become: true
+#   block:
+#     - name: Uncomment swap line in /etc/fstab
+#       lineinfile:
+#         path: /etc/fstab
+#         regexp: '^#(.+ none swap sw .+)$'
+#         line: '\1'
+#         backrefs: yes
+
+#     - name: Turn on swap
+#       command: swapon -a

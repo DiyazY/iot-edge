@@ -20,7 +20,7 @@
     - name: Copy the cluster joining script
       when: not file_result.stat.exists
       ansible.builtin.copy:
-        src: join_cluster.sh
+        src: "../.kube/{{k8s_distribution}}-join_cluster.sh"
         dest: /tmp/join_cluster.sh
         mode: '755'
 

@@ -13,13 +13,20 @@
 - name: Creating the Cluster
   when: k8s_cluster_info.rc != 0
   block:
+    - name: Disable swap
+      become: true
+      shell: |
+        swapoff -a
+        sed -i '/ swap / s/^/#/' /etc/fstab
+
+
     - name: Fetch images
       ansible.builtin.command: kubeadm config images pull
       changed_when: true
 
     - name: Initialise the K8S cluster
       ansible.builtin.command:
-        kubeadm init --pod-network-cidr={{ pod_nw_cidr }} --apiserver-advertise-address={{ ansible_host }} --fail-swap-on=false
+        kubeadm init --pod-network-cidr={{ pod_nw_cidr }} --apiserver-advertise-address={{ ansible_host }}
       register: kubeadm_init
       changed_when: true
 
@@ -33,7 +40,7 @@
       ansible.builtin.shell: |
         cd
         mkdir -p {{ansible_user}}/.kube
-        sudo cp -i /etc/kubernetes/admin.conf {{ansible_user}}/.kube/config
+        sudo cp /etc/kubernetes/admin.conf {{ansible_user}}/.kube/config
         sudo chown $(id -u):$(id -g) {{ansible_user}}/.kube/config
         echo "alias k=kubectl" >> .bashrc
       changed_when: kubeadm_init.rc == 0
