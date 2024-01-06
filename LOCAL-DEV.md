@@ -122,6 +122,7 @@ First change the directory: `cd src/ansible`;
 * before each distribution tests `kubectl --kubeconfig ../.kubeconfig label  nodes <node-name>  beta.kubernetes.io/instance-type=worker`
   * TODO: automate this step
 * k0s wraps kubectl, thus, it should be reached out by `k0s kubectl`
+* for k8s turn off swapping, `sudo swapoff -a`
 
 # TODOs
 * ~~add systemctl start mongod ~~
