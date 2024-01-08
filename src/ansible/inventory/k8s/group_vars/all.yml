@@ -2,7 +2,10 @@
 # Use this to overwrite the role defaults
 k8s_version: v1.28
 ansible_user: d-user
-pod_nw_cidr: 10.32.0.0/12
+pod_network_cidr: 10.32.0.0/12
+pod_network_manifest_file: https://docs.projectcalico.org/archive/v3.19/manifests/calico.yaml
+rbac_manifest_file: https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
 # artifacts_dir: "{{ inventory_dir }}/artifacts"
 # systemd_dest: /etc/systemd/system
 # k8s_binary_dest: /usr/local/bin/k0s
