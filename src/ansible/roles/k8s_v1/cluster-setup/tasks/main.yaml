@@ -4,6 +4,7 @@
   ignore_errors: true
   register: k8s_cluster_info
   changed_when: false
+  become: true
 
 - name: Check result
   ansible.builtin.debug:
@@ -25,8 +26,9 @@
       changed_when: true
 
     - name: Initialise the K8S cluster
+      become: true
       ansible.builtin.command:
-        kubeadm init --pod-network-cidr={{ pod_nw_cidr }} --apiserver-advertise-address={{ ansible_host }}
+        kubeadm init --pod-network-cidr={{ pod_nw_cidr }} --apiserver-advertise-address={{ ansible_host }} --ignore-preflight-errors=preflight
       register: kubeadm_init
       changed_when: true
 
@@ -45,13 +47,13 @@
         sudo chown $(id -u):$(id -g) /home/{{ansible_user}}/.kube/config
       changed_when: kubeadm_init.rc == 0
 
-    # - name: Copy kubeconfig
-    #   fetch:
-    #     src: "/home/{{ ansible_user }}/.kube/config"
-    #     dest: "../.kube/{{k8s_distribution}}-config"
-    #     flat: yes
-    #     validate_checksum: no
-    #   become: false
+    - name: Copy kubeconfig
+      fetch:
+        src: "/home/{{ ansible_user }}/.kube/config"
+        dest: "../.kube/{{k8s_distribution}}-config"
+        flat: yes
+        validate_checksum: no
+      become: false
 
 # ====== Create K8S Cluster Joining script ==========
 - name: Create cluster joining script

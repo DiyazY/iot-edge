@@ -15,15 +15,21 @@
         dest: /usr/share/keyrings/kubernetes-archive-keyring.asc
         mode: '0755'
 
-    - name: Adding kubernetes repository
-      ansible.builtin.apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.asc] https://pkgs.k8s.io/core:/stable:/{{k8s_version}}/deb/ /"
-        state: present
-        filename: kubernetes
+    # - name: Adding kubernetes repository
+    #   ansible.builtin.apt_repository:
+    #     repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.asc] https://pkgs.k8s.io/core:/stable:/{{k8s_version}}/deb/ /"
+    #     state: present
+    #     filename: kubernetes
+
+    - name: Adding kubernetes
+      shell: |
+        echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+
 
     - name: Installing kubeadm & kubectl
       ansible.builtin.apt:
-        update_cache: true
+        # update_cache: true
         name: "{{ item }}"
         state: present
       with_items:
