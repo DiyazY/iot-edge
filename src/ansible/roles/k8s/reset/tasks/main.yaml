@@ -1,7 +1,7 @@
 ---
 - name: Copy the cluster cleaning up script
   ansible.builtin.copy:
-    src: "../../etc/cleanup.sh"
+    src: "../../etc/cleanup-v2.sh"
     dest: /tmp/cleanup.sh
     mode: '755'
 

@@ -1,0 +1,15 @@
+---
+- hosts: iot_cluster
+  become: true
+  roles:
+    - k8s/prerequisites
+
+- hosts: master
+  become: true
+  roles:
+    - k8s/master
+
+- hosts: node
+  become: true
+  roles:
+    - k8s/worker
