@@ -4,19 +4,19 @@
   hosts: master:node
   become: true
   roles:
-    - k8s/commons
-    - k8s/configure-kernel
-    - k8s/containerd
+    - k8s_v1/commons
+    - k8s_v1/configure-kernel
+    - k8s_v1/containerd
 
 - name: Setup Control Plane
   hosts: master
   become: true
   roles:
-    - k8s/cluster-setup
+    - k8s_v1/cluster-setup
   tags: master_check
 
 - name: Join cluster
   hosts: node
   become: true
   roles:
-    - k8s/worker-setup
+    - k8s_v1/worker-setup
