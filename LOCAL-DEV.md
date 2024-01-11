@@ -121,6 +121,7 @@ First change the directory: `cd src/ansible`;
 * dp_redis_density test needs the intervention in a master node. In `~/.k-bench/configs/dp_redis_density/redis_pod.yaml`, change line #17 to `worker`.
 * before each distribution tests `kubectl --kubeconfig ../.kubeconfig label  nodes <node-name>  beta.kubernetes.io/instance-type=worker`
   * TODO: automate this step
+* when run `reliability` tests, ensure that all eth interfaces are set correctly
 * k0s wraps kubectl, thus, it should be reached out by `k0s kubectl`
 * for k8s turn off swapping, `sudo swapoff -a`
 
