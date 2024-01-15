@@ -1,0 +1,11 @@
+---
+- name: Install common Dependencies
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+    - gnupg
+    - net-tools
+    - apt-transport-https
+    - ca-certificates

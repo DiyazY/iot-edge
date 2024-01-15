@@ -1,0 +1,161 @@
+---
+# =========== kubeadm & kubectl ==============
+- name: Kubeadm setup
+  ansible.builtin.command: kubeadm version
+  ignore_errors: true
+  register: kubeadm_check
+  changed_when: true
+
+- name: Install kubeadm
+  when: kubeadm_check.rc != 0
+  block:
+    - name: Downloading Kubernetes archive keyring
+      ansible.builtin.get_url:
+        url: https://pkgs.k8s.io/core:/stable:/{{k8s_version}}/deb/Release.key
+        dest: /usr/share/keyrings/kubernetes-archive-keyring.asc
+        mode: '0755'
+
+    # - name: Adding kubernetes repository
+    #   ansible.builtin.apt_repository:
+    #     repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.asc] https://pkgs.k8s.io/core:/stable:/{{k8s_version}}/deb/ /"
+    #     state: present
+    #     filename: kubernetes
+
+    - name: Adding kubernetes
+      shell: |
+        echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+
+
+    - name: Installing kubeadm & kubectl
+      ansible.builtin.apt:
+        # update_cache: true
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - kubeadm
+        - kubectl
+
+# ==== kubelet Setup & Configuration ====
+- name: Check kubelet service
+  ansible.builtin.service:
+    name: kubelet
+    state: started
+  ignore_errors: true
+  register: kubelet_svc
+
+- name: Check result
+  ansible.builtin.debug:
+    msg: "kubelet service is {{ 'not running.' if kubelet_svc.failed else 'running.' }}"
+
+- name: Kubelet service setup
+  when: kubelet_svc.failed
+  block:
+    - name: Installing kubelet service
+      ansible.builtin.apt:
+        name: kubelet
+        state: present
+      ignore_errors: true
+      register: kubelet_svc_install
+
+    - name: Check result
+      ansible.builtin.debug:
+        msg: "kubelet {{ 'failed to install. Check package repository' if kubelet_svc_install.failed else 'installed successfully.' }}"
+        # var: kubelet_svc_install
+
+- name: Hold the installed packages
+  ansible.builtin.dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  with_items:
+    - kubelet
+    - kubeadm
+    - kubectl
+
+# =========== configure crictl ================
+- name: Configure /etc/crictl.yaml file
+  ansible.builtin.lineinfile:
+    path: /etc/crictl.yaml
+    insertafter: EOF
+    line: |
+      insert into it!
+      runtime-endpoint: unix:///run/containerd/containerd.sock
+      image-endpoint: unix:///run/containerd/containerd.sock
+      timeout: 10
+      debug: false
+
+
+# =========== containerd setup & configuration ================
+- name: Check necessary packages
+  ansible.builtin.service:
+    name: containerd
+    state: started
+  ignore_errors: true
+  register: containerd_svc
+
+- name: Check result
+  ansible.builtin.debug:
+    msg: "Contianerd service is {{ 'not running' if containerd_svc.failed else 'running' }}"
+
+- name: Setup Containerd basic necessary packages
+  when: containerd_svc.failed
+  block:
+
+    - name: Download docker keyring
+      ansible.builtin.shell: |
+        cd /usr/share/keyrings/
+        wget https://download.docker.com/linux/ubuntu/gpg
+        gpg --dearmor -o /usr/share/keyrings/docker.gpg --yes /usr/share/keyrings/gpg
+        chmod a+r /usr/share/keyrings/docker.gpg
+      changed_when: true
+
+    - name: Add containerd repository
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic stable"
+        state: present
+        filename: docker
+
+    - name: Installing contianerd.io service
+      ansible.builtin.apt:
+        update_cache: true
+        name: containerd.io
+        state: present
+      ignore_errors: true
+      register: containerd_svc_install
+
+    - name: Check result
+      ansible.builtin.debug:
+        msg: "Containerd service {{ 'failed to install. Check package repository' if containerd_svc_install.failed else 'installed successfully.' }}"
+
+    - name: Check config.toml file availability
+      ansible.builtin.stat:
+        path: /etc/containerd/config.toml
+      ignore_errors: true
+      register: config_file
+
+    - name: Check result
+      ansible.builtin.debug:
+        msg: "config.toml file {{ 'present.' if config_file.stat.exists else 'absent.' }}"
+
+    - name: Update contianerd configuration
+      when: config_file.stat.exists
+      block:
+        - name: Truncate config.toml file for new configuration
+          ansible.builtin.copy:
+            content: ""
+            dest: /etc/containerd/config.toml
+            mode: '0644'
+
+        - name: Configure config.toml file for systemd cgroup driver
+          ansible.builtin.lineinfile:
+            path: /etc/containerd/config.toml
+            insertafter: EOF
+            line: |
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+                  SystemdCgroup = true
+
+        - name: Restart containerd
+          ansible.builtin.service:
+            name: containerd
+            state: restarted

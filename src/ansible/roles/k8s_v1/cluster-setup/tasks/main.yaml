@@ -1,0 +1,69 @@
+---
+- name: Check if Kubernetes cluster is running
+  ansible.builtin.command: kubectl --kubeconfig /etc/kubernetes/admin.conf cluster-info
+  ignore_errors: true
+  register: k8s_cluster_info
+  changed_when: false
+  become: true
+
+- name: Check result
+  ansible.builtin.debug:
+    msg: "Kubernetes cluster is {{ 'running' if k8s_cluster_info.rc == 0 else 'not running' }}"
+    # var: k8s_cluster_info
+
+- name: Creating the Cluster
+  when: k8s_cluster_info.rc != 0
+  block:
+    - name: Disable swap
+      become: true
+      shell: |
+        swapoff -a
+        sed -i '/ swap / s/^/#/' /etc/fstab
+
+
+    - name: Fetch images
+      ansible.builtin.command: kubeadm config images pull
+      changed_when: true
+
+    - name: Initialise the K8S cluster
+      become: true
+      ansible.builtin.command:
+        kubeadm init --pod-network-cidr={{ pod_nw_cidr }} --apiserver-advertise-address={{ ansible_host }} --ignore-preflight-errors=preflight
+      register: kubeadm_init
+      changed_when: true
+
+      # kubectl --kubeconfig /etc/kubernetes/admin.conf apply -f https://docs.projectcalico.org/manifests/calico.yaml
+    - name: Install CNI
+      ansible.builtin.shell: |
+        kubectl --kubeconfig /etc/kubernetes/admin.conf apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+        sleep 30
+      changed_when: kubeadm_init.rc == 0
+
+    - name: Grant kubectl access to "{{ansible_user}}" user
+      ansible.builtin.shell: |
+        cd
+        mkdir -p /home/{{ansible_user}}/.kube
+        sudo cp /etc/kubernetes/admin.conf /home/{{ansible_user}}/.kube/config
+        sudo chown $(id -u):$(id -g) /home/{{ansible_user}}/.kube/config
+      changed_when: kubeadm_init.rc == 0
+
+    - name: Copy kubeconfig
+      fetch:
+        src: "/home/{{ ansible_user }}/.kube/config"
+        dest: "../.kube/{{k8s_distribution}}-config"
+        flat: yes
+        validate_checksum: no
+      become: false
+
+# ====== Create K8S Cluster Joining script ==========
+- name: Create cluster joining script
+  ansible.builtin.shell: |
+    kubeadm token create --print-join-command > /tmp/join_cluster.sh
+    chmod a+x /tmp/join_cluster.sh
+  changed_when: true
+
+- name: Fetch cluster joining script
+  ansible.builtin.fetch:
+    src: /tmp/join_cluster.sh
+    dest: "../.kube/{{k8s_distribution}}-join_cluster.sh"
+    flat: true

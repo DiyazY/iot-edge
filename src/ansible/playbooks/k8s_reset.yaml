@@ -1,0 +1,6 @@
+---
+- name: Reset k8s
+  hosts: iot_cluster
+  become: true
+  roles:
+    - k8s/reset

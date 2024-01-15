@@ -10,6 +10,13 @@
     - k0scontroller
     - k0sworker
 
+- name: run k0s stop
+  command: sudo k0s stop
+  ignore_errors: true
+
+- name: run k0s reset
+  command: k0s reset
+
 - name: Umount k0s filesystems
   include_tasks: umount_with_children.yml
   with_items:
@@ -18,7 +25,7 @@
   loop_control:
     loop_var: mounted_fs
 
-- name: Remove k0s Directories
+- name: Remove k0s Directories and binary
   become: true
   file:
     path: "{{ item }}"
@@ -30,6 +37,7 @@
     - /var/lib/kubelet
     - "{{ systemd_dest }}/k0scontroller.service"
     - "{{ systemd_dest }}/k0sworker.service"
+    - "{{k0s_binary_dest}}"
 
 - name: daemon_reload
   systemd:

@@ -1,0 +1,35 @@
+# remove this : /etc/sysctl.d/11-k8s.conf
+# remove this: kubeadm & kubectl
+# remove this: kubelet
+# remove this: /usr/share/keyrings/kubernetes-archive-keyring.asc
+# remove this: contianerd.io
+# remove this: /etc/containerd/
+# remove this: /etc/kubernetes/
+# remove this: /tmp/join_cluster.sh
+
+# enable swap
+# - name: Enable swap
+#   become: true
+#   block:
+#     - name: Uncomment swap line in /etc/fstab
+#       lineinfile:
+#         path: /etc/fstab
+#         regexp: '^#(.+ none swap sw .+)$'
+#         line: '\1'
+#         backrefs: yes
+
+#     - name: Turn on swap
+#       command: swapon -a
+
+# also look at this: https://stackoverflow.com/questions/44698283/how-to-completely-uninstall-kubernetes
+
+# todo the work
+# sudo kubeadm reset
+# sudo rm -rf /etc/cni/net.d
+# sudo apt-get purge kubeadm kubectl kubelet kubernetes-cni kube* 
+# sudo apt-get autoremove 
+# sudo rm -rf .kube/
+# sudo rm -rf /etc/kubernetes/
+# sudo rm /etc/modules-load.d/11-k8s.conf
+# sudo rm /usr/share/keyrings/kubernetes-archive-keyring.asc
+# sudo rm -rf /etc/containerd/

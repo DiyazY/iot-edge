@@ -119,8 +119,11 @@ First change the directory: `cd src/ansible`;
   * https://dev.to/arthurkay/k3s-node-status-notready-4j3m
   * Sometimes they are not ready, but it is possible to run tests anyway.
 * dp_redis_density test needs the intervention in a master node. In `~/.k-bench/configs/dp_redis_density/redis_pod.yaml`, change line #17 to `worker`.
-* before each run `kubectl --kubeconfig ../.kube/k0s-config label  nodes <node-name>  beta.kubernetes.io/instance-type=worker`
+* before each distribution tests `kubectl --kubeconfig ../.kubeconfig label  nodes <node-name>  beta.kubernetes.io/instance-type=worker`
+  * TODO: automate this step
+* when run `reliability` tests, ensure that all eth interfaces are set correctly
 * k0s wraps kubectl, thus, it should be reached out by `k0s kubectl`
+* for k8s turn off swapping, `sudo swapoff -a`
 
 # TODOs
 * ~~add systemctl start mongod ~~
