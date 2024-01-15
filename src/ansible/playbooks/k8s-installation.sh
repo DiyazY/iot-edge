@@ -25,6 +25,10 @@ EOF
 # Apply sysctl params without reboot
 sudo sysctl --system
 
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+
 # verify that things are running
 lsmod | grep br_netfilter
 lsmod | grep overlay
@@ -36,7 +40,12 @@ sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables ne
 sudo wget -O /tmp/containerd-1.7.11-linux-amd64.tar.gz https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz
 sudo tar Cxzvf /usr/local /tmp/containerd-1.7.11-linux-amd64.tar.gz
 
+# rpi
+# sudo wget -O /tmp/containerd-1.7.11-linux-arm64.tar.gz https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-arm64.tar.gz
+# sudo tar Cxzvf /usr/local /tmp/containerd-1.7.11-linux-arm64.tar.gz
+
 sudo wget -O /usr/local/lib/systemd/system/containerd.service https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+# the line below is used on raspberry pi
 # sudo wget -O /etc/systemd/system/containerd.service https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
@@ -44,9 +53,16 @@ sudo systemctl enable --now containerd
 sudo wget -O /tmp/runc.amd64 https://github.com/opencontainers/runc/releases/download/v1.1.11/runc.amd64
 sudo install -m 755 /tmp/runc.amd64 /usr/local/sbin/runc
 
+# rpi
+# sudo wget -O /tmp/runc.arm64 https://github.com/opencontainers/runc/releases/download/v1.1.11/runc.arm64
+# sudo install -m 755 /tmp/runc.arm64 /usr/local/sbin/runc
+
 mkdir -p /opt/cni/bin
 sudo wget -O /tmp/cni-plugins-linux-amd64-v1.4.0.tgz https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-amd64-v1.4.0.tgz
 sudo tar Cxzvf /opt/cni/bin /tmp/cni-plugins-linux-amd64-v1.4.0.tgz
+
+sudo wget -O /tmp/cni-plugins-linux-arm64-v1.4.0.tgz https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-arm64-v1.4.0.tgz
+sudo tar Cxzvf /opt/cni/bin /tmp/cni-plugins-linux-arm64-v1.4.0.tgz
 # containerd steps - end
 
 sudo mkdir /etc/containerd
@@ -61,7 +77,12 @@ sudo containerd config default > /etc/containerd/config.toml
 
 sudo systemctl restart containerd
 
+sudo swapoff -a
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
+# till this line things are the same for master and nodes
+
+# master node - begin
 ip route show # Look for a line starting with "default via"
 
 sudo kubeadm init --apiserver-advertise-address [your ip address] --pod-network-cidr
@@ -101,6 +122,14 @@ sudo kubeadm init phase certs all # this doesn't help
 # run this from a remote machine
 kubectl --kubeconfig ../.kube/[config-path] apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml --validate=false
 
+# master node - end
+
+
+###
+# preparing worker nodes.
+###
+sudo apt-get update
+# and run all previous steps except 
 
 # run on worker nodes (those are in local net... and only for testing)
 kubeadm join 192.168.1.106:6443 --token ibwhz4.d287l59q08bpoyhp \
