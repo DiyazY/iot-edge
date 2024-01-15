@@ -2,8 +2,8 @@
 
 # WIP
 
-distribution="k0s"
-test_types=("reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
+distribution="k8s"
+test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
 
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
@@ -33,10 +33,10 @@ for test_type in "${test_types[@]}"; do
         echo "Test is going..."
         if [[ "$test_type" == "idle" ]]; then
             start_time=$(date '+%s')
-            echo "$start_time" > ../k-bench-results/${distribution}/${tag}/tmp-before.txt
+            echo "$start_time" > ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-before.txt
             sleep 300 # wait 5 mins
             end_time=$(date '+%s')
-            echo "$end_time" >> ../k-bench-results/${distribution}/${tag}/tmp-after.txt
+            echo "$end_time" >> ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-after.txt
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/mongodb-derive-data.yaml --extra-vars "start_test=${start_time} end_test=${end_time} test_type=${test_type}" >> "$output_file" 2>&1 
         elif [[ "$test_type" == "reliability-control" || "$test_type" == "reliability-worker" ]]; then
             random_number=$((RANDOM % 3))
