@@ -118,3 +118,12 @@ changed: [192.168.1.113] => (item=net)
 PLAY RECAP *********************************************************************
 192.168.1.113              : ok=7    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
+
+PLAY [Clean redis test] ********************************************************
+
+TASK [Run clean up script] *****************************************************
+fatal: [192.168.1.106]: FAILED! => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "changed": true, "cmd": ["sudo", "/home/d-user/.k-bench/cleanup-k0s.sh"], "delta": "0:00:00.004746", "end": "2024-01-17 08:04:45.197536", "msg": "non-zero return code", "rc": 1, "start": "2024-01-17 08:04:45.192790", "stderr": "sudo: /home/d-user/.k-bench/cleanup-k0s.sh: command not found", "stderr_lines": ["sudo: /home/d-user/.k-bench/cleanup-k0s.sh: command not found"], "stdout": "", "stdout_lines": []}
+
+PLAY RECAP *********************************************************************
+192.168.1.106              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
