@@ -2,12 +2,12 @@
 ---
 - name: Kubernetes Recovery Testing
   hosts: iot_cluster
-  become: true
   tasks:
     - name: Set fact for the hostname at the given index
       set_fact:
         specific_node: "{{ groups[machine][(node_index | int)] }}"
-        kubeconfig: "../.kube/{{k8s_distribution}}-config"
+        kubeconfig: "../../.kube/{{k8s_distribution}}-config"
+        destination: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/"
       run_once: true
 
 
@@ -27,8 +27,8 @@
       shell: |
         # sudo k0s kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_all.yaml
         # sudo k0s kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_nodes.yaml
-        sudo kubectl get all --all-namespaces -o yaml --kubeconfig {{kubeconfig}} > ../../k-bench-results/{{k8s_distribution}}/{{ tag }}/backup_all.yaml
-        sudo kubectl get nodes -o yaml --kubeconfig {{kubeconfig}} > ../../k-bench-results/{{k8s_distribution}}/{{ tag }}/backup_nodes.yaml
+        kubectl get all --all-namespaces -o yaml --kubeconfig {{kubeconfig}} > {{destination}}/backup_all.yaml
+        kubectl get nodes -o yaml --kubeconfig {{kubeconfig}} > {{destination}}/backup_nodes.yaml
 
     - name: Get before Date and Time
       command:  date '+%s'
@@ -49,7 +49,7 @@
     - name: Copy before time
       fetch:
         src: "/home/{{ ansible_user }}/tmp-before.txt"
-        dest: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/"
+        dest: "{{destination}}"
         flat: yes
       when: inventory_hostname == groups['master'][0]
 
@@ -92,7 +92,7 @@
     - name: Copy after time
       fetch:
         src: "/home/{{ ansible_user }}/tmp-after.txt"
-        dest: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/"
+        dest: "{{destination}}"
         flat: yes
       when: inventory_hostname == groups['master'][0]
 
@@ -115,7 +115,7 @@
     - name: Copy recovery time
       fetch:
         src: "/home/{{ ansible_user }}/tmp-recovery.txt"
-        dest: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/"
+        dest: "{{destination}}"
         flat: yes
       when: inventory_hostname == groups['master'][0]
 
@@ -124,6 +124,6 @@
       shell: |
         # sudo k0s kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_all.yaml
         # sudo k0s kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_nodes.yaml
-        sudo kubectl get all --all-namespaces -o yaml --kubeconfig {{kubeconfig}} > ../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/post_recovery_all.yaml
-        sudo kubectl get nodes -o yaml --kubeconfig {{kubeconfig}} > ../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/post_recovery_nodes.yaml
+        kubectl get all --all-namespaces -o yaml --kubeconfig {{kubeconfig}} > {{destination}}/post_recovery_all.yaml
+        kubectl get nodes -o yaml --kubeconfig {{kubeconfig}} > {{destination}}/post_recovery_nodes.yaml
 
