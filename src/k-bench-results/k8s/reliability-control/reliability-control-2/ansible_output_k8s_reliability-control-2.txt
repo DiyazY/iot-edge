@@ -1,0 +1,177 @@
+Start testing of control: 0
+
+PLAY [Kubernetes Recovery Testing] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.1.106]
+ok: [192.168.1.100]
+ok: [192.168.1.102]
+ok: [192.168.1.101]
+
+TASK [Set fact for the hostname at the given index] ****************************
+ok: [192.168.1.106]
+
+TASK [Create reliability test directory] ***************************************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Get list of all nodes] ***************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+fatal: [192.168.1.106]: FAILED! => {"changed": false, "cmd": "k0s kubectl get nodes -o 'jsonpath={.items[*].metadata.name}'", "msg": "[Errno 2] No such file or directory: b'k0s'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+TASK [Split node names into a list] ********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Backup current cluster state] ********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Get before Date and Time] ************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+skipping: [192.168.1.102]
+
+TASK [Display the time before test] ********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Write variable to file] **************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Copy before time] ********************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Wait for a specified time (e.g., 250 seconds)] ***************************
+Pausing for 250 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [192.168.1.100]
+
+TASK [Simulate master failure (Stopping network interface)] ********************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Wait until all nodes are Ready] ******************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Wait for a specified time (e.g., 600 seconds)] ***************************
+Pausing for 600 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [192.168.1.100]
+
+TASK [Get after Date and Time] *************************************************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Display the time after test] *********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Write variable to file] **************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Copy after time] *********************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Calculate recovery duration] *********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Display recovery duration] ***********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Write recovery to file] **************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Copy recovery time] ******************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Gather post-recovery cluster state] **************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+
+TASK [Copy test results to repository] *****************************************
+skipping: [192.168.1.100] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.100] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.100] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.100] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.100]
+skipping: [192.168.1.102] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.102] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.102] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.102] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.102]
+skipping: [192.168.1.101] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.101]
+
+TASK [Delete test results on a remote machine] *********************************
+skipping: [192.168.1.100] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.100] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.100] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.100] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.100]
+skipping: [192.168.1.102] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.102] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.102] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.102] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.102]
+skipping: [192.168.1.101] => (item={'file': 'backup_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'backup_all'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_nodes'}) 
+skipping: [192.168.1.101] => (item={'file': 'post_recovery_all'}) 
+skipping: [192.168.1.101]
+
+PLAY RECAP *********************************************************************
+192.168.1.100              : ok=3    changed=0    unreachable=0    failed=0    skipped=21   rescued=0    ignored=0   
+192.168.1.101              : ok=1    changed=0    unreachable=0    failed=0    skipped=21   rescued=0    ignored=0   
+192.168.1.102              : ok=1    changed=0    unreachable=0    failed=0    skipped=21   rescued=0    ignored=0   
+192.168.1.106              : ok=3    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+
+PLAY [k-bench derive data from results] ****************************************
+
+TASK [List of test names] ******************************************************
+ok: [192.168.1.113]
+
+TASK [Display start and end time] **********************************************
+ok: [192.168.1.113] => {
+    "msg": " - "
+}
+
+TASK [Generating CSV file CPU] *************************************************
+fatal: [192.168.1.113]: FAILED! => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "changed": true, "cmd": ["mongoexport", "--db=netdata", "--collection=metrics", "--type=csv", "--fields=hostname,value,timestamp", "--query={\"chart_type\": \"system\", \"chart_family\": \"cpu\", \"chart_context\": \"system.cpu\", \"id\": \"idle\", \"timestamp\": {\"$gt\": , \"$lt\":  }}", "--out=./test-results/reliability-control-2-cpu.csv"], "delta": "0:00:00.006086", "end": "2024-01-17 10:03:49.979120", "msg": "non-zero return code", "rc": 1, "start": "2024-01-17 10:03:49.973034", "stderr": "2024-01-17T10:03:49.978+0200\tquery '[123 34 99 104 97 114 116 95 116 121 112 101 34 58 32 34 115 121 115 116 101 109 34 44 32 34 99 104 97 114 116 95 102 97 109 105 108 121 34 58 32 34 99 112 117 34 44 32 34 99 104 97 114 116 95 99 111 110 116 101 120 116 34 58 32 34 115 121 115 116 101 109 46 99 112 117 34 44 32 34 105 100 34 58 32 34 105 100 108 101 34 44 32 34 116 105 109 101 115 116 97 109 112 34 58 32 123 34 36 103 116 34 58 32 44 32 34 36 108 116 34 58 32 32 125 125]' is not valid JSON: invalid character ',' looking for beginning of value\n2024-01-17T10:03:49.978+0200\ttry 'mongoexport --help' for more information", "stderr_lines": ["2024-01-17T10:03:49.978+0200\tquery '[123 34 99 104 97 114 116 95 116 121 112 101 34 58 32 34 115 121 115 116 101 109 34 44 32 34 99 104 97 114 116 95 102 97 109 105 108 121 34 58 32 34 99 112 117 34 44 32 34 99 104 97 114 116 95 99 111 110 116 101 120 116 34 58 32 34 115 121 115 116 101 109 46 99 112 117 34 44 32 34 105 100 34 58 32 34 105 100 108 101 34 44 32 34 116 105 109 101 115 116 97 109 112 34 58 32 123 34 36 103 116 34 58 32 44 32 34 36 108 116 34 58 32 32 125 125]' is not valid JSON: invalid character ',' looking for beginning of value", "2024-01-17T10:03:49.978+0200\ttry 'mongoexport --help' for more information"], "stdout": "", "stdout_lines": []}
+
+PLAY RECAP *********************************************************************
+192.168.1.113              : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
