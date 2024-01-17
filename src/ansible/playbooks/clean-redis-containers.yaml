@@ -1,9 +1,16 @@
 ---
 - name: Clean redis test
-  hosts: master
+  hosts: localhost
   gather_facts: false
   become: true
   tasks:
     - name: Run clean up script
-      command: sudo /home/{{ ansible_user }}/.k-bench/cleanup-k0s.sh
+      # command: sudo /home/{{ ansible_user }}/.k-bench/cleanup-k0s.sh # I used to run this script on master node
       # command: sudo /home/{{ ansible_user }}/.k-bench/cleanup.sh
+      shell: |
+        kubectl delete all --all -n kbench-pod-namespace --kubeconfig ../.kube/{{k8s_distribution}}-config
+        kubectl delete pvc fio-block-pvc -n kbench-pod-namespace --kubeconfig ../.kube/{{k8s_distribution}}-config
+        kubectl delete all --all -n kbench-deployment-namespace --kubeconfig ../.kube/{{k8s_distribution}}-config
+        kubectl delete all --all -n kbench-service-namespace --kubeconfig ../.kube/{{k8s_distribution}}-config
+        kubectl delete all --all -n kbench-rc-namespace --kubeconfig ../.kube/{{k8s_distribution}}-config
+        kubectl delete all --all -n kbench-resource-namespace --kubeconfig ../.kube/{{k8s_distribution}}-config
