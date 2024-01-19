@@ -2,37 +2,33 @@
 ---
 - name: Kubernetes Recovery Testing
   hosts: iot_cluster
-  become: true
   tasks:
     - name: Set fact for the hostname at the given index
       set_fact:
         specific_node: "{{ groups[machine][(node_index | int)] }}"
+        kubeconfig: "../../.kube/{{k8s_distribution}}-config"
+        destination: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/"
       run_once: true
 
-    - name: Create reliability test directory
-      file:
-        path: "~{{ ansible_user }}/k-bench-results/{{ tag }}"
-        state: directory
-      when: inventory_hostname == groups['master'][0]
 
     - name: Get list of all nodes
-      # command: kubectl get nodes -o jsonpath='{.items[*].metadata.name}'
-      command: k0s kubectl get nodes -o jsonpath='{.items[*].metadata.name}'
+      delegate_to: localhost
+      command: kubectl get nodes -o jsonpath='{.items[*].metadata.name}' --kubeconfig {{kubeconfig}}
+      # command: k0s kubectl get nodes -o jsonpath='{.items[*].metadata.name}'
       register: node_names_output
-      when: inventory_hostname == groups['master'][0]
 
     - name: Split node names into a list
+      delegate_to: localhost
       set_fact:
         node_names: "{{ node_names_output.stdout.split() }}"
-      when: inventory_hostname == groups['master'][0]
 
     - name: Backup current cluster state
+      delegate_to: localhost
       shell: |
-        sudo k0s kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_all.yaml
-        sudo k0s kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_nodes.yaml
-        # sudo kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_all.yaml
-        # sudo kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_nodes.yaml
-      when: inventory_hostname == groups['master'][0]
+        # sudo k0s kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_all.yaml
+        # sudo k0s kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/backup_nodes.yaml
+        kubectl get all --all-namespaces -o yaml --kubeconfig {{kubeconfig}} > {{destination}}/backup_all.yaml
+        kubectl get nodes -o yaml --kubeconfig {{kubeconfig}} > {{destination}}/backup_nodes.yaml
 
     - name: Get before Date and Time
       command:  date '+%s'
@@ -53,7 +49,7 @@
     - name: Copy before time
       fetch:
         src: "/home/{{ ansible_user }}/tmp-before.txt"
-        dest: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/"
+        dest: "{{destination}}"
         flat: yes
       when: inventory_hostname == groups['master'][0]
 
@@ -68,10 +64,10 @@
       when: inventory_hostname == specific_node
 
     - name: Wait until all nodes are Ready
-      # command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m # issue with k3s that it can arbitrarily show nodes as NotReady
-      command: k0s kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m
+      delegate_to: localhost
+      command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m --kubeconfig {{kubeconfig}} # issue with k3s that it can arbitrarily show nodes as NotReady
+      #command: k0s kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m
       with_items: "{{ node_names }}" 
-      when: inventory_hostname == groups['master'][0]
 
     - name: Wait for a specified time (e.g., 600 seconds)
       ansible.builtin.pause:
@@ -96,7 +92,7 @@
     - name: Copy after time
       fetch:
         src: "/home/{{ ansible_user }}/tmp-after.txt"
-        dest: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/"
+        dest: "{{destination}}"
         flat: yes
       when: inventory_hostname == groups['master'][0]
 
@@ -119,40 +115,15 @@
     - name: Copy recovery time
       fetch:
         src: "/home/{{ ansible_user }}/tmp-recovery.txt"
-        dest: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/"
+        dest: "{{destination}}"
         flat: yes
       when: inventory_hostname == groups['master'][0]
 
     - name: Gather post-recovery cluster state
+      delegate_to: localhost
       shell: |
-        sudo k0s kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_all.yaml
-        sudo k0s kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_nodes.yaml
-        # sudo kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_all.yaml
-        # sudo kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_nodes.yaml
-      when: inventory_hostname == groups['master'][0]
-
-    - name: Copy test results to repository
-      fetch:
-        src: "~{{ ansible_user }}/k-bench-results/{{ tag }}/{{item.file}}.yaml"
-        dest: "../../k-bench-results/{{k8s_distribution}}/{{test_type}}/{{ tag }}/"
-        flat: yes
-      loop:
-        - file: backup_nodes
-        - file : backup_all
-        - file : post_recovery_nodes
-        - file : post_recovery_all
-      when: inventory_hostname == groups['master'][0]
-      ignore_errors: true
-    
-    - name: Delete test results on a remote machine
-      file:
-        path: "~{{ ansible_user }}/k-bench-results/{{ tag }}/{{item.file}}.yaml"
-        state: absent
-      loop:
-        - file: backup_nodes
-        - file : backup_all
-        - file : post_recovery_nodes
-        - file : post_recovery_all
-      when: inventory_hostname == groups['master'][0]
-      ignore_errors: true
+        # sudo k0s kubectl get all --all-namespaces -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_all.yaml
+        # sudo k0s kubectl get nodes -o yaml > ~{{ ansible_user }}/k-bench-results/{{ tag }}/post_recovery_nodes.yaml
+        kubectl get all --all-namespaces -o yaml --kubeconfig {{kubeconfig}} > {{destination}}/post_recovery_all.yaml
+        kubectl get nodes -o yaml --kubeconfig {{kubeconfig}} > {{destination}}/post_recovery_nodes.yaml
 
