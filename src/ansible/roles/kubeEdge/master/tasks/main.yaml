@@ -1,0 +1,107 @@
+---
+- name: download kubeedge binaries
+  ansible.builtin.shell: 
+    cmd: "wget https://github.com/kubeedge/kubeedge/releases/download/v{{kubeedge_version}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz"
+    chdir: "/home/{{ansible_user}}/"
+
+- name: download checksum
+  ansible.builtin.shell: 
+      cmd: "wget https://github.com/kubeedge/kubeedge/releases/download/v{{kubeedge_version}}/checksum_keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz.txt"
+      chdir: "/home/{{ansible_user}}/"
+
+- name: cat the checksum
+  ansible.builtin.shell: 
+      cmd: "cat checksum_keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz.txt"
+      chdir: "/home/{{ansible_user}}/"
+  register: checksum  
+
+- name: verify checksum
+  stat: 
+    path: "/home/{{ansible_user}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz"
+    checksum_algorithm: sha512
+    get_checksum: yes
+  register: checksum1   
+
+- name: Fail if checksum is not veified
+  ansible.builtin.fail:
+    msg: "Whoops! checksum not verified"
+  when: checksum.stdout != checksum1.stat.checksum
+
+- name: Unarchive a file 
+  ansible.builtin.unarchive:
+    src: "/home/{{ansible_user}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz"
+    dest: "/home/{{ansible_user}}/"
+    remote_src: yes  
+
+- name: Change file permissions
+  ansible.builtin.file:
+    path: "/home/{{ansible_user}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}/keadm/keadm"
+    mode: '0755'
+
+- name: copy binary
+  ansible.builtin.copy:
+    src: "/home/{{ansible_user}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}/keadm/keadm"
+    dest: /usr/local/bin 
+    remote_src: yes 
+    mode: u+x
+
+- name: Set fact
+  become: false
+  delegate_to: localhost
+  set_fact:
+    kubeconfig: "../../.kube/k8s-config" # since installed k8s is prerequisite 
+    run_once: true
+
+- name: Getting master's node name (expect of getting only master node's name)
+  become: false
+  delegate_to: localhost
+  command: kubectl get nodes -o jsonpath='{.items[*].metadata.name}' --kubeconfig {{kubeconfig}}
+  register: node_name
+
+- name: Untaint the Master Node
+  delegate_to: localhost
+  become: false
+  command: kubectl taint nodes {{node_name.stdout}} node-role.kubernetes.io/control-plane:NoSchedule- --kubeconfig {{kubeconfig}}
+  ignore_errors: true
+
+- name: Wait for a few seconds
+  pause:
+    seconds: 30
+    
+- name: initialize cloudcore
+  ansible.builtin.shell: "keadm init --advertise-address={{ansible_host}} --kube-config=/home/{{ansible_user}}/.kube/config" 
+
+- name: Taint the Master Node back
+  become: false
+  delegate_to: localhost
+  command: kubectl taint nodes {{node_name.stdout}}  node-role.kubernetes.io/control-plane:NoSchedule --kubeconfig {{kubeconfig}}
+  ignore_errors: true
+
+- name: Wait for a few seconds
+  pause:
+    seconds: 30
+
+# it seems that new version runs cloudcore as a container
+# - name: Copy file with owner and permissions
+#   ansible.builtin.copy:
+#     src: /etc/kubeedge/cloudcore.service
+#     dest: /etc/systemd/system/
+#     remote_src: yes
+
+# - name: enable cloudcore
+#   ansible.builtin.shell: systemctl enable --now cloudcore
+    
+# - name: Sleep for 5 seconds and continue with play
+#   wait_for:
+#     timeout: 5
+
+- name: get TOKEN
+  ansible.builtin.shell: "keadm gettoken  --kube-config=/home/{{ansible_user}}/.kube/config"
+  register: TOKEN
+
+- debug:
+    var: TOKEN.stdout
+
+- name: Setting host facts token
+  ansible.builtin.set_fact:  token="{{TOKEN.stdout}}"
+
