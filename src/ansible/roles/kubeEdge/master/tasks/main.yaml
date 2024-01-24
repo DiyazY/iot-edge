@@ -105,3 +105,8 @@
 - name: Setting host facts token
   ansible.builtin.set_fact:  token="{{TOKEN.stdout}}"
 
+- name: cleaning
+  shell: |
+    sudo rm keadm-*.gz*
+    sudo rm *keadm-*.txt*
+
