@@ -1,0 +1,12 @@
+# assume that k8s has been already installed!
+---
+# - hosts: master
+#   become: true
+#   roles:
+#     - kubeEdge/master
+
+# uncomment this when token is at hands, and comment above
+- hosts: node
+  become: true
+  roles:
+    - kubeEdge/worker
