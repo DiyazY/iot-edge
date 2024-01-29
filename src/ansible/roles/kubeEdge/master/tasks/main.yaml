@@ -64,12 +64,18 @@
   command: kubectl taint nodes {{node_name.stdout}} node-role.kubernetes.io/control-plane:NoSchedule- --kubeconfig {{kubeconfig}}
   ignore_errors: true
 
+- name: Label nodes
+  delegate_to: localhost
+  become: false
+  command: kubectl label services kubernetes service.edgemesh.kubeedge.io/service-proxy-name="" --kubeconfig {{kubeconfig}}
+  ignore_errors: true
+
 - name: Wait for a few seconds
   pause:
     seconds: 30
     
 - name: initialize cloudcore
-  ansible.builtin.shell: "keadm init --advertise-address={{ansible_host}} --kube-config=/home/{{ansible_user}}/.kube/config" 
+  ansible.builtin.shell: "keadm init --advertise-address={{ansible_host}} --kube-config=/home/{{ansible_user}}/.kube/config --set cloudCore.modules.dynamicController.enable=true" 
 
 - name: Taint the Master Node back
   become: false
@@ -110,3 +116,57 @@
     sudo rm keadm-*.gz*
     sudo rm *keadm-*.txt*
 
+# - name: generating certs for stream
+#   shell: |
+#     export CLOUDCOREIPS="{{ansible_host}}"
+#     sudo su
+#     wget https://raw.githubusercontent.com/kubeedge/kubeedge/master/build/tools/certgen.sh /etc/kubeedge/
+#     chmod +x /etc/kubeedge/certgen.sh
+#     /etc/kubeedge/certgen.sh stream
+#     /etc/kubeedge/certgen.sh genCertAndKey edge
+
+- name: get tunnelport (read the ip addresses of cloud)
+  delegate_to: localhost
+  shell: kubectl get cm tunnelport -n kubeedge -o yaml --kubeconfig {{kubeconfig}}
+
+- name: fix iptables (in my case this)
+  shell: sudo iptables -t nat -A OUTPUT -p tcp --dport 10351 -j DNAT --to 192.168.1.17:10003
+
+# useless because cloudcore runs in a container mode. Read this: https://kubeedge.io/docs/faq/setup/
+# - name: adjust clouldcore config
+#   shell: |
+#     cat << EOF >  /etc/kubeedge/config/cloudcore.yaml
+#     cloudStream:
+#       enable: true
+#       streamPort: 10003
+#       tlsStreamCAFile: /etc/kubeedge/ca/streamCA.crt
+#       tlsStreamCertFile: /etc/kubeedge/certs/stream.crt
+#       tlsStreamPrivateKeyFile: /etc/kubeedge/certs/stream.key
+#       tlsTunnelCAFile: /etc/kubeedge/ca/rootCA.crt
+#       tlsTunnelCertFile: /etc/kubeedge/certs/server.crt
+#       tlsTunnelPrivateKeyFile: /etc/kubeedge/certs/server.key
+#       tunnelPort: 10004
+#     EOF
+
+
+# - name: disable kube-proxy on all edge nodes (edge nodes conflict with it)
+#   delegate_to: localhost
+#   shell: | 
+#     # kubectl patch daemonset kube-proxy -n kube-system -p '{"spec": {"template": {"spec": {"affinity": {"nodeAffinity": {"requiredDuringSchedulingIgnoredDuringExecution": {"nodeSelectorTerms": [{"matchExpressions": [{"key": "node-role.kubernetes.io/edge", "operator": "DoesNotExist"}]}]}}}}}}}' --kubeconfig {{kubeconfig}} 
+# kubectl patch daemonset kube-proxy -n kube-system -p '{"spec": {"template": {"spec": {"affinity": null}}}}' ## revert action
+  
+
+# disabling flannel and other things on edge nodes
+# kubectl edit ds  kube-flannel-ds -n kube-flannel
+# change afinity
+# requiredDuringSchedulingIgnoredDuringExecution:
+#             nodeSelectorTerms:
+#             - matchExpressions:
+#               - key: kubernetes.io/os
+#                 operator: In
+#                 values:
+#                 - linux
+#               - key: node-role.kubernetes.io/edge
+#                 operator: DoesNotExist
+#               - key: node-role.kubernetes.io/agent
+#                 operator: DoesNotExist

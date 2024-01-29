@@ -47,7 +47,7 @@
 
 - name: clean /etc/kubeedge/config
   file:
-    name: "/etc/kubeedge/config"
+    name: "/etc/kubeedge"
     state: absent
   ignore_errors: true
 
@@ -68,13 +68,18 @@
     cat << EOF >  /var/lib/kubelet/config.yaml
     apiVersion: kubelet.config.k8s.io/v1beta1
     cgroupDriver: systemd 
+    kind: KubeletConfiguration
     EOF
     sudo systemctl daemon-reload
     sudo systemctl restart kubelet
 
+# this would be available after the installation
 # - name: create kubeedge config
 #   shell: | 
 #     ~/kubeedge/edgecore --defaultconfig > /etc/kubeedge/config/edgecore.yaml
+# some manual steps
+# to read cloudconfig: kubectl get configmap cloudcore -nkubeedge -oyaml
+# edit configs according to this: https://edgemesh.netlify.app/guide/edge-kube-api.html#quick-start.
 
 
 - name: Wait for a few seconds
@@ -85,7 +90,7 @@
 - name: init edgecore
   ansible.builtin.shell: "keadm join --cgroupdriver=systemd --cloudcore-ipport={{master_ip}}:10000 --token={{token}}"
 
-     
+
 - name: change edgecore cgroupDriver
   ansible.builtin.shell: sed -i 's/cgroupfs/systemd/g' /etc/kubeedge/config/edgecore.yaml  
 
@@ -93,3 +98,59 @@
   shell: |
     sudo rm keadm-*.gz*
     sudo rm *keadm-*.txt*
+
+# - name: enabling streaming in sudo nano /etc/kubeedge/config/edgecore.yaml works for progressing further
+# todo: read this: https://kubeedge.io/docs/setup/install-with-keadm/#enable-kubectl-logs-feature
+
+# to deploy edgemesh network, follow this: https://edgemesh.netlify.app/
+
+# alssssssssssssssssssssssssssssssssssssssso configure this: https://kubeedge.io/docs/setup/config/#modification-in-edgecoreyaml
+# sudo nano /etc/kubeedge/config/edgecore.yaml
+#  edged:
+#     ....
+#     podSandboxImage: kubeedge/pause-arm64:3.1
+#     runtimeType: remote
+#     runtimeRequestTimeout: 2
+#     cgroupDriver: systemd
+
+# /etc/containerd/config.toml (don't do this!)
+# systemd_cgroup = true
+
+# cleaning up the flannel stuff
+# $ sudo rm -rf /etc/cni/net.d/10-flannel.conflist
+# $ sudo rm -rf /run/flannel
+# $ sudo systemctl restart edgecore
+# sudo sed -i 's/            SystemdCgroup = false/            SystemdCgroup = true/' /etc/containerd/config.toml
+# $ sudo nano /etc/cni/net.d/my.conflist
+# insert this:
+# {
+#   "cniVersion": "1.0.0",
+#   "name": "containerd-net",
+#   "plugins": [
+#     {
+#       "type": "bridge",
+#       "bridge": "cni0",
+#       "isGateway": true,
+#       "ipMasq": true,
+#       "promiscMode": true,
+#       "ipam": {
+#         "type": "host-local",
+#         "ranges": [
+#           [{
+#             "subnet": "10.216.3.0/24"
+#           }]
+#         ],
+#         "routes": [
+#           { "dst": "0.0.0.0/0" }
+#         ]
+#       }
+#     },
+#     {
+#       "type": "portmap",
+#       "capabilities": {"portMappings": true}
+#     }
+#   ]
+# }
+# $ sudo systemctl restart containerd
+# $ sudo systemctl restart edgecore
+

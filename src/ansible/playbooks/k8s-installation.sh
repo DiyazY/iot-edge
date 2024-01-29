@@ -120,6 +120,10 @@ sudo kubeadm init phase certs all # this doesn't help
 # kubeadm reset and rebooting the machine allows to proceed further
 
 # run this from a remote machine
+
+# NOTE: for kubeedge run it with env variable: export KUBECONFIG=/home/d-user/.kube/config
+# Acutally, kubeedge has its sown CNI compatible networking plugin: edgemesh (https://github.com/kubeedge/kubeedge/issues/1662)
+
 kubectl --kubeconfig ../.kube/[config-path] apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml --validate=false
 
 # master node - end
