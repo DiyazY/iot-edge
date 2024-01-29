@@ -6,6 +6,8 @@ metadata:
   labels:
     name: myredisserverclient
 spec:
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

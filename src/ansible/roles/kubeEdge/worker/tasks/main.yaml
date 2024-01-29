@@ -1,0 +1,156 @@
+---
+- name: download kubeedge binaries
+  ansible.builtin.shell: 
+    cmd: "wget https://github.com/kubeedge/kubeedge/releases/download/v{{kubeedge_version}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz"
+    chdir: "/home/{{ansible_user}}/"
+
+- name: download checksum
+  ansible.builtin.shell: 
+    cmd: "wget https://github.com/kubeedge/kubeedge/releases/download/v{{kubeedge_version}}/checksum_keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz.txt"
+    chdir: "/home/{{ansible_user}}/"
+
+- name: cat the checksum
+  ansible.builtin.shell: 
+    cmd: "cat checksum_keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz.txt"
+    chdir: "/home/{{ansible_user}}/"
+  register: checksum  
+
+- name: verify checksum
+  stat: 
+    path: "/home/{{ansible_user}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz"
+    checksum_algorithm: sha512
+    get_checksum: yes
+  register: checksum1   
+
+- name: Fail if checksum is not veified
+  ansible.builtin.fail:
+    msg: "Whoops! checksum not verified"
+  when: checksum.stdout != checksum1.stat.checksum
+
+- name: Unarchive a file 
+  ansible.builtin.unarchive:
+    src: "/home/{{ansible_user}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}.tar.gz"
+    dest: "/home/{{ansible_user}}/"
+    remote_src: yes  
+
+- name: Change file permissions
+  ansible.builtin.file:
+    path: "/home/{{ansible_user}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}/keadm/keadm"
+    mode: '0755'
+
+- name: copy binary
+  ansible.builtin.copy:
+    src: "/home/{{ansible_user}}/keadm-v{{kubeedge_version}}-linux-{{architecture}}/keadm/keadm"
+    dest: /usr/local/bin 
+    remote_src: yes 
+    mode: u+x
+
+- name: clean /etc/kubeedge/config
+  file:
+    name: "/etc/kubeedge"
+    state: absent
+  ignore_errors: true
+
+- name: create /run/flannel/subnet.env file (looks like some deps)
+  shell: |
+    mkdir -p /run/flannel
+    cat << EOF > /run/flannel/subnet.env
+    FLANNEL_NETWORK=10.244.0.0/16
+    FLANNEL_SUBNET=10.244.0.1/24
+    FLANNEL_MTU=1450
+    FLANNEL_IPMASQ=true
+    EOF
+  ignore_errors: true
+
+- name: adjust kubelet config
+  shell: |
+    sudo mkdir -p /var/lib/kubelet
+    cat << EOF >  /var/lib/kubelet/config.yaml
+    apiVersion: kubelet.config.k8s.io/v1beta1
+    cgroupDriver: systemd 
+    kind: KubeletConfiguration
+    EOF
+    sudo systemctl daemon-reload
+    sudo systemctl restart kubelet
+
+# this would be available after the installation
+# - name: create kubeedge config
+#   shell: | 
+#     ~/kubeedge/edgecore --defaultconfig > /etc/kubeedge/config/edgecore.yaml
+# some manual steps
+# to read cloudconfig: kubectl get configmap cloudcore -nkubeedge -oyaml
+# edit configs according to this: https://edgemesh.netlify.app/guide/edge-kube-api.html#quick-start.
+
+
+- name: Wait for a few seconds
+  pause:
+    seconds: 30
+  run_once: true
+      
+- name: init edgecore
+  ansible.builtin.shell: "keadm join --cgroupdriver=systemd --cloudcore-ipport={{master_ip}}:10000 --token={{token}}"
+
+
+- name: change edgecore cgroupDriver
+  ansible.builtin.shell: sed -i 's/cgroupfs/systemd/g' /etc/kubeedge/config/edgecore.yaml  
+
+- name: cleaning
+  shell: |
+    sudo rm keadm-*.gz*
+    sudo rm *keadm-*.txt*
+
+# - name: enabling streaming in sudo nano /etc/kubeedge/config/edgecore.yaml works for progressing further
+# todo: read this: https://kubeedge.io/docs/setup/install-with-keadm/#enable-kubectl-logs-feature
+
+# to deploy edgemesh network, follow this: https://edgemesh.netlify.app/
+
+# alssssssssssssssssssssssssssssssssssssssso configure this: https://kubeedge.io/docs/setup/config/#modification-in-edgecoreyaml
+# sudo nano /etc/kubeedge/config/edgecore.yaml
+#  edged:
+#     ....
+#     podSandboxImage: kubeedge/pause-arm64:3.1
+#     runtimeType: remote
+#     runtimeRequestTimeout: 2
+#     cgroupDriver: systemd
+
+# /etc/containerd/config.toml (don't do this!)
+# systemd_cgroup = true
+
+# cleaning up the flannel stuff
+# $ sudo rm -rf /etc/cni/net.d/10-flannel.conflist
+# $ sudo rm -rf /run/flannel
+# $ sudo systemctl restart edgecore
+# sudo sed -i 's/            SystemdCgroup = false/            SystemdCgroup = true/' /etc/containerd/config.toml
+# $ sudo nano /etc/cni/net.d/my.conflist
+# insert this:
+# {
+#   "cniVersion": "1.0.0",
+#   "name": "containerd-net",
+#   "plugins": [
+#     {
+#       "type": "bridge",
+#       "bridge": "cni0",
+#       "isGateway": true,
+#       "ipMasq": true,
+#       "promiscMode": true,
+#       "ipam": {
+#         "type": "host-local",
+#         "ranges": [
+#           [{
+#             "subnet": "10.216.3.0/24"
+#           }]
+#         ],
+#         "routes": [
+#           { "dst": "0.0.0.0/0" }
+#         ]
+#       }
+#     },
+#     {
+#       "type": "portmap",
+#       "capabilities": {"portMappings": true}
+#     }
+#   ]
+# }
+# $ sudo systemctl restart containerd
+# $ sudo systemctl restart edgecore
+

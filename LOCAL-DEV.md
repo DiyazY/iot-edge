@@ -124,6 +124,7 @@ First change the directory: `cd src/ansible`;
 * when run `reliability` tests, ensure that all eth interfaces are set correctly
 * k0s wraps kubectl, thus, it should be reached out by `k0s kubectl`
 * for k8s turn off swapping, `sudo swapoff -a`
+* after rebooting, cluster's joining token can be changed (always ensure that token is correct). 
 
 # TODOs
 * ~~add systemctl start mongod ~~
@@ -140,8 +141,8 @@ First change the directory: `cd src/ansible`;
 * in final results, measurements metrics should be adjusted (e.g. totalCpuUtilization = 100 - idle, time in minutes, memory in Mb and etc.)
 
 # test coverage
-k8s: in-progress
+k8s: done
 k0s: done
 k3s: redo
-kubeEdge: not-started
+kubeEdge: in-progress
 openYort: not-started

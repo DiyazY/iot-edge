@@ -120,6 +120,10 @@ sudo kubeadm init phase certs all # this doesn't help
 # kubeadm reset and rebooting the machine allows to proceed further
 
 # run this from a remote machine
+
+# NOTE: for kubeedge run it with env variable: export KUBECONFIG=/home/d-user/.kube/config
+# Acutally, kubeedge has its sown CNI compatible networking plugin: edgemesh (https://github.com/kubeedge/kubeedge/issues/1662)
+
 kubectl --kubeconfig ../.kube/[config-path] apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml --validate=false
 
 # master node - end
@@ -134,3 +138,9 @@ sudo apt-get update
 # run on worker nodes (those are in local net... and only for testing)
 kubeadm join 192.168.1.106:6443 --token ibwhz4.d287l59q08bpoyhp \
         --discovery-token-ca-cert-hash sha256:626b5d1d474caa116b44472748477a62f6bc7407760966db44bee7f4000e585e 
+
+
+###
+# Cleaning the worker nodes
+###
+# run k8s-drain-worker.yaml playbook

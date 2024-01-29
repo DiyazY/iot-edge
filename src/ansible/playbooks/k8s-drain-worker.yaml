@@ -1,0 +1,41 @@
+---
+- name: Run k-bench benchmark
+  hosts: localhost
+
+  tasks:
+  - name: Set fact for the hostname at the given index
+    set_fact:
+      kubeconfig: "../../.kube/{{k8s_distribution}}-config"
+      run_once: true
+
+  - name: Get list of all nodes
+    shell:  "kubectl get nodes --show-labels --kubeconfig {{kubeconfig}} | grep \"beta.kubernetes.io/instance-type=worker\" | awk '{print $1}'"
+    register: node_names_output
+
+  - name: Split node names into a list
+    set_fact:
+      node_names: "{{ node_names_output.stdout.split() }}"
+
+  - name: print names
+    debug:
+      var: node_names
+
+  - name: drain nodes
+    shell: kubectl drain {{item}} --kubeconfig {{kubeconfig}}  --ignore-daemonsets --delete-local-data
+    with_items: "{{ node_names }}" 
+
+  - name: remove the node
+    shell: kubectl delete node {{item}} --kubeconfig {{kubeconfig}}
+    with_items: "{{ node_names }}" 
+
+
+- name: Reset worker nodes
+  hosts: node
+  become: true
+
+  tasks:
+    - name: run kubeadm reset
+      expect:
+        command: kubeadm reset
+        responses:
+          '[reset] Are you sure you want to proceed? [y/N]: ': "y\n"
