@@ -1,0 +1,415 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2024-01-24T20:28:05Z"
+    labels:
+      beta.kubernetes.io/arch: arm64
+      beta.kubernetes.io/instance-type: worker
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: arm64
+      kubernetes.io/hostname: ubuntu-host-75e4c5
+      kubernetes.io/os: linux
+      node-role.kubernetes.io/agent: ""
+      node-role.kubernetes.io/edge: ""
+    name: ubuntu-host-75e4c5
+    resourceVersion: "1125707"
+    uid: 9985448d-eb81-4bfc-a26f-2be9a9827083
+  spec:
+    podCIDR: 10.244.1.0/24
+    podCIDRs:
+    - 10.244.1.0/24
+  status:
+    addresses:
+    - address: 192.168.1.100
+      type: InternalIP
+    - address: ubuntu-host-75e4c5
+      type: Hostname
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: "54972850085"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3778592Ki
+      pods: "110"
+    capacity:
+      cpu: "4"
+      ephemeral-storage: 59649360Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2024-01-31T06:46:03Z"
+      lastTransitionTime: "2024-01-28T12:55:44Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2024-01-31T06:46:03Z"
+      lastTransitionTime: "2024-01-28T12:55:44Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2024-01-31T06:46:03Z"
+      lastTransitionTime: "2024-01-28T12:55:44Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2024-01-31T06:46:03Z"
+      lastTransitionTime: "2024-01-31T06:35:48Z"
+      message: edge is posting ready status. AppArmor enabled
+      reason: EdgeReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10351
+    nodeInfo:
+      architecture: arm64
+      bootID: 73ed28ad-0a02-4e3b-a2db-999062a74354
+      containerRuntimeVersion: containerd://1.7.11
+      kernelVersion: 5.15.0-1044-raspi
+      kubeProxyVersion: v0.0.0-master+$Format:%H$
+      kubeletVersion: v1.24.17-kubeedge-v1.14.4
+      machineID: 686d6871003546538313ca7951fe291b
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: 686d6871003546538313ca7951fe291b
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2024-01-26T17:57:16Z"
+    labels:
+      beta.kubernetes.io/arch: arm64
+      beta.kubernetes.io/instance-type: worker
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: arm64
+      kubernetes.io/hostname: ubuntu-host-76d48b
+      kubernetes.io/os: linux
+      node-role.kubernetes.io/agent: ""
+      node-role.kubernetes.io/edge: ""
+    name: ubuntu-host-76d48b
+    resourceVersion: "1125660"
+    uid: 58e5a2f4-e535-4297-9b1b-5db23d39a87f
+  spec:
+    podCIDR: 10.244.2.0/24
+    podCIDRs:
+    - 10.244.2.0/24
+  status:
+    addresses:
+    - address: 192.168.1.101
+      type: InternalIP
+    - address: ubuntu-host-76d48b
+      type: Hostname
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: "56399796541"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3778592Ki
+      pods: "110"
+    capacity:
+      cpu: "4"
+      ephemeral-storage: 61197696Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2024-01-31T06:45:35Z"
+      lastTransitionTime: "2024-01-30T20:39:11Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2024-01-31T06:45:35Z"
+      lastTransitionTime: "2024-01-30T20:39:11Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2024-01-31T06:45:35Z"
+      lastTransitionTime: "2024-01-30T20:39:11Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2024-01-31T06:45:35Z"
+      lastTransitionTime: "2024-01-30T20:39:11Z"
+      message: edge is posting ready status. AppArmor enabled
+      reason: EdgeReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10351
+    nodeInfo:
+      architecture: arm64
+      bootID: 831c4fff-4603-4e0f-9dbe-9d9e602293b4
+      containerRuntimeVersion: containerd://1.7.11
+      kernelVersion: 5.15.0-1044-raspi
+      kubeProxyVersion: v0.0.0-master+$Format:%H$
+      kubeletVersion: v1.24.17-kubeedge-v1.14.4
+      machineID: 8448fbf1356c4fb8a6fd582df155ee0a
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: 8448fbf1356c4fb8a6fd582df155ee0a
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2024-01-27T12:25:04Z"
+    labels:
+      beta.kubernetes.io/arch: arm64
+      beta.kubernetes.io/instance-type: worker
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: arm64
+      kubernetes.io/hostname: ubuntu-host-a6773f
+      kubernetes.io/os: linux
+      node-role.kubernetes.io/agent: ""
+      node-role.kubernetes.io/edge: ""
+    name: ubuntu-host-a6773f
+    resourceVersion: "1125478"
+    uid: 99e92577-29a0-4af4-a446-495a46df2ace
+  spec:
+    podCIDR: 10.244.3.0/24
+    podCIDRs:
+    - 10.244.3.0/24
+  status:
+    addresses:
+    - address: 192.168.1.102
+      type: InternalIP
+    - address: ubuntu-host-a6773f
+      type: Hostname
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: "56399796541"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3778592Ki
+      pods: "110"
+    capacity:
+      cpu: "4"
+      ephemeral-storage: 61197696Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2024-01-31T06:43:40Z"
+      lastTransitionTime: "2024-01-30T20:42:55Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2024-01-31T06:43:40Z"
+      lastTransitionTime: "2024-01-30T20:42:55Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2024-01-31T06:43:40Z"
+      lastTransitionTime: "2024-01-30T20:42:55Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2024-01-31T06:43:40Z"
+      lastTransitionTime: "2024-01-30T20:42:55Z"
+      message: edge is posting ready status. AppArmor enabled
+      reason: EdgeReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10351
+    nodeInfo:
+      architecture: arm64
+      bootID: 8828f1bc-07ba-49a4-abce-a6f730f2773a
+      containerRuntimeVersion: containerd://1.7.11
+      kernelVersion: 5.15.0-1044-raspi
+      kubeProxyVersion: v0.0.0-master+$Format:%H$
+      kubeletVersion: v1.24.17-kubeedge-v1.14.4
+      machineID: a6b1af98c5964412bb34f706055e5ec4
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: a6b1af98c5964412bb34f706055e5ec4
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      flannel.alpha.coreos.com/backend-data: '{"VNI":1,"VtepMAC":"1e:19:7a:48:2f:38"}'
+      flannel.alpha.coreos.com/backend-type: vxlan
+      flannel.alpha.coreos.com/kube-subnet-manager: "true"
+      flannel.alpha.coreos.com/public-ip: 192.168.1.106
+      kubeadm.alpha.kubernetes.io/cri-socket: unix:///var/run/containerd/containerd.sock
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2024-01-14T19:16:09Z"
+    labels:
+      beta.kubernetes.io/arch: amd64
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: amd64
+      kubernetes.io/hostname: ubuntu-host-ddde9b
+      kubernetes.io/os: linux
+      node-role.kubernetes.io/control-plane: ""
+      node.kubernetes.io/exclude-from-external-load-balancers: ""
+    name: ubuntu-host-ddde9b
+    resourceVersion: "1125675"
+    uid: e47eec0c-e6b0-4506-9802-2db5db24dff7
+  spec:
+    podCIDR: 10.244.0.0/24
+    podCIDRs:
+    - 10.244.0.0/24
+    taints:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+  status:
+    addresses:
+    - address: 192.168.1.106
+      type: InternalIP
+    - address: ubuntu-host-ddde9b
+      type: Hostname
+    allocatable:
+      cpu: "12"
+      ephemeral-storage: "882600297445"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      memory: 65438664Ki
+      pods: "110"
+    capacity:
+      cpu: "12"
+      ephemeral-storage: 957682616Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      memory: 65541064Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2024-01-28T20:08:22Z"
+      lastTransitionTime: "2024-01-28T20:08:22Z"
+      message: Flannel is running on this node
+      reason: FlannelIsUp
+      status: "False"
+      type: NetworkUnavailable
+    - lastHeartbeatTime: "2024-01-31T06:45:44Z"
+      lastTransitionTime: "2024-01-14T19:16:09Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2024-01-31T06:45:44Z"
+      lastTransitionTime: "2024-01-14T19:16:09Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2024-01-31T06:45:44Z"
+      lastTransitionTime: "2024-01-14T19:16:09Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2024-01-31T06:45:44Z"
+      lastTransitionTime: "2024-01-14T19:21:09Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - registry.k8s.io/etcd@sha256:22f892d7672adc0b9c86df67792afdb8b2dc08880f49f669eaaa59c47d7908c2
+      - registry.k8s.io/etcd:3.5.10-0
+      sizeBytes: 56649232
+    - names:
+      - registry.k8s.io/kube-apiserver@sha256:921d9d4cda40bd481283375d39d12b24f51281682ae41f6da47f69cb072643bc
+      - registry.k8s.io/kube-apiserver:v1.29.0
+      sizeBytes: 35068125
+    - names:
+      - registry.k8s.io/kube-controller-manager@sha256:d1e38ea25b27e57b41995ef59ad76dd33481853a5b8d1a91abb7a8be32b7e7da
+      - registry.k8s.io/kube-controller-manager:v1.29.0
+      sizeBytes: 33426031
+    - names:
+      - docker.io/flannel/flannel@sha256:2a2b74a762a5d99517659f940e3f2ad774de293d41fce6a78378df6fe9320173
+      - docker.io/flannel/flannel:v0.24.2
+      sizeBytes: 29594543
+    - names:
+      - registry.k8s.io/kube-proxy@sha256:8da4de35c4929411300eb8052fdfd34095b6090ed0c8dbc776d58bf1c61a2c89
+      - registry.k8s.io/kube-proxy:v1.29.0
+      sizeBytes: 28358954
+    - names:
+      - docker.io/flannel/flannel@sha256:713dd5fb74baceb2b7e7141cb063f8bf8d7e644b3fe2d2d020200157c656b6f8
+      - docker.io/flannel/flannel:v0.24.0
+      sizeBytes: 28044699
+    - names:
+      - docker.io/kubeedge/edgemesh-agent@sha256:e53830b7a0276005b1fef44736cc5ff15732b7f4778d319c47beaa4818c9dde8
+      - docker.io/kubeedge/edgemesh-agent:v1.14.0
+      sizeBytes: 23968450
+    - names:
+      - registry.k8s.io/kube-scheduler@sha256:5df310234e4f9463b15d166778d697830a51c0037ff28a1759daaad2d3cde991
+      - registry.k8s.io/kube-scheduler:v1.29.0
+      sizeBytes: 18521870
+    - names:
+      - registry.k8s.io/coredns/coredns@sha256:1eeb4c7316bacb1d4c8ead65571cd92dd21e27359f0d4917f1a5822a73b75db1
+      - registry.k8s.io/coredns/coredns:v1.11.1
+      sizeBytes: 18182961
+    - names:
+      - docker.io/kubeedge/cloudcore@sha256:b38593a9346c425f4ac850e5cb56e83a38072ea56b91e9e2fb0c32fa56b13ef6
+      - docker.io/kubeedge/cloudcore:v1.15.1
+      sizeBytes: 18173248
+    - names:
+      - docker.io/flannel/flannel-cni-plugin@sha256:743c25e5e477527d8e54faa3e5259fbbee3463a335de1690879fc74305edc79b
+      - docker.io/flannel/flannel-cni-plugin:v1.4.0-flannel1
+      sizeBytes: 4498296
+    - names:
+      - docker.io/flannel/flannel-cni-plugin@sha256:ca6779c6ad63b77af8a00151cefc08578241197b9a6fe144b0e55484bc52b852
+      - docker.io/flannel/flannel-cni-plugin:v1.2.0
+      sizeBytes: 3879095
+    - names:
+      - registry.k8s.io/pause@sha256:7031c1b283388d2c2e09b57badb803c05ebed362dc88d84b480cc47f72a21097
+      - registry.k8s.io/pause:3.9
+      sizeBytes: 321520
+    - names:
+      - registry.k8s.io/pause@sha256:9001185023633d17a2f98ff69b6ff2615b8ea02a825adffa40422f51dfdcde9d
+      - registry.k8s.io/pause:3.8
+      sizeBytes: 311286
+    nodeInfo:
+      architecture: amd64
+      bootID: 78bc64ef-8962-4484-a451-997316416287
+      containerRuntimeVersion: containerd://1.7.11
+      kernelVersion: 5.15.0-91-generic
+      kubeProxyVersion: v1.29.0
+      kubeletVersion: v1.29.0
+      machineID: 8140afd76403476c8ab13f1ba93477ec
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: ddf2c293-c5b5-6291-d5b5-1c697a628989
+kind: List
+metadata:
+  resourceVersion: ""
