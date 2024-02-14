@@ -136,8 +136,7 @@ sudo apt-get update
 # and run all previous steps except 
 
 # run on worker nodes (those are in local net... and only for testing)
-kubeadm join 192.168.1.106:6443 --token ibwhz4.d287l59q08bpoyhp \
-        --discovery-token-ca-cert-hash sha256:626b5d1d474caa116b44472748477a62f6bc7407760966db44bee7f4000e585e 
+kubeadm join 192.168.1.106:6443 --token ibwhz4.d287l59q08bpoyhp --discovery-token-ca-cert-hash sha256:626b5d1d474caa116b44472748477a62f6bc7407760966db44bee7f4000e585e 
 
 
 ###
