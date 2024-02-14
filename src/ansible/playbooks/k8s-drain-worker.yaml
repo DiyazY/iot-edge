@@ -36,6 +36,6 @@
   tasks:
     - name: run kubeadm reset
       expect:
-        command: kubeadm reset
+        command: kubeadm reset -f
         responses:
           '[reset] Are you sure you want to proceed? [y/N]: ': "y\n"
