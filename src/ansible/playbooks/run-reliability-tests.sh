@@ -98,4 +98,6 @@ for test_type in "${test_types[@]}"; do
     sleep 1800 # wait 30 min
 done
 
+ansible-playbook -i inventory/${distribution}/hosts.ini playbooks/kube-bench-run.yaml 
+
 ansible-playbook -i inventory/${distribution}/hosts.ini shutdown.yaml

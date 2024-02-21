@@ -21,7 +21,7 @@
       var: node_names
 
   - name: drain nodes
-    shell: kubectl drain {{item}} --kubeconfig {{kubeconfig}}  --ignore-daemonsets --delete-local-data
+    shell: kubectl drain {{item}} --kubeconfig {{kubeconfig}}  --ignore-daemonsets --delete-local-data --delete-emptydir-data #--force
     with_items: "{{ node_names }}" 
 
   - name: remove the node
@@ -36,6 +36,6 @@
   tasks:
     - name: run kubeadm reset
       expect:
-        command: kubeadm reset
+        command: kubeadm reset -f
         responses:
           '[reset] Are you sure you want to proceed? [y/N]: ': "y\n"
