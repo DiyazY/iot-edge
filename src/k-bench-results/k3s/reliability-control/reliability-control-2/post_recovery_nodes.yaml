@@ -1,0 +1,483 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      flannel.alpha.coreos.com/backend-data: '{"VNI":1,"VtepMAC":"3e:66:f9:69:6a:5d"}'
+      flannel.alpha.coreos.com/backend-type: vxlan
+      flannel.alpha.coreos.com/kube-subnet-manager: "true"
+      flannel.alpha.coreos.com/public-ip: 192.168.1.106
+      k3s.io/hostname: ubuntu-host-ddde9b
+      k3s.io/internal-ip: 192.168.1.106
+      k3s.io/node-args: '["server","--data-dir","/var/lib/rancher/k3s"]'
+      k3s.io/node-config-hash: Y6H6SZEX6HVHK5UJWLKZAKZZNFNVE6QPNQBZBA2HU5D7MX4JTJMA====
+      k3s.io/node-env: '{"K3S_DATA_DIR":"/var/lib/rancher/k3s/data/dc43f496a0a9ac19d3b2444d390db38e0cfb38e672721f838b075422b8734994"}'
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2024-02-22T20:24:16Z"
+    finalizers:
+    - wrangler.cattle.io/node
+    labels:
+      beta.kubernetes.io/arch: amd64
+      beta.kubernetes.io/instance-type: k3s
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: amd64
+      kubernetes.io/hostname: ubuntu-host-ddde9b
+      kubernetes.io/os: linux
+      node-role.kubernetes.io/control-plane: "true"
+      node-role.kubernetes.io/master: "true"
+      node.kubernetes.io/instance-type: k3s
+    name: ubuntu-host-ddde9b
+    resourceVersion: "202533"
+    uid: a595758f-a4b4-4061-9aa2-e3ea7456086a
+  spec:
+    podCIDR: 10.42.0.0/24
+    podCIDRs:
+    - 10.42.0.0/24
+    providerID: k3s://ubuntu-host-ddde9b
+    taints:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+  status:
+    addresses:
+    - address: 192.168.1.106
+      type: InternalIP
+    - address: ubuntu-host-ddde9b
+      type: Hostname
+    allocatable:
+      cpu: "12"
+      ephemeral-storage: "931633648115"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      memory: 65541064Ki
+      pods: "110"
+    capacity:
+      cpu: "12"
+      ephemeral-storage: 957682616Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      memory: 65541064Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2024-02-27T09:23:58Z"
+      lastTransitionTime: "2024-02-22T20:24:16Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2024-02-27T09:23:58Z"
+      lastTransitionTime: "2024-02-22T20:24:16Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2024-02-27T09:23:58Z"
+      lastTransitionTime: "2024-02-22T20:24:16Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2024-02-27T09:23:58Z"
+      lastTransitionTime: "2024-02-27T06:50:55Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - docker.io/rancher/klipper-helm@sha256:4d2ec9ac78f6e3ca3d4dd0a1c3b754aec2b4f19e3a922c6ebcb0d74bb5ac674a
+      - docker.io/rancher/klipper-helm:v0.8.0-build20230510
+      sizeBytes: 95025757
+    - names:
+      - docker.io/rancher/mirrored-library-traefik@sha256:aaec134463b277ca7aa4f88807c8b67f2ec05d92a8f0432c0540b7ecc8fe724a
+      - docker.io/rancher/mirrored-library-traefik:2.9.10
+      sizeBytes: 39620247
+    - names:
+      - docker.io/rancher/mirrored-metrics-server@sha256:c2dfd72bafd6406ed306d9fbd07f55c496b004293d13d3de88a4567eacc36558
+      - docker.io/rancher/mirrored-metrics-server:v0.6.3
+      sizeBytes: 29943298
+    - names:
+      - docker.io/rancher/mirrored-coredns-coredns@sha256:a11fafae1f8037cbbd66c5afa40ba2423936b72b4fd50a7034a7e8b955163594
+      - docker.io/rancher/mirrored-coredns-coredns:1.10.1
+      sizeBytes: 16190137
+    - names:
+      - docker.io/rancher/local-path-provisioner@sha256:5bb33992a4ec3034c28b5e0b3c4c2ac35d3613b25b79455eb4b1a95adc82cdc0
+      - docker.io/rancher/local-path-provisioner:v0.0.24
+      sizeBytes: 14887612
+    - names:
+      - docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
+      - docker.io/rancher/klipper-lb:v0.4.4
+      sizeBytes: 4921566
+    - names:
+      - docker.io/rancher/mirrored-pause@sha256:74c4244427b7312c5b901fe0f67cbc53683d06f4f24c6faee65d4182bf0fa893
+      - docker.io/rancher/mirrored-pause:3.6
+      sizeBytes: 301463
+    nodeInfo:
+      architecture: amd64
+      bootID: 286ff3ec-9977-48ae-929f-bc5f41f0fcf5
+      containerRuntimeVersion: containerd://1.7.1-k3s1
+      kernelVersion: 5.15.0-91-generic
+      kubeProxyVersion: v1.27.4+k3s1
+      kubeletVersion: v1.27.4+k3s1
+      machineID: 8140afd76403476c8ab13f1ba93477ec
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: ddf2c293-c5b5-6291-d5b5-1c697a628989
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      flannel.alpha.coreos.com/backend-data: '{"VNI":1,"VtepMAC":"9a:bb:00:1b:a2:c9"}'
+      flannel.alpha.coreos.com/backend-type: vxlan
+      flannel.alpha.coreos.com/kube-subnet-manager: "true"
+      flannel.alpha.coreos.com/public-ip: 192.168.1.102
+      k3s.io/hostname: ubuntu-host-a6773f
+      k3s.io/internal-ip: 192.168.1.102,fd14:de39:445c:6200:dea6:32ff:fe0f:33ef
+      k3s.io/node-args: '["agent","--server","https://192.168.1.106:6443","--token","********"]'
+      k3s.io/node-config-hash: Q4UL27ENS4S43CGFT7FQHTADGAYQ3HP2YORMSZAPY2MIMNOYPVUQ====
+      k3s.io/node-env: '{"K3S_DATA_DIR":"/var/lib/rancher/k3s/data/14c44c6cb6f5fa4811c67c01bea2e254edb000fc47925ae671ffacdf1c1f3dcf"}'
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2024-02-22T20:30:11Z"
+    finalizers:
+    - wrangler.cattle.io/node
+    labels:
+      beta.kubernetes.io/arch: arm64
+      beta.kubernetes.io/instance-type: k3s
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: arm64
+      kubernetes.io/hostname: ubuntu-host-a6773f
+      kubernetes.io/os: linux
+      my.kubernetes.io/instance-type: worker
+      node.kubernetes.io/instance-type: k3s
+    name: ubuntu-host-a6773f
+    resourceVersion: "202608"
+    uid: e007f34d-de3e-49d6-bc23-609d1673e706
+  spec:
+    podCIDR: 10.42.2.0/24
+    podCIDRs:
+    - 10.42.2.0/24
+    providerID: k3s://ubuntu-host-a6773f
+  status:
+    addresses:
+    - address: 192.168.1.102
+      type: InternalIP
+    - address: fd14:de39:445c:6200:dea6:32ff:fe0f:33ef
+      type: InternalIP
+    - address: ubuntu-host-a6773f
+      type: Hostname
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: "59533118623"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    capacity:
+      cpu: "4"
+      ephemeral-storage: 61197696Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2024-02-27T09:26:05Z"
+      lastTransitionTime: "2024-02-27T06:53:05Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2024-02-27T09:26:05Z"
+      lastTransitionTime: "2024-02-27T06:53:05Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2024-02-27T09:26:05Z"
+      lastTransitionTime: "2024-02-27T06:53:05Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2024-02-27T09:26:05Z"
+      lastTransitionTime: "2024-02-27T06:53:05Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - docker.io/library/nginx@sha256:c26ae7472d624ba1fafd296e73cecc4f93f853088e6a9c13c0d52f6ca5865107
+      - docker.io/library/nginx:latest
+      sizeBytes: 67216905
+    - names:
+      - docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
+      - docker.io/rancher/klipper-lb:v0.4.4
+      sizeBytes: 5068868
+    - names:
+      - k8s.gcr.io/pause@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea
+      - k8s.gcr.io/pause:3.1
+      sizeBytes: 264644
+    - names:
+      - docker.io/rancher/mirrored-pause@sha256:74c4244427b7312c5b901fe0f67cbc53683d06f4f24c6faee65d4182bf0fa893
+      - docker.io/rancher/mirrored-pause:3.6
+      sizeBytes: 253243
+    nodeInfo:
+      architecture: arm64
+      bootID: 400aab46-8e18-4754-b158-7a948daf2d8c
+      containerRuntimeVersion: containerd://1.7.1-k3s1
+      kernelVersion: 5.15.0-1047-raspi
+      kubeProxyVersion: v1.27.4+k3s1
+      kubeletVersion: v1.27.4+k3s1
+      machineID: a6b1af98c5964412bb34f706055e5ec4
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: a6b1af98c5964412bb34f706055e5ec4
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      flannel.alpha.coreos.com/backend-data: '{"VNI":1,"VtepMAC":"ee:17:4f:9e:79:3e"}'
+      flannel.alpha.coreos.com/backend-type: vxlan
+      flannel.alpha.coreos.com/kube-subnet-manager: "true"
+      flannel.alpha.coreos.com/public-ip: 192.168.1.100
+      k3s.io/hostname: ubuntu-host-75e4c5
+      k3s.io/internal-ip: 192.168.1.100,fd14:de39:445c:6200:dea6:32ff:fe86:4a8d
+      k3s.io/node-args: '["agent","--server","https://192.168.1.106:6443","--token","********"]'
+      k3s.io/node-config-hash: Q4UL27ENS4S43CGFT7FQHTADGAYQ3HP2YORMSZAPY2MIMNOYPVUQ====
+      k3s.io/node-env: '{"K3S_DATA_DIR":"/var/lib/rancher/k3s/data/14c44c6cb6f5fa4811c67c01bea2e254edb000fc47925ae671ffacdf1c1f3dcf"}'
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2024-02-22T20:30:04Z"
+    finalizers:
+    - wrangler.cattle.io/node
+    labels:
+      beta.kubernetes.io/arch: arm64
+      beta.kubernetes.io/instance-type: k3s
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: arm64
+      kubernetes.io/hostname: ubuntu-host-75e4c5
+      kubernetes.io/os: linux
+      my.kubernetes.io/instance-type: worker
+      node.kubernetes.io/instance-type: k3s
+    name: ubuntu-host-75e4c5
+    resourceVersion: "202616"
+    uid: 8dd771e6-9ce8-4fe0-9600-bc3c50bfdb47
+  spec:
+    podCIDR: 10.42.1.0/24
+    podCIDRs:
+    - 10.42.1.0/24
+    providerID: k3s://ubuntu-host-75e4c5
+  status:
+    addresses:
+    - address: 192.168.1.100
+      type: InternalIP
+    - address: fd14:de39:445c:6200:dea6:32ff:fe86:4a8d
+      type: InternalIP
+    - address: ubuntu-host-75e4c5
+      type: Hostname
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: "58026897363"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    capacity:
+      cpu: "4"
+      ephemeral-storage: 59649360Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2024-02-27T09:26:18Z"
+      lastTransitionTime: "2024-02-27T06:53:14Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2024-02-27T09:26:18Z"
+      lastTransitionTime: "2024-02-27T06:53:14Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2024-02-27T09:26:18Z"
+      lastTransitionTime: "2024-02-27T06:53:14Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2024-02-27T09:26:18Z"
+      lastTransitionTime: "2024-02-27T06:53:14Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - docker.io/library/nginx@sha256:c26ae7472d624ba1fafd296e73cecc4f93f853088e6a9c13c0d52f6ca5865107
+      - docker.io/library/nginx:latest
+      sizeBytes: 67216905
+    - names:
+      - docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
+      - docker.io/rancher/klipper-lb:v0.4.4
+      sizeBytes: 5068868
+    - names:
+      - k8s.gcr.io/pause@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea
+      - k8s.gcr.io/pause:3.1
+      sizeBytes: 264644
+    - names:
+      - docker.io/rancher/mirrored-pause@sha256:74c4244427b7312c5b901fe0f67cbc53683d06f4f24c6faee65d4182bf0fa893
+      - docker.io/rancher/mirrored-pause:3.6
+      sizeBytes: 253243
+    nodeInfo:
+      architecture: arm64
+      bootID: a28c4ba6-ebc5-4f5c-91ec-527a68e4f832
+      containerRuntimeVersion: containerd://1.7.1-k3s1
+      kernelVersion: 5.15.0-1047-raspi
+      kubeProxyVersion: v1.27.4+k3s1
+      kubeletVersion: v1.27.4+k3s1
+      machineID: 686d6871003546538313ca7951fe291b
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: 686d6871003546538313ca7951fe291b
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      flannel.alpha.coreos.com/backend-data: '{"VNI":1,"VtepMAC":"1a:8a:30:9e:d1:a8"}'
+      flannel.alpha.coreos.com/backend-type: vxlan
+      flannel.alpha.coreos.com/kube-subnet-manager: "true"
+      flannel.alpha.coreos.com/public-ip: 192.168.1.101
+      k3s.io/hostname: ubuntu-host-76d48b
+      k3s.io/internal-ip: 192.168.1.101,fd14:de39:445c:6200:dea6:32ff:fe60:54b5
+      k3s.io/node-args: '["agent","--server","https://192.168.1.106:6443","--token","********"]'
+      k3s.io/node-config-hash: Q4UL27ENS4S43CGFT7FQHTADGAYQ3HP2YORMSZAPY2MIMNOYPVUQ====
+      k3s.io/node-env: '{"K3S_DATA_DIR":"/var/lib/rancher/k3s/data/14c44c6cb6f5fa4811c67c01bea2e254edb000fc47925ae671ffacdf1c1f3dcf"}'
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2024-02-22T20:39:54Z"
+    finalizers:
+    - wrangler.cattle.io/node
+    labels:
+      beta.kubernetes.io/arch: arm64
+      beta.kubernetes.io/instance-type: k3s
+      beta.kubernetes.io/os: linux
+      kubernetes.io/arch: arm64
+      kubernetes.io/hostname: ubuntu-host-76d48b
+      kubernetes.io/os: linux
+      my.kubernetes.io/instance-type: worker
+      node.kubernetes.io/instance-type: k3s
+    name: ubuntu-host-76d48b
+    resourceVersion: "202620"
+    uid: 55a05e4d-5a3b-4c7e-b0b7-23b87faba226
+  spec:
+    podCIDR: 10.42.3.0/24
+    podCIDRs:
+    - 10.42.3.0/24
+    providerID: k3s://ubuntu-host-76d48b
+  status:
+    addresses:
+    - address: 192.168.1.101
+      type: InternalIP
+    - address: fd14:de39:445c:6200:dea6:32ff:fe60:54b5
+      type: InternalIP
+    - address: ubuntu-host-76d48b
+      type: Hostname
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: "59533118623"
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    capacity:
+      cpu: "4"
+      ephemeral-storage: 61197696Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      hugepages-32Mi: "0"
+      hugepages-64Ki: "0"
+      memory: 3880992Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2024-02-27T09:26:21Z"
+      lastTransitionTime: "2024-02-27T06:53:05Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2024-02-27T09:26:21Z"
+      lastTransitionTime: "2024-02-27T06:53:05Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2024-02-27T09:26:21Z"
+      lastTransitionTime: "2024-02-27T06:53:05Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2024-02-27T09:26:21Z"
+      lastTransitionTime: "2024-02-27T06:53:05Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - docker.io/library/nginx@sha256:c26ae7472d624ba1fafd296e73cecc4f93f853088e6a9c13c0d52f6ca5865107
+      - docker.io/library/nginx:latest
+      sizeBytes: 67216905
+    - names:
+      - docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
+      - docker.io/rancher/klipper-lb:v0.4.4
+      sizeBytes: 5068868
+    - names:
+      - k8s.gcr.io/pause@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea
+      - k8s.gcr.io/pause:3.1
+      sizeBytes: 264644
+    - names:
+      - docker.io/rancher/mirrored-pause@sha256:74c4244427b7312c5b901fe0f67cbc53683d06f4f24c6faee65d4182bf0fa893
+      - docker.io/rancher/mirrored-pause:3.6
+      sizeBytes: 253243
+    nodeInfo:
+      architecture: arm64
+      bootID: 38300b66-7ba1-414c-b0b8-3c5d4eb0145e
+      containerRuntimeVersion: containerd://1.7.1-k3s1
+      kernelVersion: 5.15.0-1047-raspi
+      kubeProxyVersion: v1.27.4+k3s1
+      kubeletVersion: v1.27.4+k3s1
+      machineID: 8448fbf1356c4fb8a6fd582df155ee0a
+      operatingSystem: linux
+      osImage: Ubuntu 22.04.3 LTS
+      systemUUID: 8448fbf1356c4fb8a6fd582df155ee0a
+kind: List
+metadata:
+  resourceVersion: ""
