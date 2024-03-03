@@ -62,22 +62,13 @@
         # List all network interfaces except the loopback
         interfaces=$(ip -o link show | awk -F': ' '{print $2}' | grep -vE '^lo$')
 
-        echo "Deactivating all network interfaces..."
         for intf in $interfaces; do
-            echo "Deactivating $intf"
-            ip link set $intf down
+            sudo ip link set dev $intf down
         done
 
-        echo "Waiting for $WAIT_TIME seconds..."
-        sleep {{sleep_time}}
-
-        echo "Activating all network interfaces..."
-        for intf in $interfaces; do
-            echo "Activating $intf"
-            ip link set $intf up
-        done
-
-        echo "All network interfaces have been reactivated."
+        sleep {{sleep_time}} && for intf in $interfaces; do
+            sudo ip link set dev $intf up
+        done &
       when: inventory_hostname == specific_node
 
     - name: Wait until all nodes are Ready
