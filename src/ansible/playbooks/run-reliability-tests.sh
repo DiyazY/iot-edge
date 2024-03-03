@@ -8,7 +8,7 @@ test_types=("reliability-control" "reliability-worker" "reliability-control-no-p
 
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
-# TODO: automate this part kubectl --kubeconfig ../.kube/k0s-config label  nodes <node-name>  beta.kubernetes.io/instance-type=worker
+# TODO: automate this part kubectl --kubeconfig ../.kube/k0s-config label  nodes <node-name>  my.kubernetes.io/instance-type=worker
 
 for test_type in "${test_types[@]}"; do
     for i in {1..5}; do
