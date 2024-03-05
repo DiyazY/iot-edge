@@ -330,7 +330,7 @@ items:
       kind: DaemonSet
       name: svclb-traefik-cb6d1771
       uid: 05b6744e-11e6-458e-9cc4-e8840259a117
-    resourceVersion: "196563"
+    resourceVersion: "274153"
     uid: f87b7e4c-b6d8-4c46-b37f-f4ad6c00eeac
   spec:
     affinity:
@@ -444,11 +444,11 @@ items:
       status: "True"
       type: Initialized
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:50:46Z"
+      lastTransitionTime: "2024-03-03T06:55:41Z"
       status: "True"
       type: Ready
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:50:46Z"
+      lastTransitionTime: "2024-03-03T06:55:41Z"
       status: "True"
       type: ContainersReady
     - lastProbeTime: null
@@ -456,45 +456,45 @@ items:
       status: "True"
       type: PodScheduled
     containerStatuses:
-    - containerID: containerd://90f6c123ae9debe9007caa4066d465569830d7573463e9fdb61d4e5ce2d90374
+    - containerID: containerd://dd07fa62c94243005a72fe8564bf5ee2c33bd98d3a8f00bf24dbb80b7c817337
       image: docker.io/rancher/klipper-lb:v0.4.4
       imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
       lastState:
         terminated:
-          containerID: containerd://81b228e60f1a03b2c4b153df49a97dd25477fe67a18e6aa2c452bc71295c5ee0
+          containerID: containerd://90f6c123ae9debe9007caa4066d465569830d7573463e9fdb61d4e5ce2d90374
           exitCode: 255
-          finishedAt: "2024-02-27T06:50:43Z"
+          finishedAt: "2024-03-03T06:55:38Z"
           reason: Unknown
-          startedAt: "2024-02-27T04:20:49Z"
+          startedAt: "2024-02-27T06:50:46Z"
       name: lb-tcp-443
       ready: true
-      restartCount: 2
+      restartCount: 3
       started: true
       state:
         running:
-          startedAt: "2024-02-27T06:50:46Z"
-    - containerID: containerd://7b181d3aa90024e09831e97aac2e6d1a585151cf5d0bd607824a905a3d61614e
+          startedAt: "2024-03-03T06:55:40Z"
+    - containerID: containerd://8120baae97afd0c906545b459cc972d3f0d5ce0831d5832eeada7abc97d90c3f
       image: docker.io/rancher/klipper-lb:v0.4.4
       imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
       lastState:
         terminated:
-          containerID: containerd://d89a7851858f7de963394328c1a9cf398d42be1c11c934629eb53bbe148b79b5
+          containerID: containerd://7b181d3aa90024e09831e97aac2e6d1a585151cf5d0bd607824a905a3d61614e
           exitCode: 255
-          finishedAt: "2024-02-27T06:50:43Z"
+          finishedAt: "2024-03-03T06:55:38Z"
           reason: Unknown
-          startedAt: "2024-02-27T04:20:49Z"
+          startedAt: "2024-02-27T06:50:46Z"
       name: lb-tcp-80
       ready: true
-      restartCount: 2
+      restartCount: 3
       started: true
       state:
         running:
-          startedAt: "2024-02-27T06:50:46Z"
+          startedAt: "2024-03-03T06:55:40Z"
     hostIP: 192.168.1.106
     phase: Running
-    podIP: 10.42.0.16
+    podIP: 10.42.0.20
     podIPs:
-    - ip: 10.42.0.16
+    - ip: 10.42.0.20
     qosClass: BestEffort
     startTime: "2024-02-22T20:25:02Z"
 - apiVersion: v1
@@ -514,7 +514,7 @@ items:
       kind: ReplicaSet
       name: local-path-provisioner-957fdf8bc
       uid: 0af10f92-7f86-4aa9-a929-51006021e229
-    resourceVersion: "196564"
+    resourceVersion: "274251"
     uid: 6a5f44ff-0f1d-437c-8974-715540ed6e1e
   spec:
     containers:
@@ -600,11 +600,11 @@ items:
       status: "True"
       type: Initialized
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:50:46Z"
+      lastTransitionTime: "2024-03-03T06:56:21Z"
       status: "True"
       type: Ready
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:50:46Z"
+      lastTransitionTime: "2024-03-03T06:56:21Z"
       status: "True"
       type: ContainersReady
     - lastProbeTime: null
@@ -612,30 +612,404 @@ items:
       status: "True"
       type: PodScheduled
     containerStatuses:
-    - containerID: containerd://0ba17f1b7a1d895405efc7b898c3a394b2bf9348bade2e864731974ff1fd13ae
+    - containerID: containerd://9981d18b69f50c5e485ca4b4621036ca5ceb89cdc32e361390ff4c0603295cde
       image: docker.io/rancher/local-path-provisioner:v0.0.24
       imageID: docker.io/rancher/local-path-provisioner@sha256:5bb33992a4ec3034c28b5e0b3c4c2ac35d3613b25b79455eb4b1a95adc82cdc0
       lastState:
         terminated:
-          containerID: containerd://58a941fdb05116822d7bd063bf46bee2cfdbc6ad316b5297dace4a8c26033284
-          exitCode: 255
-          finishedAt: "2024-02-27T06:50:43Z"
-          reason: Unknown
-          startedAt: "2024-02-27T04:20:49Z"
+          containerID: containerd://4f0963eade062a5bd60dcc9d5d2cf3b52ee37af3e2a3eb8d2b831622e817705b
+          exitCode: 1
+          finishedAt: "2024-03-03T06:56:08Z"
+          reason: Error
+          startedAt: "2024-03-03T06:55:40Z"
       name: local-path-provisioner
       ready: true
-      restartCount: 2
+      restartCount: 4
       started: true
       state:
         running:
-          startedAt: "2024-02-27T06:50:46Z"
+          startedAt: "2024-03-03T06:56:21Z"
     hostIP: 192.168.1.106
     phase: Running
-    podIP: 10.42.0.15
+    podIP: 10.42.0.22
     podIPs:
-    - ip: 10.42.0.15
+    - ip: 10.42.0.22
     qosClass: BestEffort
     startTime: "2024-02-22T20:24:31Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2024-02-22T20:30:11Z"
+    generateName: svclb-traefik-cb6d1771-
+    labels:
+      app: svclb-traefik-cb6d1771
+      controller-revision-hash: b677d8fc8
+      pod-template-generation: "1"
+      svccontroller.k3s.cattle.io/svcname: traefik
+      svccontroller.k3s.cattle.io/svcnamespace: kube-system
+    name: svclb-traefik-cb6d1771-jxswq
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: svclb-traefik-cb6d1771
+      uid: 05b6744e-11e6-458e-9cc4-e8840259a117
+    resourceVersion: "363632"
+    uid: 4e8034d1-a9a9-4e4e-8388-1d55ff5bc682
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-a6773f
+    automountServiceAccountToken: false
+    containers:
+    - env:
+      - name: SRC_PORT
+        value: "80"
+      - name: SRC_RANGES
+        value: 0.0.0.0/0
+      - name: DEST_PROTO
+        value: TCP
+      - name: DEST_PORT
+        value: "80"
+      - name: DEST_IPS
+        value: 10.43.21.154
+      image: rancher/klipper-lb:v0.4.4
+      imagePullPolicy: IfNotPresent
+      name: lb-tcp-80
+      ports:
+      - containerPort: 80
+        hostPort: 80
+        name: lb-tcp-80
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - NET_ADMIN
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+    - env:
+      - name: SRC_PORT
+        value: "443"
+      - name: SRC_RANGES
+        value: 0.0.0.0/0
+      - name: DEST_PROTO
+        value: TCP
+      - name: DEST_PORT
+        value: "443"
+      - name: DEST_IPS
+        value: 10.43.21.154
+      image: rancher/klipper-lb:v0.4.4
+      imagePullPolicy: IfNotPresent
+      name: lb-tcp-443
+      ports:
+      - containerPort: 443
+        hostPort: 443
+        name: lb-tcp-443
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - NET_ADMIN
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ubuntu-host-a6773f
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      sysctls:
+      - name: net.ipv4.ip_forward
+        value: "1"
+    serviceAccount: svclb
+    serviceAccountName: svclb
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+      operator: Exists
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-02-22T20:30:12Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-03T06:58:36Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-03T06:58:36Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-02-22T20:30:11Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://c97634cb45b32d9ce175dd85d03e790ad60982826c4af3352aa00545b88f8923
+      image: docker.io/rancher/klipper-lb:v0.4.4
+      imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
+      lastState:
+        terminated:
+          containerID: containerd://23fd97ca9d44c3d167e5b24f2e5c022c2ae937742b9ba2b921fb26f824b3b815
+          exitCode: 255
+          finishedAt: "2024-03-03T06:58:14Z"
+          reason: Unknown
+          startedAt: "2024-02-27T06:53:22Z"
+      name: lb-tcp-443
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2024-03-03T06:58:35Z"
+    - containerID: containerd://86a8c898490d13facaaf0c8fce8073697d892b919ced5ec502bd61a81ac1c92c
+      image: docker.io/rancher/klipper-lb:v0.4.4
+      imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
+      lastState:
+        terminated:
+          containerID: containerd://e490f75e995112135c579a27d09c8bccda6326f15a3508bd4c5eb2f6d87d4415
+          exitCode: 255
+          finishedAt: "2024-03-03T06:58:14Z"
+          reason: Unknown
+          startedAt: "2024-02-27T06:53:21Z"
+      name: lb-tcp-80
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2024-03-03T06:58:34Z"
+    hostIP: 192.168.1.102
+    phase: Running
+    podIP: 10.42.2.172
+    podIPs:
+    - ip: 10.42.2.172
+    qosClass: BestEffort
+    startTime: "2024-02-22T20:30:12Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2024-02-22T20:39:54Z"
+    generateName: svclb-traefik-cb6d1771-
+    labels:
+      app: svclb-traefik-cb6d1771
+      controller-revision-hash: b677d8fc8
+      pod-template-generation: "1"
+      svccontroller.k3s.cattle.io/svcname: traefik
+      svccontroller.k3s.cattle.io/svcnamespace: kube-system
+    name: svclb-traefik-cb6d1771-x67br
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: DaemonSet
+      name: svclb-traefik-cb6d1771
+      uid: 05b6744e-11e6-458e-9cc4-e8840259a117
+    resourceVersion: "363639"
+    uid: f2ee15a1-aa88-4890-b0a6-168df23d678f
+  spec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchFields:
+            - key: metadata.name
+              operator: In
+              values:
+              - ubuntu-host-76d48b
+    automountServiceAccountToken: false
+    containers:
+    - env:
+      - name: SRC_PORT
+        value: "80"
+      - name: SRC_RANGES
+        value: 0.0.0.0/0
+      - name: DEST_PROTO
+        value: TCP
+      - name: DEST_PORT
+        value: "80"
+      - name: DEST_IPS
+        value: 10.43.21.154
+      image: rancher/klipper-lb:v0.4.4
+      imagePullPolicy: IfNotPresent
+      name: lb-tcp-80
+      ports:
+      - containerPort: 80
+        hostPort: 80
+        name: lb-tcp-80
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - NET_ADMIN
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+    - env:
+      - name: SRC_PORT
+        value: "443"
+      - name: SRC_RANGES
+        value: 0.0.0.0/0
+      - name: DEST_PROTO
+        value: TCP
+      - name: DEST_PORT
+        value: "443"
+      - name: DEST_IPS
+        value: 10.43.21.154
+      image: rancher/klipper-lb:v0.4.4
+      imagePullPolicy: IfNotPresent
+      name: lb-tcp-443
+      ports:
+      - containerPort: 443
+        hostPort: 443
+        name: lb-tcp-443
+        protocol: TCP
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - NET_ADMIN
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: ubuntu-host-76d48b
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      sysctls:
+      - name: net.ipv4.ip_forward
+        value: "1"
+    serviceAccount: svclb
+    serviceAccountName: svclb
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+      operator: Exists
+    - key: CriticalAddonsOnly
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/disk-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/pid-pressure
+      operator: Exists
+    - effect: NoSchedule
+      key: node.kubernetes.io/unschedulable
+      operator: Exists
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-02-22T20:39:55Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-03T06:58:32Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-03-03T06:58:32Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-02-22T20:39:54Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://498e5bbeb46b86322037d5297859122d88ac7ea41ae65a7959158ca1c3b5104e
+      image: docker.io/rancher/klipper-lb:v0.4.4
+      imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
+      lastState:
+        terminated:
+          containerID: containerd://7840ba0d70f46d2a23ea973af913c8ebdb612ddc87ba9d9faa753d4762971d70
+          exitCode: 255
+          finishedAt: "2024-03-03T06:58:13Z"
+          reason: Unknown
+          startedAt: "2024-02-27T06:53:15Z"
+      name: lb-tcp-443
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2024-03-03T06:58:32Z"
+    - containerID: containerd://51c2ac946975514b0fc73256571b8f623124f24a07a911e51bfff00b85c950a9
+      image: docker.io/rancher/klipper-lb:v0.4.4
+      imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
+      lastState:
+        terminated:
+          containerID: containerd://92d0a1ba00a8de49e0167540b8bce8176f3c54824955b51ca1148ce6249807e6
+          exitCode: 255
+          finishedAt: "2024-03-03T06:58:13Z"
+          reason: Unknown
+          startedAt: "2024-02-27T06:53:13Z"
+      name: lb-tcp-80
+      ready: true
+      restartCount: 3
+      started: true
+      state:
+        running:
+          startedAt: "2024-03-03T06:58:31Z"
+    hostIP: 192.168.1.101
+    phase: Running
+    podIP: 10.42.3.178
+    podIPs:
+    - ip: 10.42.3.178
+    qosClass: BestEffort
+    startTime: "2024-02-22T20:39:55Z"
 - apiVersion: v1
   kind: Pod
   metadata:
@@ -653,7 +1027,7 @@ items:
       kind: ReplicaSet
       name: coredns-77ccd57875
       uid: d609d628-743c-4537-ac64-9260d823cb80
-    resourceVersion: "196566"
+    resourceVersion: "363703"
     uid: 0931cd80-47c3-4514-994d-784b78a6cd80
   spec:
     containers:
@@ -796,11 +1170,11 @@ items:
       status: "True"
       type: Initialized
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:50:46Z"
+      lastTransitionTime: "2024-03-04T23:05:23Z"
       status: "True"
       type: Ready
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:50:46Z"
+      lastTransitionTime: "2024-03-04T23:05:23Z"
       status: "True"
       type: ContainersReady
     - lastProbeTime: null
@@ -808,28 +1182,28 @@ items:
       status: "True"
       type: PodScheduled
     containerStatuses:
-    - containerID: containerd://de5b1423da0ba7f75bd453fb05e89aedd3fa10a36ef285c3d8b1acb53800bd44
+    - containerID: containerd://33ac6f80e6e519c4806fbf20f5965b90f605c3857917b5e826ebf2ab41ae9c93
       image: docker.io/rancher/mirrored-coredns-coredns:1.10.1
       imageID: docker.io/rancher/mirrored-coredns-coredns@sha256:a11fafae1f8037cbbd66c5afa40ba2423936b72b4fd50a7034a7e8b955163594
       lastState:
         terminated:
-          containerID: containerd://93b7b662b67dde206ba2768459ba2c69f23d3105632244fd017fd633f9ace123
-          exitCode: 255
-          finishedAt: "2024-02-27T06:50:43Z"
-          reason: Unknown
-          startedAt: "2024-02-27T04:20:49Z"
+          containerID: containerd://65391c8ce9f6ac1f9cf06ac566409a7d4839161d041780f23f75d827ec5198a5
+          exitCode: 0
+          finishedAt: "2024-03-04T23:02:33Z"
+          reason: Completed
+          startedAt: "2024-03-04T23:01:13Z"
       name: coredns
       ready: true
-      restartCount: 2
+      restartCount: 40
       started: true
       state:
         running:
-          startedAt: "2024-02-27T06:50:46Z"
+          startedAt: "2024-03-04T23:05:22Z"
     hostIP: 192.168.1.106
     phase: Running
-    podIP: 10.42.0.18
+    podIP: 10.42.0.21
     podIPs:
-    - ip: 10.42.0.18
+    - ip: 10.42.0.21
     qosClass: Burstable
     startTime: "2024-02-22T20:24:31Z"
 - apiVersion: v1
@@ -856,7 +1230,7 @@ items:
       kind: ReplicaSet
       name: traefik-64f55bb67d
       uid: 59e28a6a-3b07-46bd-a92f-c19562823211
-    resourceVersion: "196601"
+    resourceVersion: "363788"
     uid: ca149711-54e1-4696-9b1e-2226f0270a8d
   spec:
     containers:
@@ -990,11 +1364,11 @@ items:
       status: "True"
       type: Initialized
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:50:56Z"
+      lastTransitionTime: "2024-03-04T23:07:37Z"
       status: "True"
       type: Ready
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:50:56Z"
+      lastTransitionTime: "2024-03-04T23:07:37Z"
       status: "True"
       type: ContainersReady
     - lastProbeTime: null
@@ -1002,28 +1376,28 @@ items:
       status: "True"
       type: PodScheduled
     containerStatuses:
-    - containerID: containerd://32b40b312119e839bbaa49c80eb58336a23f20c56a9b8338ade4d24b285f6c90
+    - containerID: containerd://41e3e2dd574480bc50d4e1b5c2c68e05c5c767c155e0b9a9d067fa871e4534f5
       image: docker.io/rancher/mirrored-library-traefik:2.9.10
       imageID: docker.io/rancher/mirrored-library-traefik@sha256:aaec134463b277ca7aa4f88807c8b67f2ec05d92a8f0432c0540b7ecc8fe724a
       lastState:
         terminated:
-          containerID: containerd://933e02f8c34ea8207dcd8e6354dcb325fd568f53e48c0b104558609fc7a77989
-          exitCode: 255
-          finishedAt: "2024-02-27T06:50:43Z"
-          reason: Unknown
-          startedAt: "2024-02-27T04:20:49Z"
+          containerID: containerd://d8d3d07d3e7d01644d8d5b050da5535b957a35040c233a8c7123d536de3d3bd6
+          exitCode: 0
+          finishedAt: "2024-03-04T23:02:29Z"
+          reason: Completed
+          startedAt: "2024-03-04T23:01:59Z"
       name: traefik
       ready: true
-      restartCount: 2
+      restartCount: 59
       started: true
       state:
         running:
-          startedAt: "2024-02-27T06:50:46Z"
+          startedAt: "2024-03-04T23:07:35Z"
     hostIP: 192.168.1.106
     phase: Running
-    podIP: 10.42.0.14
+    podIP: 10.42.0.19
     podIPs:
-    - ip: 10.42.0.14
+    - ip: 10.42.0.19
     qosClass: BestEffort
     startTime: "2024-02-22T20:25:02Z"
 - apiVersion: v1
@@ -1043,7 +1417,7 @@ items:
       kind: ReplicaSet
       name: metrics-server-648b5df564
       uid: 268789dd-318b-423c-bbbf-7fcdadc438c5
-    resourceVersion: "196611"
+    resourceVersion: "363801"
     uid: f04e1640-569e-40b0-952e-5dfbe3deafc3
   spec:
     containers:
@@ -1154,11 +1528,11 @@ items:
       status: "True"
       type: Initialized
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:51:03Z"
+      lastTransitionTime: "2024-03-04T23:07:48Z"
       status: "True"
       type: Ready
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:51:03Z"
+      lastTransitionTime: "2024-03-04T23:07:48Z"
       status: "True"
       type: ContainersReady
     - lastProbeTime: null
@@ -1166,404 +1540,30 @@ items:
       status: "True"
       type: PodScheduled
     containerStatuses:
-    - containerID: containerd://d3ff97b3c86a643ac81d777b56e0fdb88bfbeee9a4a42479806e3c630609b1f0
+    - containerID: containerd://34227ac48d54eef93921e03abdf338f4c319ef01f02689ae3f1ac9c77e700c49
       image: docker.io/rancher/mirrored-metrics-server:v0.6.3
       imageID: docker.io/rancher/mirrored-metrics-server@sha256:c2dfd72bafd6406ed306d9fbd07f55c496b004293d13d3de88a4567eacc36558
       lastState:
         terminated:
-          containerID: containerd://24e90b9d0fa86da63bb8d2e28f91e9f567c130ec31beb917b9e791a7856eb6d4
-          exitCode: 255
-          finishedAt: "2024-02-27T06:50:43Z"
-          reason: Unknown
-          startedAt: "2024-02-27T04:20:49Z"
+          containerID: containerd://cbb18a8f92b98329d9b6ca5002d3b6d006ebc5f5bc7937c8b0166aac28dac014
+          exitCode: 2
+          finishedAt: "2024-03-04T23:02:45Z"
+          reason: Error
+          startedAt: "2024-03-04T23:02:42Z"
       name: metrics-server
       ready: true
-      restartCount: 2
+      restartCount: 64
       started: true
       state:
         running:
-          startedAt: "2024-02-27T06:50:46Z"
+          startedAt: "2024-03-04T23:07:47Z"
     hostIP: 192.168.1.106
     phase: Running
-    podIP: 10.42.0.17
+    podIP: 10.42.0.23
     podIPs:
-    - ip: 10.42.0.17
+    - ip: 10.42.0.23
     qosClass: Burstable
     startTime: "2024-02-22T20:24:31Z"
-- apiVersion: v1
-  kind: Pod
-  metadata:
-    creationTimestamp: "2024-02-22T20:39:54Z"
-    generateName: svclb-traefik-cb6d1771-
-    labels:
-      app: svclb-traefik-cb6d1771
-      controller-revision-hash: b677d8fc8
-      pod-template-generation: "1"
-      svccontroller.k3s.cattle.io/svcname: traefik
-      svccontroller.k3s.cattle.io/svcnamespace: kube-system
-    name: svclb-traefik-cb6d1771-x67br
-    namespace: kube-system
-    ownerReferences:
-    - apiVersion: apps/v1
-      blockOwnerDeletion: true
-      controller: true
-      kind: DaemonSet
-      name: svclb-traefik-cb6d1771
-      uid: 05b6744e-11e6-458e-9cc4-e8840259a117
-    resourceVersion: "196756"
-    uid: f2ee15a1-aa88-4890-b0a6-168df23d678f
-  spec:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchFields:
-            - key: metadata.name
-              operator: In
-              values:
-              - ubuntu-host-76d48b
-    automountServiceAccountToken: false
-    containers:
-    - env:
-      - name: SRC_PORT
-        value: "80"
-      - name: SRC_RANGES
-        value: 0.0.0.0/0
-      - name: DEST_PROTO
-        value: TCP
-      - name: DEST_PORT
-        value: "80"
-      - name: DEST_IPS
-        value: 10.43.21.154
-      image: rancher/klipper-lb:v0.4.4
-      imagePullPolicy: IfNotPresent
-      name: lb-tcp-80
-      ports:
-      - containerPort: 80
-        hostPort: 80
-        name: lb-tcp-80
-        protocol: TCP
-      resources: {}
-      securityContext:
-        capabilities:
-          add:
-          - NET_ADMIN
-      terminationMessagePath: /dev/termination-log
-      terminationMessagePolicy: File
-    - env:
-      - name: SRC_PORT
-        value: "443"
-      - name: SRC_RANGES
-        value: 0.0.0.0/0
-      - name: DEST_PROTO
-        value: TCP
-      - name: DEST_PORT
-        value: "443"
-      - name: DEST_IPS
-        value: 10.43.21.154
-      image: rancher/klipper-lb:v0.4.4
-      imagePullPolicy: IfNotPresent
-      name: lb-tcp-443
-      ports:
-      - containerPort: 443
-        hostPort: 443
-        name: lb-tcp-443
-        protocol: TCP
-      resources: {}
-      securityContext:
-        capabilities:
-          add:
-          - NET_ADMIN
-      terminationMessagePath: /dev/termination-log
-      terminationMessagePolicy: File
-    dnsPolicy: ClusterFirst
-    enableServiceLinks: true
-    nodeName: ubuntu-host-76d48b
-    preemptionPolicy: PreemptLowerPriority
-    priority: 0
-    restartPolicy: Always
-    schedulerName: default-scheduler
-    securityContext:
-      sysctls:
-      - name: net.ipv4.ip_forward
-        value: "1"
-    serviceAccount: svclb
-    serviceAccountName: svclb
-    terminationGracePeriodSeconds: 30
-    tolerations:
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/master
-      operator: Exists
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/control-plane
-      operator: Exists
-    - key: CriticalAddonsOnly
-      operator: Exists
-    - effect: NoExecute
-      key: node.kubernetes.io/not-ready
-      operator: Exists
-    - effect: NoExecute
-      key: node.kubernetes.io/unreachable
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/disk-pressure
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/memory-pressure
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/pid-pressure
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/unschedulable
-      operator: Exists
-  status:
-    conditions:
-    - lastProbeTime: null
-      lastTransitionTime: "2024-02-22T20:39:55Z"
-      status: "True"
-      type: Initialized
-    - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:53:15Z"
-      status: "True"
-      type: Ready
-    - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:53:15Z"
-      status: "True"
-      type: ContainersReady
-    - lastProbeTime: null
-      lastTransitionTime: "2024-02-22T20:39:54Z"
-      status: "True"
-      type: PodScheduled
-    containerStatuses:
-    - containerID: containerd://7840ba0d70f46d2a23ea973af913c8ebdb612ddc87ba9d9faa753d4762971d70
-      image: docker.io/rancher/klipper-lb:v0.4.4
-      imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
-      lastState:
-        terminated:
-          containerID: containerd://1a3978654032735f51309115c28cbb11d910376454062284546c09ad344fcf26
-          exitCode: 255
-          finishedAt: "2024-02-27T06:53:00Z"
-          reason: Unknown
-          startedAt: "2024-02-27T04:23:20Z"
-      name: lb-tcp-443
-      ready: true
-      restartCount: 2
-      started: true
-      state:
-        running:
-          startedAt: "2024-02-27T06:53:15Z"
-    - containerID: containerd://92d0a1ba00a8de49e0167540b8bce8176f3c54824955b51ca1148ce6249807e6
-      image: docker.io/rancher/klipper-lb:v0.4.4
-      imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
-      lastState:
-        terminated:
-          containerID: containerd://59e2f93830333db3e90ee225dee8671aa177e93eefee25c6973d7dd59de1e1a7
-          exitCode: 255
-          finishedAt: "2024-02-27T06:53:00Z"
-          reason: Unknown
-          startedAt: "2024-02-27T04:23:19Z"
-      name: lb-tcp-80
-      ready: true
-      restartCount: 2
-      started: true
-      state:
-        running:
-          startedAt: "2024-02-27T06:53:13Z"
-    hostIP: 192.168.1.101
-    phase: Running
-    podIP: 10.42.3.177
-    podIPs:
-    - ip: 10.42.3.177
-    qosClass: BestEffort
-    startTime: "2024-02-22T20:39:55Z"
-- apiVersion: v1
-  kind: Pod
-  metadata:
-    creationTimestamp: "2024-02-22T20:30:11Z"
-    generateName: svclb-traefik-cb6d1771-
-    labels:
-      app: svclb-traefik-cb6d1771
-      controller-revision-hash: b677d8fc8
-      pod-template-generation: "1"
-      svccontroller.k3s.cattle.io/svcname: traefik
-      svccontroller.k3s.cattle.io/svcnamespace: kube-system
-    name: svclb-traefik-cb6d1771-jxswq
-    namespace: kube-system
-    ownerReferences:
-    - apiVersion: apps/v1
-      blockOwnerDeletion: true
-      controller: true
-      kind: DaemonSet
-      name: svclb-traefik-cb6d1771
-      uid: 05b6744e-11e6-458e-9cc4-e8840259a117
-    resourceVersion: "196768"
-    uid: 4e8034d1-a9a9-4e4e-8388-1d55ff5bc682
-  spec:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchFields:
-            - key: metadata.name
-              operator: In
-              values:
-              - ubuntu-host-a6773f
-    automountServiceAccountToken: false
-    containers:
-    - env:
-      - name: SRC_PORT
-        value: "80"
-      - name: SRC_RANGES
-        value: 0.0.0.0/0
-      - name: DEST_PROTO
-        value: TCP
-      - name: DEST_PORT
-        value: "80"
-      - name: DEST_IPS
-        value: 10.43.21.154
-      image: rancher/klipper-lb:v0.4.4
-      imagePullPolicy: IfNotPresent
-      name: lb-tcp-80
-      ports:
-      - containerPort: 80
-        hostPort: 80
-        name: lb-tcp-80
-        protocol: TCP
-      resources: {}
-      securityContext:
-        capabilities:
-          add:
-          - NET_ADMIN
-      terminationMessagePath: /dev/termination-log
-      terminationMessagePolicy: File
-    - env:
-      - name: SRC_PORT
-        value: "443"
-      - name: SRC_RANGES
-        value: 0.0.0.0/0
-      - name: DEST_PROTO
-        value: TCP
-      - name: DEST_PORT
-        value: "443"
-      - name: DEST_IPS
-        value: 10.43.21.154
-      image: rancher/klipper-lb:v0.4.4
-      imagePullPolicy: IfNotPresent
-      name: lb-tcp-443
-      ports:
-      - containerPort: 443
-        hostPort: 443
-        name: lb-tcp-443
-        protocol: TCP
-      resources: {}
-      securityContext:
-        capabilities:
-          add:
-          - NET_ADMIN
-      terminationMessagePath: /dev/termination-log
-      terminationMessagePolicy: File
-    dnsPolicy: ClusterFirst
-    enableServiceLinks: true
-    nodeName: ubuntu-host-a6773f
-    preemptionPolicy: PreemptLowerPriority
-    priority: 0
-    restartPolicy: Always
-    schedulerName: default-scheduler
-    securityContext:
-      sysctls:
-      - name: net.ipv4.ip_forward
-        value: "1"
-    serviceAccount: svclb
-    serviceAccountName: svclb
-    terminationGracePeriodSeconds: 30
-    tolerations:
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/master
-      operator: Exists
-    - effect: NoSchedule
-      key: node-role.kubernetes.io/control-plane
-      operator: Exists
-    - key: CriticalAddonsOnly
-      operator: Exists
-    - effect: NoExecute
-      key: node.kubernetes.io/not-ready
-      operator: Exists
-    - effect: NoExecute
-      key: node.kubernetes.io/unreachable
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/disk-pressure
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/memory-pressure
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/pid-pressure
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/unschedulable
-      operator: Exists
-  status:
-    conditions:
-    - lastProbeTime: null
-      lastTransitionTime: "2024-02-22T20:30:12Z"
-      status: "True"
-      type: Initialized
-    - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:53:23Z"
-      status: "True"
-      type: Ready
-    - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:53:23Z"
-      status: "True"
-      type: ContainersReady
-    - lastProbeTime: null
-      lastTransitionTime: "2024-02-22T20:30:11Z"
-      status: "True"
-      type: PodScheduled
-    containerStatuses:
-    - containerID: containerd://23fd97ca9d44c3d167e5b24f2e5c022c2ae937742b9ba2b921fb26f824b3b815
-      image: docker.io/rancher/klipper-lb:v0.4.4
-      imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
-      lastState:
-        terminated:
-          containerID: containerd://0a981c4c02d402ace5e666d2862d2bf0aa80518d03c316cdbc435d58dc2ab1bd
-          exitCode: 255
-          finishedAt: "2024-02-27T06:53:00Z"
-          reason: Unknown
-          startedAt: "2024-02-27T04:23:22Z"
-      name: lb-tcp-443
-      ready: true
-      restartCount: 2
-      started: true
-      state:
-        running:
-          startedAt: "2024-02-27T06:53:22Z"
-    - containerID: containerd://e490f75e995112135c579a27d09c8bccda6326f15a3508bd4c5eb2f6d87d4415
-      image: docker.io/rancher/klipper-lb:v0.4.4
-      imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
-      lastState:
-        terminated:
-          containerID: containerd://92a874b27218669427de1ffcb81770c5d26bdf17bbc6116793dec25700edf047
-          exitCode: 255
-          finishedAt: "2024-02-27T06:53:00Z"
-          reason: Unknown
-          startedAt: "2024-02-27T04:23:20Z"
-      name: lb-tcp-80
-      ready: true
-      restartCount: 2
-      started: true
-      state:
-        running:
-          startedAt: "2024-02-27T06:53:21Z"
-    hostIP: 192.168.1.102
-    phase: Running
-    podIP: 10.42.2.171
-    podIPs:
-    - ip: 10.42.2.171
-    qosClass: BestEffort
-    startTime: "2024-02-22T20:30:12Z"
 - apiVersion: v1
   kind: Pod
   metadata:
@@ -1584,7 +1584,7 @@ items:
       kind: DaemonSet
       name: svclb-traefik-cb6d1771
       uid: 05b6744e-11e6-458e-9cc4-e8840259a117
-    resourceVersion: "196784"
+    resourceVersion: "368450"
     uid: 38c54398-95e1-4602-b5a5-f4376c7aa9b5
   spec:
     affinity:
@@ -1698,11 +1698,11 @@ items:
       status: "True"
       type: Initialized
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:53:29Z"
+      lastTransitionTime: "2024-03-03T06:58:14Z"
       status: "True"
       type: Ready
     - lastProbeTime: null
-      lastTransitionTime: "2024-02-27T06:53:29Z"
+      lastTransitionTime: "2024-03-03T06:58:14Z"
       status: "True"
       type: ContainersReady
     - lastProbeTime: null
@@ -1710,45 +1710,45 @@ items:
       status: "True"
       type: PodScheduled
     containerStatuses:
-    - containerID: containerd://0755347304946160e599df00a19585d35ef89a3c0a2987282633e4826efe1f16
+    - containerID: containerd://3e1dcf4d4401eb5d65d382555dfb5246ddf4c5b1735bfedc5a3c20059a8e6c0b
       image: docker.io/rancher/klipper-lb:v0.4.4
       imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
       lastState:
         terminated:
-          containerID: containerd://f7261ed6cd9757a4421606271715934a154a343dba0d15ff5264bbc7bbc9ce42
+          containerID: containerd://0755347304946160e599df00a19585d35ef89a3c0a2987282633e4826efe1f16
           exitCode: 255
-          finishedAt: "2024-02-27T06:53:09Z"
+          finishedAt: "2024-03-03T06:57:55Z"
           reason: Unknown
-          startedAt: "2024-02-27T04:23:18Z"
+          startedAt: "2024-02-27T06:53:28Z"
       name: lb-tcp-443
       ready: true
-      restartCount: 2
+      restartCount: 3
       started: true
       state:
         running:
-          startedAt: "2024-02-27T06:53:28Z"
-    - containerID: containerd://b9464d4b390985ef571ffc0b8f5557a27388c82b4f4230c9b3ff07d941686749
+          startedAt: "2024-03-03T06:58:13Z"
+    - containerID: containerd://c3f12755638200dee1ecf77f7aa913d1902cbd29b9e78801b83d078dc7ec9b0f
       image: docker.io/rancher/klipper-lb:v0.4.4
       imageID: docker.io/rancher/klipper-lb@sha256:d6780e97ac25454b56f88410b236d52572518040f11d0db5c6baaac0d2fcf860
       lastState:
         terminated:
-          containerID: containerd://94523cbdc05601b74f1f4aae2b1f7c0eaf885f35080667edbe470999712cbcf1
+          containerID: containerd://b9464d4b390985ef571ffc0b8f5557a27388c82b4f4230c9b3ff07d941686749
           exitCode: 255
-          finishedAt: "2024-02-27T06:53:09Z"
+          finishedAt: "2024-03-03T06:57:55Z"
           reason: Unknown
-          startedAt: "2024-02-27T04:23:17Z"
+          startedAt: "2024-02-27T06:53:27Z"
       name: lb-tcp-80
       ready: true
-      restartCount: 2
+      restartCount: 3
       started: true
       state:
         running:
-          startedAt: "2024-02-27T06:53:27Z"
+          startedAt: "2024-03-03T06:58:12Z"
     hostIP: 192.168.1.100
     phase: Running
-    podIP: 10.42.1.168
+    podIP: 10.42.1.169
     podIPs:
-    - ip: 10.42.1.168
+    - ip: 10.42.1.169
     qosClass: BestEffort
     startTime: "2024-02-22T20:30:05Z"
 - apiVersion: v1
@@ -1880,7 +1880,7 @@ items:
       helm.sh/chart: traefik-21.2.1_up21.2.0
     name: traefik
     namespace: kube-system
-    resourceVersion: "196786"
+    resourceVersion: "368452"
     uid: cb6d1771-6c07-42d6-a6f3-307941d722f7
   spec:
     allocateLoadBalancerNodePorts: true
@@ -1934,7 +1934,7 @@ items:
       svccontroller.k3s.cattle.io/svcnamespace: kube-system
     name: svclb-traefik-cb6d1771
     namespace: kube-system
-    resourceVersion: "196785"
+    resourceVersion: "368451"
     uid: 05b6744e-11e6-458e-9cc4-e8840259a117
   spec:
     revisionHistoryLimit: 10
@@ -2051,7 +2051,7 @@ items:
       objectset.rio.cattle.io/hash: 183f35c65ffbc3064603f43f1580d8c68a2dabd4
     name: local-path-provisioner
     namespace: kube-system
-    resourceVersion: "460"
+    resourceVersion: "274253"
     uid: 1c78f300-5229-4dbb-8a23-ffd36b809d25
   spec:
     progressDeadlineSeconds: 600
@@ -2151,7 +2151,7 @@ items:
       objectset.rio.cattle.io/hash: bce283298811743a0386ab510f2f67ef74240c57
     name: coredns
     namespace: kube-system
-    resourceVersion: "485"
+    resourceVersion: "363707"
     uid: f1419ca7-f039-4242-aca1-11f8765a530d
   spec:
     progressDeadlineSeconds: 600
@@ -2306,7 +2306,7 @@ items:
       helm.sh/chart: traefik-21.2.1_up21.2.0
     name: traefik
     namespace: kube-system
-    resourceVersion: "196605"
+    resourceVersion: "363792"
     uid: d113be91-c732-43c9-a113-f6d31fbd66a1
   spec:
     progressDeadlineSeconds: 600
@@ -2434,8 +2434,8 @@ items:
       reason: NewReplicaSetAvailable
       status: "True"
       type: Progressing
-    - lastTransitionTime: "2024-02-27T06:50:56Z"
-      lastUpdateTime: "2024-02-27T06:50:56Z"
+    - lastTransitionTime: "2024-03-04T23:07:37Z"
+      lastUpdateTime: "2024-03-04T23:07:37Z"
       message: Deployment has minimum availability.
       reason: MinimumReplicasAvailable
       status: "True"
@@ -2461,7 +2461,7 @@ items:
       objectset.rio.cattle.io/hash: e10e245e13e46a725c9dddd4f9eb239f147774fd
     name: metrics-server
     namespace: kube-system
-    resourceVersion: "196615"
+    resourceVersion: "363805"
     uid: 63675e67-81c7-436e-b04b-78b95b1f46ab
   spec:
     progressDeadlineSeconds: 600
@@ -2595,7 +2595,7 @@ items:
       kind: Deployment
       name: local-path-provisioner
       uid: 1c78f300-5229-4dbb-8a23-ffd36b809d25
-    resourceVersion: "459"
+    resourceVersion: "274252"
     uid: 0af10f92-7f86-4aa9-a929-51006021e229
   spec:
     replicas: 1
@@ -2685,7 +2685,7 @@ items:
       kind: Deployment
       name: coredns
       uid: f1419ca7-f039-4242-aca1-11f8765a530d
-    resourceVersion: "484"
+    resourceVersion: "363706"
     uid: d609d628-743c-4537-ac64-9260d823cb80
   spec:
     replicas: 1
@@ -2832,7 +2832,7 @@ items:
       kind: Deployment
       name: traefik
       uid: d113be91-c732-43c9-a113-f6d31fbd66a1
-    resourceVersion: "196603"
+    resourceVersion: "363791"
     uid: 59e28a6a-3b07-46bd-a92f-c19562823211
   spec:
     replicas: 1
@@ -2978,7 +2978,7 @@ items:
       kind: Deployment
       name: metrics-server
       uid: 63675e67-81c7-436e-b04b-78b95b1f46ab
-    resourceVersion: "196613"
+    resourceVersion: "363804"
     uid: 268789dd-318b-423c-bbbf-7fcdadc438c5
   spec:
     replicas: 1

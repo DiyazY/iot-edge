@@ -5,8 +5,8 @@ PLAY [Kubernetes Recovery Testing] *********************************************
 TASK [Gathering Facts] *********************************************************
 ok: [192.168.1.106]
 ok: [192.168.1.101]
-ok: [192.168.1.100]
 ok: [192.168.1.102]
+ok: [192.168.1.100]
 
 TASK [Set fact for the hostname at the given index] ****************************
 ok: [192.168.1.106]
@@ -18,14 +18,14 @@ changed: [192.168.1.102 -> localhost]
 changed: [192.168.1.106 -> localhost]
 
 TASK [Split node names into a list] ********************************************
-ok: [192.168.1.106 -> localhost]
 ok: [192.168.1.100 -> localhost]
+ok: [192.168.1.106 -> localhost]
 ok: [192.168.1.102 -> localhost]
 ok: [192.168.1.101 -> localhost]
 
 TASK [Backup current cluster state] ********************************************
-changed: [192.168.1.106 -> localhost]
 changed: [192.168.1.102 -> localhost]
+changed: [192.168.1.106 -> localhost]
 changed: [192.168.1.100 -> localhost]
 changed: [192.168.1.101 -> localhost]
 
@@ -37,7 +37,7 @@ changed: [192.168.1.106]
 
 TASK [Display the time before test] ********************************************
 ok: [192.168.1.106] => {
-    "before_datetime.stdout": "1709025109"
+    "before_datetime.stdout": "1709509137"
 }
 skipping: [192.168.1.102]
 skipping: [192.168.1.100]
@@ -67,22 +67,22 @@ skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
 TASK [Wait until all nodes are Ready] ******************************************
-changed: [192.168.1.106 -> localhost] => (item=ubuntu-host-ddde9b)
-changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-ddde9b)
-changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-ddde9b)
-changed: [192.168.1.102 -> localhost] => (item=ubuntu-host-ddde9b)
-changed: [192.168.1.106 -> localhost] => (item=ubuntu-host-a6773f)
-changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-a6773f)
-changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-a6773f)
-changed: [192.168.1.102 -> localhost] => (item=ubuntu-host-a6773f)
 changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-75e4c5)
 changed: [192.168.1.106 -> localhost] => (item=ubuntu-host-75e4c5)
 changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-75e4c5)
 changed: [192.168.1.102 -> localhost] => (item=ubuntu-host-75e4c5)
-changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-76d48b)
+changed: [192.168.1.106 -> localhost] => (item=ubuntu-host-a6773f)
+changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-a6773f)
+changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-a6773f)
+changed: [192.168.1.102 -> localhost] => (item=ubuntu-host-a6773f)
 changed: [192.168.1.106 -> localhost] => (item=ubuntu-host-76d48b)
 changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-76d48b)
+changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-76d48b)
 changed: [192.168.1.102 -> localhost] => (item=ubuntu-host-76d48b)
+changed: [192.168.1.106 -> localhost] => (item=ubuntu-host-ddde9b)
+changed: [192.168.1.102 -> localhost] => (item=ubuntu-host-ddde9b)
+changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-ddde9b)
+changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-ddde9b)
 
 TASK [Wait for a specified time (e.g., 600 seconds)] ***************************
 Pausing for 600 seconds
@@ -90,22 +90,22 @@ Pausing for 600 seconds
 ok: [192.168.1.106]
 
 TASK [Get after Date and Time] *************************************************
-skipping: [192.168.1.102]
 skipping: [192.168.1.100]
+skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
 TASK [Display the time after test] *********************************************
-ok: [192.168.1.106] => {
-    "after_datetime.stdout": "1709026063"
-}
 skipping: [192.168.1.100]
+ok: [192.168.1.106] => {
+    "after_datetime.stdout": "1709510095"
+}
 skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 
 TASK [Write variable to file] **************************************************
-skipping: [192.168.1.102]
 skipping: [192.168.1.100]
+skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
@@ -116,35 +116,35 @@ skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
 TASK [Calculate recovery duration] *********************************************
-skipping: [192.168.1.100]
-ok: [192.168.1.106]
 skipping: [192.168.1.102]
+skipping: [192.168.1.100]
 skipping: [192.168.1.101]
+ok: [192.168.1.106]
 
 TASK [Display recovery duration] ***********************************************
 ok: [192.168.1.106] => {
-    "recovery_duration": "954"
+    "recovery_duration": "958"
 }
 skipping: [192.168.1.100]
 skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 
 TASK [Write recovery to file] **************************************************
-skipping: [192.168.1.102]
 skipping: [192.168.1.100]
+skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 ok: [192.168.1.106]
 
 TASK [Copy recovery time] ******************************************************
-skipping: [192.168.1.102]
 skipping: [192.168.1.100]
+skipping: [192.168.1.102]
 skipping: [192.168.1.101]
 changed: [192.168.1.106]
 
 TASK [Gather post-recovery cluster state] **************************************
 changed: [192.168.1.100 -> localhost]
-changed: [192.168.1.102 -> localhost]
 changed: [192.168.1.106 -> localhost]
+changed: [192.168.1.102 -> localhost]
 changed: [192.168.1.101 -> localhost]
 
 PLAY RECAP *********************************************************************
@@ -161,7 +161,7 @@ ok: [192.168.1.113]
 
 TASK [Display start and end time] **********************************************
 ok: [192.168.1.113] => {
-    "msg": "1709025109 - 1709026063"
+    "msg": "1709509137 - 1709510095"
 }
 
 TASK [Generating CSV file CPU] *************************************************
