@@ -1,0 +1,109 @@
+Start testing of control: 0
+
+PLAY [Kubernetes Recovery Testing] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.1.106]
+ok: [192.168.1.100]
+ok: [192.168.1.102]
+ok: [192.168.1.101]
+
+TASK [Set fact for the hostname at the given index] ****************************
+ok: [192.168.1.106]
+
+TASK [Get list of all nodes] ***************************************************
+changed: [192.168.1.102 -> localhost]
+changed: [192.168.1.101 -> localhost]
+changed: [192.168.1.100 -> localhost]
+changed: [192.168.1.106 -> localhost]
+
+TASK [Split node names into a list] ********************************************
+ok: [192.168.1.106 -> localhost]
+ok: [192.168.1.100 -> localhost]
+ok: [192.168.1.102 -> localhost]
+ok: [192.168.1.101 -> localhost]
+
+TASK [Backup current cluster state] ********************************************
+changed: [192.168.1.106 -> localhost]
+changed: [192.168.1.102 -> localhost]
+changed: [192.168.1.101 -> localhost]
+changed: [192.168.1.100 -> localhost]
+
+TASK [Get before Date and Time] ************************************************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Display the time before test] ********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+skipping: [192.168.1.102]
+ok: [192.168.1.106] => {
+    "before_datetime.stdout": "1709758471"
+}
+
+TASK [Write variable to file] **************************************************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Copy before time] ********************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Wait for a specified time (e.g., 250 seconds)] ***************************
+Pausing for 250 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [192.168.1.106]
+
+TASK [Simulate master failure (Stopping network interface)] ********************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Wait until all nodes are Ready] ******************************************
+failed: [192.168.1.106 -> localhost] (item=ubuntu-host-75e4c5) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-75e4c5", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.121759", "end": "2024-03-06 23:00:27.015090", "item": "ubuntu-host-75e4c5", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:26.893331", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.102 -> localhost] (item=ubuntu-host-75e4c5) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-75e4c5", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.251513", "end": "2024-03-06 23:00:27.062249", "item": "ubuntu-host-75e4c5", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:26.810736", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.100 -> localhost] (item=ubuntu-host-75e4c5) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-75e4c5", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.203860", "end": "2024-03-06 23:00:27.073506", "item": "ubuntu-host-75e4c5", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:26.869646", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.101 -> localhost] (item=ubuntu-host-75e4c5) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-75e4c5", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.118021", "end": "2024-03-06 23:00:27.151284", "item": "ubuntu-host-75e4c5", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.033263", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.102 -> localhost] (item=ubuntu-host-76d48b) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-76d48b", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.061176", "end": "2024-03-06 23:00:27.245582", "item": "ubuntu-host-76d48b", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.184406", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.106 -> localhost] (item=ubuntu-host-76d48b) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-76d48b", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.091174", "end": "2024-03-06 23:00:27.344216", "item": "ubuntu-host-76d48b", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.253042", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.101 -> localhost] (item=ubuntu-host-76d48b) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-76d48b", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.151197", "end": "2024-03-06 23:00:27.533260", "item": "ubuntu-host-76d48b", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.382063", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.100 -> localhost] (item=ubuntu-host-76d48b) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-76d48b", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.161269", "end": "2024-03-06 23:00:27.523234", "item": "ubuntu-host-76d48b", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.361965", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.102 -> localhost] (item=ubuntu-host-a6773f) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-a6773f", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.077964", "end": "2024-03-06 23:00:27.555456", "item": "ubuntu-host-a6773f", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.477492", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.106 -> localhost] (item=ubuntu-host-a6773f) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-a6773f", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.101823", "end": "2024-03-06 23:00:27.680905", "item": "ubuntu-host-a6773f", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.579082", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.101 -> localhost] (item=ubuntu-host-a6773f) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-a6773f", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.106054", "end": "2024-03-06 23:00:27.743213", "item": "ubuntu-host-a6773f", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.637159", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.102 -> localhost] (item=ubuntu-host-ddde9b) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-ddde9b", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.075250", "end": "2024-03-06 23:00:27.798353", "item": "ubuntu-host-ddde9b", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.723103", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.100 -> localhost] (item=ubuntu-host-a6773f) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-a6773f", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.077341", "end": "2024-03-06 23:00:27.902769", "item": "ubuntu-host-a6773f", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.825428", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.101 -> localhost] (item=ubuntu-host-ddde9b) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-ddde9b", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.091039", "end": "2024-03-06 23:00:27.975218", "item": "ubuntu-host-ddde9b", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.884179", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.106 -> localhost] (item=ubuntu-host-ddde9b) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-ddde9b", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.091742", "end": "2024-03-06 23:00:27.995696", "item": "ubuntu-host-ddde9b", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:27.903954", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.100 -> localhost] (item=ubuntu-host-ddde9b) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-ddde9b", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.033613", "end": "2024-03-06 23:00:28.042607", "item": "ubuntu-host-ddde9b", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:28.008994", "stderr": "The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?", "stderr_lines": ["The connection to the server 192.168.1.106:6443 was refused - did you specify the right host or port?"], "stdout": "", "stdout_lines": []}
+
+PLAY RECAP *********************************************************************
+192.168.1.100              : ok=4    changed=2    unreachable=0    failed=1    skipped=5    rescued=0    ignored=0   
+192.168.1.101              : ok=4    changed=2    unreachable=0    failed=1    skipped=5    rescued=0    ignored=0   
+192.168.1.102              : ok=4    changed=2    unreachable=0    failed=1    skipped=5    rescued=0    ignored=0   
+192.168.1.106              : ok=11   changed=6    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+
+PLAY [k-bench derive data from results] ****************************************
+
+TASK [List of test names] ******************************************************
+ok: [192.168.1.113]
+
+TASK [Display start and end time] **********************************************
+ok: [192.168.1.113] => {
+    "msg": "1709758471 - "
+}
+
+TASK [Generating CSV file CPU] *************************************************
+fatal: [192.168.1.113]: FAILED! => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "changed": true, "cmd": ["mongoexport", "--db=netdata", "--collection=metrics", "--type=csv", "--fields=hostname,value,timestamp", "--query={\"chart_type\": \"system\", \"chart_family\": \"cpu\", \"chart_context\": \"system.cpu\", \"id\": \"idle\", \"timestamp\": {\"$gt\": 1709758471, \"$lt\":  }}", "--out=./test-results/reliability-control-1-cpu.csv"], "delta": "0:00:00.015347", "end": "2024-03-06 23:00:29.872103", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:00:29.856756", "stderr": "2024-03-06T23:00:29.871+0200\tquery '[123 34 99 104 97 114 116 95 116 121 112 101 34 58 32 34 115 121 115 116 101 109 34 44 32 34 99 104 97 114 116 95 102 97 109 105 108 121 34 58 32 34 99 112 117 34 44 32 34 99 104 97 114 116 95 99 111 110 116 101 120 116 34 58 32 34 115 121 115 116 101 109 46 99 112 117 34 44 32 34 105 100 34 58 32 34 105 100 108 101 34 44 32 34 116 105 109 101 115 116 97 109 112 34 58 32 123 34 36 103 116 34 58 32 49 55 48 57 55 53 56 52 55 49 44 32 34 36 108 116 34 58 32 32 125 125]' is not valid JSON: invalid character '}' looking for beginning of value\n2024-03-06T23:00:29.871+0200\ttry 'mongoexport --help' for more information", "stderr_lines": ["2024-03-06T23:00:29.871+0200\tquery '[123 34 99 104 97 114 116 95 116 121 112 101 34 58 32 34 115 121 115 116 101 109 34 44 32 34 99 104 97 114 116 95 102 97 109 105 108 121 34 58 32 34 99 112 117 34 44 32 34 99 104 97 114 116 95 99 111 110 116 101 120 116 34 58 32 34 115 121 115 116 101 109 46 99 112 117 34 44 32 34 105 100 34 58 32 34 105 100 108 101 34 44 32 34 116 105 109 101 115 116 97 109 112 34 58 32 123 34 36 103 116 34 58 32 49 55 48 57 55 53 56 52 55 49 44 32 34 36 108 116 34 58 32 32 125 125]' is not valid JSON: invalid character '}' looking for beginning of value", "2024-03-06T23:00:29.871+0200\ttry 'mongoexport --help' for more information"], "stdout": "", "stdout_lines": []}
+
+PLAY RECAP *********************************************************************
+192.168.1.113              : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
