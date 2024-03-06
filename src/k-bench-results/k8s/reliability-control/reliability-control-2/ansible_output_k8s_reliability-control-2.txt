@@ -1,0 +1,150 @@
+Start testing of control: 0
+
+PLAY [Kubernetes Recovery Testing] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.1.106]
+ok: [192.168.1.101]
+ok: [192.168.1.102]
+ok: [192.168.1.100]
+
+TASK [Set fact for the hostname at the given index] ****************************
+ok: [192.168.1.106]
+
+TASK [Get list of all nodes] ***************************************************
+changed: [192.168.1.102 -> localhost]
+changed: [192.168.1.101 -> localhost]
+changed: [192.168.1.100 -> localhost]
+changed: [192.168.1.106 -> localhost]
+
+TASK [Split node names into a list] ********************************************
+ok: [192.168.1.106 -> localhost]
+ok: [192.168.1.102 -> localhost]
+ok: [192.168.1.100 -> localhost]
+ok: [192.168.1.101 -> localhost]
+
+TASK [Backup current cluster state] ********************************************
+changed: [192.168.1.102 -> localhost]
+changed: [192.168.1.106 -> localhost]
+changed: [192.168.1.100 -> localhost]
+changed: [192.168.1.101 -> localhost]
+
+TASK [Get before Date and Time] ************************************************
+skipping: [192.168.1.102]
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Display the time before test] ********************************************
+skipping: [192.168.1.102]
+ok: [192.168.1.106] => {
+    "before_datetime.stdout": "1709760654"
+}
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Write variable to file] **************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Copy before time] ********************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Wait for a specified time (e.g., 250 seconds)] ***************************
+Pausing for 250 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [192.168.1.106]
+
+TASK [Simulate master failure (Stopping network interface)] ********************
+skipping: [192.168.1.100]
+skipping: [192.168.1.102]
+skipping: [192.168.1.101]
+changed: [192.168.1.106]
+
+TASK [Wait until all nodes are Ready] ******************************************
+failed: [192.168.1.102 -> localhost] (item=ubuntu-host-75e4c5) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-75e4c5", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.304675", "end": "2024-03-06 23:36:50.152336", "item": "ubuntu-host-75e4c5", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:36:49.847661", "stderr": "Error from server (Forbidden): nodes \"ubuntu-host-75e4c5\" is forbidden: User \"kubernetes-admin\" cannot get resource \"nodes\" in API group \"\" at the cluster scope", "stderr_lines": ["Error from server (Forbidden): nodes \"ubuntu-host-75e4c5\" is forbidden: User \"kubernetes-admin\" cannot get resource \"nodes\" in API group \"\" at the cluster scope"], "stdout": "", "stdout_lines": []}
+failed: [192.168.1.106 -> localhost] (item=ubuntu-host-75e4c5) => {"ansible_loop_var": "item", "changed": true, "cmd": ["kubectl", "wait", "--for=condition=Ready", "node/ubuntu-host-75e4c5", "--timeout=5m", "--kubeconfig", "../../.kube/k8s-config"], "delta": "0:00:00.443094", "end": "2024-03-06 23:36:50.149060", "item": "ubuntu-host-75e4c5", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:36:49.705966", "stderr": "Error from server (Forbidden): nodes \"ubuntu-host-75e4c5\" is forbidden: User \"kubernetes-admin\" cannot get resource \"nodes\" in API group \"\" at the cluster scope", "stderr_lines": ["Error from server (Forbidden): nodes \"ubuntu-host-75e4c5\" is forbidden: User \"kubernetes-admin\" cannot get resource \"nodes\" in API group \"\" at the cluster scope"], "stdout": "", "stdout_lines": []}
+changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-75e4c5)
+changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-75e4c5)
+changed: [192.168.1.102 -> localhost] => (item=ubuntu-host-76d48b)
+changed: [192.168.1.106 -> localhost] => (item=ubuntu-host-76d48b)
+changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-76d48b)
+changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-76d48b)
+changed: [192.168.1.106 -> localhost] => (item=ubuntu-host-a6773f)
+changed: [192.168.1.102 -> localhost] => (item=ubuntu-host-a6773f)
+changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-a6773f)
+changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-a6773f)
+changed: [192.168.1.106 -> localhost] => (item=ubuntu-host-ddde9b)
+changed: [192.168.1.102 -> localhost] => (item=ubuntu-host-ddde9b)
+changed: [192.168.1.101 -> localhost] => (item=ubuntu-host-ddde9b)
+changed: [192.168.1.100 -> localhost] => (item=ubuntu-host-ddde9b)
+
+TASK [Wait for a specified time (e.g., 600 seconds)] ***************************
+Pausing for 600 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [192.168.1.100]
+
+TASK [Get after Date and Time] *************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Display the time after test] *********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Write variable to file] **************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Copy after time] *********************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Calculate recovery duration] *********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Display recovery duration] ***********************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Write recovery to file] **************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Copy recovery time] ******************************************************
+skipping: [192.168.1.100]
+skipping: [192.168.1.101]
+
+TASK [Gather post-recovery cluster state] **************************************
+changed: [192.168.1.100 -> localhost]
+changed: [192.168.1.101 -> localhost]
+
+PLAY RECAP *********************************************************************
+192.168.1.100              : ok=7    changed=4    unreachable=0    failed=0    skipped=13   rescued=0    ignored=0   
+192.168.1.101              : ok=6    changed=4    unreachable=0    failed=0    skipped=13   rescued=0    ignored=0   
+192.168.1.102              : ok=4    changed=2    unreachable=0    failed=1    skipped=5    rescued=0    ignored=0   
+192.168.1.106              : ok=11   changed=6    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+
+PLAY [k-bench derive data from results] ****************************************
+
+TASK [List of test names] ******************************************************
+ok: [192.168.1.113]
+
+TASK [Display start and end time] **********************************************
+ok: [192.168.1.113] => {
+    "msg": "1709760654 - "
+}
+
+TASK [Generating CSV file CPU] *************************************************
+fatal: [192.168.1.113]: FAILED! => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python3"}, "changed": true, "cmd": ["mongoexport", "--db=netdata", "--collection=metrics", "--type=csv", "--fields=hostname,value,timestamp", "--query={\"chart_type\": \"system\", \"chart_family\": \"cpu\", \"chart_context\": \"system.cpu\", \"id\": \"idle\", \"timestamp\": {\"$gt\": 1709760654, \"$lt\":  }}", "--out=./test-results/reliability-control-2-cpu.csv"], "delta": "0:00:00.004622", "end": "2024-03-06 23:46:53.947844", "msg": "non-zero return code", "rc": 1, "start": "2024-03-06 23:46:53.943222", "stderr": "2024-03-06T23:46:53.947+0200\tquery '[123 34 99 104 97 114 116 95 116 121 112 101 34 58 32 34 115 121 115 116 101 109 34 44 32 34 99 104 97 114 116 95 102 97 109 105 108 121 34 58 32 34 99 112 117 34 44 32 34 99 104 97 114 116 95 99 111 110 116 101 120 116 34 58 32 34 115 121 115 116 101 109 46 99 112 117 34 44 32 34 105 100 34 58 32 34 105 100 108 101 34 44 32 34 116 105 109 101 115 116 97 109 112 34 58 32 123 34 36 103 116 34 58 32 49 55 48 57 55 54 48 54 53 52 44 32 34 36 108 116 34 58 32 32 125 125]' is not valid JSON: invalid character '}' looking for beginning of value\n2024-03-06T23:46:53.947+0200\ttry 'mongoexport --help' for more information", "stderr_lines": ["2024-03-06T23:46:53.947+0200\tquery '[123 34 99 104 97 114 116 95 116 121 112 101 34 58 32 34 115 121 115 116 101 109 34 44 32 34 99 104 97 114 116 95 102 97 109 105 108 121 34 58 32 34 99 112 117 34 44 32 34 99 104 97 114 116 95 99 111 110 116 101 120 116 34 58 32 34 115 121 115 116 101 109 46 99 112 117 34 44 32 34 105 100 34 58 32 34 105 100 108 101 34 44 32 34 116 105 109 101 115 116 97 109 112 34 58 32 123 34 36 103 116 34 58 32 49 55 48 57 55 54 48 54 53 52 44 32 34 36 108 116 34 58 32 32 125 125]' is not valid JSON: invalid character '}' looking for beginning of value", "2024-03-06T23:46:53.947+0200\ttry 'mongoexport --help' for more information"], "stdout": "", "stdout_lines": []}
+
+PLAY RECAP *********************************************************************
+192.168.1.113              : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
