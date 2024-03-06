@@ -61,6 +61,7 @@ mkdir -p /opt/cni/bin
 sudo wget -O /tmp/cni-plugins-linux-amd64-v1.4.0.tgz https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-amd64-v1.4.0.tgz
 sudo tar Cxzvf /opt/cni/bin /tmp/cni-plugins-linux-amd64-v1.4.0.tgz
 
+# rpi
 sudo wget -O /tmp/cni-plugins-linux-arm64-v1.4.0.tgz https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-arm64-v1.4.0.tgz
 sudo tar Cxzvf /opt/cni/bin /tmp/cni-plugins-linux-arm64-v1.4.0.tgz
 # containerd steps - end
@@ -136,10 +137,32 @@ sudo apt-get update
 # and run all previous steps except 
 
 # run on worker nodes (those are in local net... and only for testing)
+# get the token: kubeadm token create --print-join-command
 kubeadm join 192.168.1.106:6443 --token ibwhz4.d287l59q08bpoyhp --discovery-token-ca-cert-hash sha256:626b5d1d474caa116b44472748477a62f6bc7407760966db44bee7f4000e585e 
 
+
+# kube-dns issue: https://github.com/containerd/containerd/issues/4857#issuecomment-747238907
 
 ###
 # Cleaning the worker nodes
 ###
 # run k8s-drain-worker.yaml playbook
+
+# cleaning ip tables if needed
+# sudo iptables -P INPUT ACCEPT
+# sudo iptables -P FORWARD ACCEPT
+# sudo iptables -P OUTPUT ACCEPT
+# sudo iptables -t nat -F
+# sudo iptables -t mangle -F
+# sudo iptables -F
+# sudo iptables -X
+
+# sudo ip6tables -P INPUT ACCEPT
+# sudo ip6tables -P FORWARD ACCEPT
+# sudo ip6tables -P OUTPUT ACCEPT
+# sudo ip6tables -t nat -F
+# sudo ip6tables -t mangle -F
+# sudo ip6tables -F
+# sudo ip6tables -X
+
+# iptables -nvL
