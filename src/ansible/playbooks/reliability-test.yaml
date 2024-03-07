@@ -73,7 +73,7 @@
 
     - name: Wait until all nodes are Ready
       delegate_to: localhost
-      command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m --kubeconfig {{kubeconfig}} # issue with k3s that it can arbitrarily show nodes as NotReady
+      command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=10m --kubeconfig {{kubeconfig}} # issue with k3s that it can arbitrarily show nodes as NotReady
       #command: k0s kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m
       with_items: "{{ node_names }}" 
 
