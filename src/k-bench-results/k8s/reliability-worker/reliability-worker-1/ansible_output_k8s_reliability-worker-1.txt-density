@@ -12,7 +12,7 @@ changed: [192.168.1.106]
 
 TASK [Display the time before test] ********************************************
 ok: [192.168.1.106] => {
-    "before_datetime.stdout": "1709775816"
+    "before_datetime.stdout": "1709779799"
 }
 
 TASK [Write variable to file] **************************************************
@@ -29,7 +29,7 @@ changed: [192.168.1.106]
 
 TASK [Display the time before test] ********************************************
 ok: [192.168.1.106] => {
-    "after_datetime.stdout": "1709776204"
+    "after_datetime.stdout": "1709780593"
 }
 
 TASK [Write variable to file] **************************************************
