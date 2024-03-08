@@ -1,0 +1,1 @@
+for k8s, it takes a significant amount of time to recover from the network outage.
