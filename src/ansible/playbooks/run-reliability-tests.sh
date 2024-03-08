@@ -4,8 +4,7 @@
 
 distribution="k8s"
 #test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
-test_types=("reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
-# "reliability-control"
+test_types=("reliability-control")
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
 # TODO: automate this part kubectl --kubeconfig ../.kube/k0s-config label  nodes <node-name>  my.kubernetes.io/instance-type=worker
@@ -13,7 +12,7 @@ test_types=("reliability-worker" "reliability-control-no-pressure-long" "reliabi
 for test_type in "${test_types[@]}"; do
     for i in {1..5}; do
 
-        if [[ "$test_type" == "reliability-worker" && "$i" == "1" ]]; then
+        if [[ "$test_type" == "reliability-control" && ("$i" == "3" || "$i" == "4") ]]; then
             # skip the first test
             echo "skipping the first test..."
             continue
