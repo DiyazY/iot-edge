@@ -9,7 +9,7 @@
       run_once: true
 
   - name: Get list of all nodes
-    shell:  "kubectl get nodes --show-labels --kubeconfig {{kubeconfig}} | grep \"beta.kubernetes.io/instance-type=worker\" | awk '{print $1}'"
+    shell:  "kubectl get nodes --show-labels --kubeconfig {{kubeconfig}} | grep \"my.kubernetes.io/instance-type=worker\" | awk '{print $1}'"
     register: node_names_output
 
   - name: Split node names into a list
