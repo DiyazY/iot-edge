@@ -81,6 +81,7 @@
       block:
         - name: Wait for node to be Ready
           command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=10m --kubeconfig {{kubeconfig}}
+          delegate_to: localhost
           loop: "{{ node_names }}"
           register: result
           until: result.rc == 0
