@@ -2,7 +2,7 @@
 
 # WIP
 
-distribution="k8s"
+distribution="kubeEdge"
 #test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
 test_types=("reliability-control")
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
@@ -11,15 +11,6 @@ test_types=("reliability-control")
 
 for test_type in "${test_types[@]}"; do
     for i in {1..5}; do
-
-        if [[ "$test_type" == "reliability-control" && ("$i" == "3" || "$i" == "4") ]]; then
-            # skip the first test
-            echo "skipping the first test..."
-            continue
-        fi
-
-
-
         tag="${test_type}-${i}"
         mkdir -p ../k-bench-results/${distribution}/${test_type}/${tag}
         output_file="../k-bench-results/${distribution}/${test_type}/${tag}/ansible_output_${distribution}_${tag}.txt"
@@ -107,6 +98,7 @@ for test_type in "${test_types[@]}"; do
     sleep 1800 # wait 30 min
 done
 
-ansible-playbook -i inventory/${distribution}/hosts.ini playbooks/kube-bench-run.yaml 
+# temporary commented
+# ansible-playbook -i inventory/${distribution}/hosts.ini playbooks/kube-bench-run.yaml 
 
-ansible-playbook -i inventory/${distribution}/hosts.ini shutdown.yaml
+# ansible-playbook -i inventory/${distribution}/hosts.ini shutdown.yaml
