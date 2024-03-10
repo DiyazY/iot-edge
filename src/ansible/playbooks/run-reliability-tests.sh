@@ -2,16 +2,24 @@
 
 # WIP
 
-distribution="k3s"
+distribution="k8s"
 #test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
-test_types=("reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
-
+test_types=("reliability-control")
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
-# TODO: automate this part kubectl --kubeconfig ../.kube/k0s-config label  nodes <node-name>  my.kubernetes.io/instance-type=worker
+# TODO: automate this part kubectl label  nodes <node-name>  my.kubernetes.io/instance-type=worker --kubeconfig ../.kube/k0s-config
 
 for test_type in "${test_types[@]}"; do
     for i in {1..5}; do
+
+        if [[ "$test_type" == "reliability-control" && ("$i" == "3" || "$i" == "4") ]]; then
+            # skip the first test
+            echo "skipping the first test..."
+            continue
+        fi
+
+
+
         tag="${test_type}-${i}"
         mkdir -p ../k-bench-results/${distribution}/${test_type}/${tag}
         output_file="../k-bench-results/${distribution}/${test_type}/${tag}/ansible_output_${distribution}_${tag}.txt"
@@ -31,7 +39,7 @@ for test_type in "${test_types[@]}"; do
             eth_interface="eth0"
             node_type="node"
         fi
-        echo "Test is going..."
+        echo "Test is going..."       
         if [[ "$test_type" == "idle" ]]; then
             start_time=$(date '+%s')
             echo "$start_time" > ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-before.txt

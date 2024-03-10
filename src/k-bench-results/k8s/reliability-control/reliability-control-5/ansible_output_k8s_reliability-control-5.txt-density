@@ -5,14 +5,14 @@ TASK [Gathering Facts] *********************************************************
 ok: [192.168.1.106]
 
 TASK [Create config paths] *****************************************************
-changed: [192.168.1.106]
+ok: [192.168.1.106]
 
 TASK [Get before Date and Time] ************************************************
 changed: [192.168.1.106]
 
 TASK [Display the time before test] ********************************************
 ok: [192.168.1.106] => {
-    "before_datetime.stdout": "1705537602"
+    "before_datetime.stdout": "1710072989"
 }
 
 TASK [Write variable to file] **************************************************
@@ -29,7 +29,7 @@ changed: [192.168.1.106]
 
 TASK [Display the time before test] ********************************************
 ok: [192.168.1.106] => {
-    "after_datetime.stdout": "1705538395"
+    "after_datetime.stdout": "1710073375"
 }
 
 TASK [Write variable to file] **************************************************
@@ -45,5 +45,5 @@ TASK [Delete test results on a remote machine] *********************************
 changed: [192.168.1.106]
 
 PLAY RECAP *********************************************************************
-192.168.1.106              : ok=13   changed=10   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.1.106              : ok=13   changed=9    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 

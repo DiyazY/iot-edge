@@ -71,11 +71,26 @@
         done &
       when: inventory_hostname == specific_node
 
+    # - name: Wait until all nodes are Ready
+    #   delegate_to: localhost
+    #   command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=10m --kubeconfig {{kubeconfig}} # issue with k3s that it can arbitrarily show nodes as NotReady
+    #   #command: k0s kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m
+    #   with_items: "{{ node_names }}" 
+
     - name: Wait until all nodes are Ready
-      delegate_to: localhost
-      command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m --kubeconfig {{kubeconfig}} # issue with k3s that it can arbitrarily show nodes as NotReady
-      #command: k0s kubectl wait --for=condition=Ready node/{{ item }} --timeout=5m
-      with_items: "{{ node_names }}" 
+      block:
+        - name: Wait for node to be Ready
+          command: kubectl wait --for=condition=Ready node/{{ item }} --timeout=10m --kubeconfig {{kubeconfig}}
+          delegate_to: localhost
+          loop: "{{ node_names }}"
+          register: result
+          until: result.rc == 0
+          retries: 10  # Number of retries
+          delay: 5  # Delay in seconds between retries
+      rescue:
+        - name: Retry notification
+          debug:
+            msg: "Retrying due to failure. Result: {{ result }}"
 
     - name: Wait for a specified time (e.g., 600 seconds)
       ansible.builtin.pause:
