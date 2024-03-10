@@ -51,16 +51,16 @@
     state: absent
   ignore_errors: true
 
-- name: create /run/flannel/subnet.env file (looks like some deps)
-  shell: |
-    mkdir -p /run/flannel
-    cat << EOF > /run/flannel/subnet.env
-    FLANNEL_NETWORK=10.244.0.0/16
-    FLANNEL_SUBNET=10.244.0.1/24
-    FLANNEL_MTU=1450
-    FLANNEL_IPMASQ=true
-    EOF
-  ignore_errors: true
+# - name: create /run/flannel/subnet.env file (looks like some deps)
+#   shell: |
+#     mkdir -p /run/flannel
+#     cat << EOF > /run/flannel/subnet.env
+#     FLANNEL_NETWORK=10.244.0.0/16
+#     FLANNEL_SUBNET=10.244.0.1/24
+#     FLANNEL_MTU=1450
+#     FLANNEL_IPMASQ=true
+#     EOF
+#   ignore_errors: true
 
 - name: adjust kubelet config
   shell: |
@@ -98,6 +98,43 @@
   shell: |
     sudo rm keadm-*.gz*
     sudo rm *keadm-*.txt*
+    sudo rm -rf /etc/cni/net.d/10-flannel.conflist
+    sudo rm -rf /run/flannel
+
+- name: create containerd-net
+  shell: |
+    cat << EOF >  /etc/cni/net.d/my.conflist
+    {
+      "cniVersion": "1.0.0",
+      "name": "containerd-net",
+      "plugins": [
+        {
+          "type": "bridge",
+          "bridge": "cni0",
+          "isGateway": true,
+          "ipMasq": true,
+          "promiscMode": true,
+          "ipam": {
+            "type": "host-local",
+            "ranges": [
+              [{
+                "subnet": "10.216.3.0/24"
+              }]
+            ],
+            "routes": [
+              { "dst": "0.0.0.0/0" }
+            ]
+          }
+        },
+        {
+          "type": "portmap",
+          "capabilities": {"portMappings": true}
+        }
+      ]
+    }
+    EOF
+    sudo systemctl restart containerd
+    sudo systemctl restart edgecore
 
 # - name: enabling streaming in sudo nano /etc/kubeedge/config/edgecore.yaml works for progressing further
 # todo: read this: https://kubeedge.io/docs/setup/install-with-keadm/#enable-kubectl-logs-feature
