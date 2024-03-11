@@ -4,7 +4,7 @@
 
 distribution="kubeEdge"
 #test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
-test_types=("reliability-control")
+test_types=("reliability-worker")
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
 # TODO: automate this part kubectl label  nodes <node-name>  my.kubernetes.io/instance-type=worker --kubeconfig ../.kube/k0s-config
