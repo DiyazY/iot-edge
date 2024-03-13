@@ -4,13 +4,20 @@
 
 distribution="kubeEdge"
 #test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
-test_types=("reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
+test_types=("reliability-worker-no-pressure-long")
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
 # TODO: automate this part kubectl label  nodes <node-name>  my.kubernetes.io/instance-type=worker --kubeconfig ../.kube/k0s-config
 
 for test_type in "${test_types[@]}"; do
     for i in {1..5}; do
+
+        if [[ "$test_type" == "reliability-worker-no-pressure-long" && "$i" == "1" ]]; then
+            # skip the first test
+            echo "skipping the first test..."
+            continue
+        fi
+
         tag="${test_type}-${i}"
         mkdir -p ../k-bench-results/${distribution}/${test_type}/${tag}
         output_file="../k-bench-results/${distribution}/${test_type}/${tag}/ansible_output_${distribution}_${tag}.txt"
