@@ -12,12 +12,6 @@ test_types=("reliability-worker-no-pressure-long")
 for test_type in "${test_types[@]}"; do
     for i in {1..5}; do
 
-        if [[ "$test_type" == "reliability-worker-no-pressure-long" && "$i" == "1" ]]; then
-            # skip the first test
-            echo "skipping the first test..."
-            continue
-        fi
-
         tag="${test_type}-${i}"
         mkdir -p ../k-bench-results/${distribution}/${test_type}/${tag}
         output_file="../k-bench-results/${distribution}/${test_type}/${tag}/ansible_output_${distribution}_${tag}.txt"
@@ -105,7 +99,6 @@ for test_type in "${test_types[@]}"; do
     sleep 1800 # wait 30 min
 done
 
-# temporary commented
-# ansible-playbook -i inventory/${distribution}/hosts.ini playbooks/kube-bench-run.yaml 
+ansible-playbook -i inventory/${distribution}/hosts.ini playbooks/kube-bench-run.yaml 
 
-# ansible-playbook -i inventory/${distribution}/hosts.ini shutdown.yaml
+ansible-playbook -i inventory/${distribution}/hosts.ini shutdown.yaml
