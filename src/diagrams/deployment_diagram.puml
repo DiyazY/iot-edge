@@ -11,7 +11,7 @@ WithoutPropertyHeader()
 
 title Deployment Diagram for K8s cluster
 
-Deployment_Node(plc, "K8s cluster", "k8s, k3s, k0s, kubeEdge, openYort", "Big Bank plc data center"){
+Deployment_Node(plc, "K8s cluster", "k8s, k3s, k0s, kubeEdge, openYurt", "Big Bank plc data center"){
     AddProperty("Machine", "Raspberry Pi 4")
     AddProperty("CPU", "Arm")
     AddProperty("RAM", "Arm")
