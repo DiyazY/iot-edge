@@ -1,0 +1,71 @@
+
+PLAY [Running tests] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Update tag in hosts.ini] *************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+PLAY [setuping netdata tags] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.1.106]
+ok: [192.168.1.102]
+ok: [192.168.1.100]
+ok: [192.168.1.101]
+
+TASK [change the tag to idle-5] ************************************************
+changed: [192.168.1.106]
+changed: [192.168.1.101]
+changed: [192.168.1.102]
+changed: [192.168.1.100]
+
+TASK [Restart Netdata] *********************************************************
+changed: [192.168.1.106]
+changed: [192.168.1.100]
+changed: [192.168.1.102]
+changed: [192.168.1.101]
+
+PLAY RECAP *********************************************************************
+192.168.1.100              : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.1.101              : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.1.102              : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+192.168.1.106              : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+PLAY [k-bench derive data from results] ****************************************
+
+TASK [List of test names] ******************************************************
+ok: [192.168.1.113]
+
+TASK [Display start and end time] **********************************************
+ok: [192.168.1.113] => {
+    "msg": "1710716990 - 1710717290"
+}
+
+TASK [Generating CSV file CPU] *************************************************
+changed: [192.168.1.113]
+
+TASK [Generating CSV file Ram] *************************************************
+changed: [192.168.1.113]
+
+TASK [Generating CSV file Disk] ************************************************
+changed: [192.168.1.113]
+
+TASK [Generating CSV file Network] *********************************************
+changed: [192.168.1.113]
+
+TASK [Copy test results to repository] *****************************************
+changed: [192.168.1.113] => (item=cpu)
+changed: [192.168.1.113] => (item=ram)
+changed: [192.168.1.113] => (item=disk)
+changed: [192.168.1.113] => (item=net)
+
+PLAY RECAP *********************************************************************
+192.168.1.113              : ok=7    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
