@@ -1,0 +1,49 @@
+
+PLAY [Run k-bench benchmark] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.1.106]
+
+TASK [Create config paths] *****************************************************
+ok: [192.168.1.106]
+
+TASK [Get before Date and Time] ************************************************
+changed: [192.168.1.106]
+
+TASK [Display the time before test] ********************************************
+ok: [192.168.1.106] => {
+    "before_datetime.stdout": "1710968902"
+}
+
+TASK [Write variable to file] **************************************************
+changed: [192.168.1.106]
+
+TASK [Copy before time] ********************************************************
+changed: [192.168.1.106]
+
+TASK [Run kbench command] ******************************************************
+changed: [192.168.1.106]
+
+TASK [Get after Date and Time] *************************************************
+changed: [192.168.1.106]
+
+TASK [Display the time before test] ********************************************
+ok: [192.168.1.106] => {
+    "after_datetime.stdout": "1710969283"
+}
+
+TASK [Write variable to file] **************************************************
+changed: [192.168.1.106]
+
+TASK [Copy after time] *********************************************************
+changed: [192.168.1.106]
+
+TASK [Copy test results to repository] *****************************************
+changed: [192.168.1.106]
+
+TASK [Delete test results on a remote machine] *********************************
+changed: [192.168.1.106]
+
+PLAY RECAP *********************************************************************
+192.168.1.106              : ok=13   changed=9    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
