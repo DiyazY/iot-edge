@@ -3,7 +3,8 @@
 # WIP
 
 distribution="openYurt"
-test_types=("dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
+# test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
+test_types=("reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
 
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
