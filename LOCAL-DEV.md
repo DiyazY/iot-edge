@@ -143,6 +143,6 @@ First change the directory: `cd src/ansible`;
 # test coverage
 k8s: done
 k0s: done
-k3s: redo
-kubeEdge: in-progress
-openYort: not-started
+k3s: done
+kubeEdge: done
+openYurt: in-progress
