@@ -123,16 +123,16 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
     
 
 toSave = False
-distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge']
-testCases = ['idle', 'cp_heavy_12client', 'cp_heavy_8client', 'dp_redis_density']
-metrics = ['cpu'] #, 'ram', 'net', 'disk'] # TODO: think how to present net and disk.
+distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
+testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density'] # TODO: reliability tests needs different plotting
+metrics = ['cpu'] #, 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
 files = []
 def create_plots_time_series(plot_type='scatter'):
     for unit in metrics:
         for test in testCases:
             for dist in distributions:
-                for i in range(1, 5):
+                for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
             create_plots(files, f'{dist} - {test}', 'Minutes', 'Value (%)', toSave, plot_type)
 
-create_plots_time_series('line')
+create_plots_time_series()
