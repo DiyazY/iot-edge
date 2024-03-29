@@ -83,7 +83,7 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False):
         if toSave:
             snake_title = title.replace(' ', '_').lower()
             file_name = f'{snake_title}_for_{host}.png'
-            plt.savefig(f'../diagrams/{file_name}')
+            plt.savefig(f'../diagrams/results/line/{file_name}')
         else:
             plt.show()
 
@@ -122,7 +122,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave)
     
 
-toSave = False
+toSave = True
 distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
 testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density'] # TODO: reliability tests needs different plotting
 metrics = ['cpu'] #, 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
@@ -133,6 +133,6 @@ def create_plots_time_series(plot_type='scatter'):
             for dist in distributions:
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
-            create_plots(files, f'{test}', 'Minutes', 'Value (%)', toSave, plot_type)
+            create_plots(files, f'{test}', 'Minutes', 'CPU Usage (%)', toSave, plot_type)
 
 create_plots_time_series('line')
