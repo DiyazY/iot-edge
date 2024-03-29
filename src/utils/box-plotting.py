@@ -133,6 +133,6 @@ def create_plots_time_series(plot_type='scatter'):
             for dist in distributions:
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
-            create_plots(files, f'{dist} - {test}', 'Minutes', 'Value (%)', toSave, plot_type)
+            create_plots(files, f'{test}', 'Minutes', 'Value (%)', toSave, plot_type)
 
-create_plots_time_series()
+create_plots_time_series('line')
