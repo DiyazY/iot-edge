@@ -27,7 +27,7 @@ def scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave=False
         else:
             plt.show()
 
-def box_plotting(all_data, title, xlabel, ylabel, toSave=False):
+def box_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
     """
     Create and save or display box plots for given data files.
 
@@ -53,11 +53,11 @@ def box_plotting(all_data, title, xlabel, ylabel, toSave=False):
         if toSave:
             snake_title = title.replace(' ', '_').lower()
             file_name = f'{snake_title}_for_{host}.png'
-            plt.savefig(f'../diagrams/{file_name}')
+            plt.savefig(f'../diagrams/results/box/{unit}/{file_name}')
         else:
             plt.show()
 
-def line_plotting(all_data, title, xlabel, ylabel, toSave=False):
+def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
     """
     Create and save or display line plots for given data files.
 
@@ -83,7 +83,7 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False):
         if toSave:
             snake_title = title.replace(' ', '_').lower()
             file_name = f'{snake_title}_for_{host}.png'
-            plt.savefig(f'../diagrams/results/line/{file_name}')
+            plt.savefig(f'../diagrams/results/line/{unit}/{file_name}')
         else:
             plt.show()
 
@@ -99,7 +99,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
     toSave (bool): If True, save the plots instead of displaying them.
     """
     all_data = []
-
+    unit = ''
     for file in files:
         path_components = file.split('/')
         dist = path_components[2]
@@ -108,6 +108,17 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         data['timestamp'] = pd.to_datetime(data['timestamp'], unit='s')
         if unit == 'cpu':
             data['value'] = 100 - data['value']
+
+        if unit == 'net':
+            # Ensure 'value' is positive for all rows, assuming negative values indicate outgoing data
+            data['value'] = data['value'].abs()
+            # Group by 'hostname' and 'timestamp' to calculate total traffic (sum of InOctets and OutOctets)
+            data_grouped = data.groupby(['hostname', 'timestamp']).agg(TotalTraffic=('value', 'sum')).reset_index()
+
+            # Replace the original 'data' DataFrame with the grouped one
+            data = data_grouped
+            data['value'] = data['TotalTraffic'] / 1024  # Convert bytes to kilobytes
+
         min_timestamp = data['timestamp'].min()
         data['timestamp'] -= min_timestamp
         data['minutes'] = (data['timestamp'].dt.total_seconds() / 60).round().astype(int)
@@ -115,17 +126,17 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         all_data.append(data)
 
     if plot_type == 'box':
-        box_plotting(all_data, title, xlabel, ylabel, toSave)
+        box_plotting(all_data, title, xlabel, ylabel, toSave, unit)
     elif plot_type == 'line':
-        line_plotting(all_data, title, xlabel, ylabel, toSave)
+        line_plotting(all_data, title, xlabel, ylabel, toSave, unit)
     else:
-        scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave)
+        scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave, unit)
     
 
 toSave = True
 distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
 testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density'] # TODO: reliability tests needs different plotting
-metrics = ['cpu'] #, 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
+metrics = ['net'] #'cpu', 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
 files = []
 def create_plots_time_series(plot_type='scatter'):
     for unit in metrics:
@@ -133,6 +144,6 @@ def create_plots_time_series(plot_type='scatter'):
             for dist in distributions:
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
-            create_plots(files, f'{test}', 'Minutes', 'CPU Usage (%)', toSave, plot_type)
+            create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type)
 
-create_plots_time_series('line')
+create_plots_time_series('box')
