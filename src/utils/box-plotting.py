@@ -137,7 +137,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         all_data.append(data)
 
     if plot_type == 'box':
-        box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=True)
+        box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=False)
     elif plot_type == 'line':
         line_plotting(all_data, title, xlabel, ylabel, toSave, unit)
     else:
