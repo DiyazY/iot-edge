@@ -155,7 +155,7 @@ def create_plots_time_series(plot_type='scatter'):
             for dist in distributions:
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
-            create_plots(files, f'{test}', 'Minutes', 'Disk Usage (%)', toSave, plot_type, False)
+            create_plots(files, f'{test}', 'Minutes', 'Disk Usage (%)', toSave, plot_type, True)
             #create_plots(files, f'{test}', 'Minutes', 'Memory Usage (Mb)', toSave, plot_type, True)
             #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type, False)
             #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type)
