@@ -28,7 +28,7 @@ def scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave=False
             plt.show()
 
 # TODO: remove outliers and check
-def box_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
+def box_plotting(all_data, title, xlabel, ylabel, toSave=False, unit='', showfliers=False):
     """
     Create and save or display box plots for given data files.
 
@@ -45,7 +45,7 @@ def box_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
     for host in hosts:
         host_data = combined_data[combined_data['hostname'] == host]
         plt.figure(figsize=(15, 8))
-        sns.boxplot(data=host_data, x='minutes', y='value', hue='dist')
+        sns.boxplot(data=host_data, x='minutes', y='value', hue='dist', showfliers=showfliers)
         plt.title(f'{title} for {host}')
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
@@ -54,7 +54,8 @@ def box_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
         if toSave:
             snake_title = title.replace(' ', '_').lower()
             file_name = f'{snake_title}_for_{host}.png'
-            plt.savefig(f'../diagrams/results/box/{unit}/{file_name}')
+            sub_dir = 'box' if showfliers == True else 'box-without-fliers'
+            plt.savefig(f'../diagrams/results/{sub_dir}/{unit}/{file_name}')
         else:
             plt.show()
 
@@ -111,7 +112,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
             data = data[data['hostname'].str.match('^node_.*')].copy()
             # Assign 'worker' to the 'hostname' column for the remaining data
             data['hostname'] = 'worker'
-            
+
         data['timestamp'] = pd.to_datetime(data['timestamp'], unit='s')
 
 
@@ -136,7 +137,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         all_data.append(data)
 
     if plot_type == 'box':
-        box_plotting(all_data, title, xlabel, ylabel, toSave, unit)
+        box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=False)
     elif plot_type == 'line':
         line_plotting(all_data, title, xlabel, ylabel, toSave, unit)
     else:
@@ -154,7 +155,7 @@ def create_plots_time_series(plot_type='scatter'):
             for dist in distributions:
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
-            create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type, True)
+            create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type, False)
             #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type)
 
 create_plots_time_series('box')
