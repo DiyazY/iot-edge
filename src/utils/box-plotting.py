@@ -159,4 +159,4 @@ def create_plots_time_series(plot_type='scatter'):
             #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type, False)
             #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type)
 
-create_plots_time_series('box')
+create_plots_time_series('line')
