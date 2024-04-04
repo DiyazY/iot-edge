@@ -27,6 +27,7 @@ def scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave=False
         else:
             plt.show()
 
+# TODO: remove outliers and check
 def box_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
     """
     Create and save or display box plots for given data files.
@@ -87,7 +88,7 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
         else:
             plt.show()
 
-def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'):
+def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter', workersOnly=False):
     """
     Create and save or display box plots for given data files.
 
@@ -105,7 +106,15 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         dist = path_components[2]
         unit = path_components[-1].split('-')[-1].split('.')[0]
         data = pd.read_csv(file)
+
+        if workersOnly:
+            data = data[data['hostname'].str.match('^node_.*')].copy()
+            # Assign 'worker' to the 'hostname' column for the remaining data
+            data['hostname'] = 'worker'
+            
         data['timestamp'] = pd.to_datetime(data['timestamp'], unit='s')
+
+
         if unit == 'cpu':
             data['value'] = 100 - data['value']
 
@@ -118,6 +127,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
             # Replace the original 'data' DataFrame with the grouped one
             data = data_grouped
             data['value'] = data['TotalTraffic'] / 1024  # Convert bytes to kilobytes
+        
 
         min_timestamp = data['timestamp'].min()
         data['timestamp'] -= min_timestamp
@@ -144,6 +154,7 @@ def create_plots_time_series(plot_type='scatter'):
             for dist in distributions:
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
-            create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type)
+            create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type, True)
+            #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type)
 
 create_plots_time_series('box')
