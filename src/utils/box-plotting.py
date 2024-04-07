@@ -89,7 +89,7 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
         else:
             plt.show()
 
-def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter', workersOnly=False):
+def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter', workersOnly=False, reliabilityTests=False):
     """
     Create and save or display box plots for given data files.
 
@@ -137,7 +137,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         all_data.append(data)
 
     if plot_type == 'box':
-        box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=False)
+        box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=True)
     elif plot_type == 'line':
         line_plotting(all_data, title, xlabel, ylabel, toSave, unit)
     else:
@@ -146,18 +146,21 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 
 toSave = True
 distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
-testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density'] # TODO: reliability tests needs different plotting
-metrics = ['disk'] #'cpu', 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
+# testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density'] # TODO: reliability tests needs different plotting
+testCases = [ 'reliability-control', 'reliability-control-no-pressure-long' ] # 'reliability-worker-no-pressure-long', 
+metrics = ['cpu'] #'cpu', 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
 files = []
+workersOnly=True
+reliabilityTests=False
 def create_plots_time_series(plot_type='scatter'):
     for unit in metrics:
         for test in testCases:
             for dist in distributions:
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
-            create_plots(files, f'{test}', 'Minutes', 'Disk Usage (%)', toSave, plot_type, True)
+            create_plots(files, f'{test}', 'Minutes', 'CPU Usage (%)', toSave, plot_type, workersOnly, reliabilityTests)
             #create_plots(files, f'{test}', 'Minutes', 'Memory Usage (Mb)', toSave, plot_type, True)
             #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type, False)
             #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type)
 
-create_plots_time_series('line')
+create_plots_time_series('box')
