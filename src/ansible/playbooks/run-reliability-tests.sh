@@ -2,9 +2,9 @@
 
 # WIP
 
-distribution="openYurt"
+distribution="k3s"
 # test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
-test_types=("reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
+test_types=("reliability-worker")
 
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
@@ -21,8 +21,10 @@ for test_type in "${test_types[@]}"; do
         ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/update-tag-in-inventory.yaml --extra-vars "new_tag=${tag}" > "$output_file" 2>&1
         echo "setting netdata tag..."
         ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/netdata-tag-setup.yaml >> "$output_file" 2>&1
-        echo "waiting 30min..."
-        sleep 1800 # wait 30 min
+
+        # TODO: remove it later. This is commented only for one time run
+        # echo "waiting 30min..."
+        # sleep 1800 # wait 30 min
 
         machine="control"
         eth_interface="eno1"
