@@ -144,13 +144,13 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave, unit)
     
 
-toSave = True
+toSave = False # saved them manually since it is not worth handling them via code
 distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density'] # TODO: reliability tests needs different plotting
 testCases = [ 'reliability-control', 'reliability-control-no-pressure-long' ] # 'reliability-worker-no-pressure-long', 
 metrics = ['cpu'] #'cpu', 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
 files = []
-workersOnly=True
+workersOnly=False
 reliabilityTests=False
 def create_plots_time_series(plot_type='scatter'):
     for unit in metrics:
