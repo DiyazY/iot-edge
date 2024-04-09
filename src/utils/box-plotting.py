@@ -145,7 +145,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         all_data.append(data)
 
     if plot_type == 'box':
-        box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=False)
+        box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=True)
     elif plot_type == 'line':
         line_plotting(all_data, title, xlabel, ylabel, toSave, unit)
     else:
@@ -157,7 +157,7 @@ distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density'] # TODO: reliability tests needs different plotting
 # testCases = [ 'reliability-control', 'reliability-control-no-pressure-long' ] 
 testCases = [ 'reliability-worker-no-pressure-long'] # , 'reliability-worker-no-pressure-long' ]
-metrics = ['ram'] #'cpu', 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
+metrics = ['disk'] #'cpu', 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
 files = []
 workersOnly=False
 reliabilityTests=True
@@ -167,9 +167,9 @@ def create_plots_time_series(plot_type='scatter'):
             for dist in distributions:
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
-            create_plots(files, f'{test}', 'Minutes', 'Memory Usage (Mb)', toSave, plot_type, workersOnly, reliabilityTests)
+            # create_plots(files, f'{test}', 'Minutes', 'Memory Usage (Mb)', toSave, plot_type, workersOnly, reliabilityTests)
             # create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type, workersOnly, reliabilityTests)
-            # create_plots(files, f'{test}', 'Minutes', 'Disk Usage (%)', toSave, plot_type, workersOnly, reliabilityTests)
+            create_plots(files, f'{test}', 'Minutes', 'Disk Usage (%)', toSave, plot_type, workersOnly, reliabilityTests)
             # create_plots(files, f'{test}', 'Minutes', 'CPU Usage (%)', toSave, plot_type, workersOnly, reliabilityTests)
 
-create_plots_time_series('line')
+create_plots_time_series('box')
