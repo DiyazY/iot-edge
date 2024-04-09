@@ -179,4 +179,4 @@ def create_plots_time_series(plot_type='scatter'):
             # create_plots(files, f'{test}', 'Minutes', 'Disk Usage (%)', toSave, plot_type, workersOnly, reliabilityTests)
             # create_plots(files, f'{test}', 'Minutes', 'CPU Usage (%)', toSave, plot_type, workersOnly, reliabilityTests)
 
-create_plots_time_series('box')
+create_plots_time_series('line')
