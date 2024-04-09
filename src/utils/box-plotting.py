@@ -108,13 +108,21 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         unit = path_components[-1].split('-')[-1].split('.')[0]
         data = pd.read_csv(file)
 
+        if reliabilityTests:
+            paths = file.split('/')[:-1]
+            filePath = '/'.join(paths) + f'/ansible_output_{dist}_{title}-{paths[-1][-1]}.txt'
+            file = open(filePath, 'r')
+            first_line = file.readline()
+            file.close()
+            node_number = first_line.split(' ')[-1].split(':')[0]
+            data['hostname'] = data['hostname'].apply(lambda x: 'failed' if x == f'node_{int(node_number)+1}' else 'worker' if 'node' in x else x)
+
         if workersOnly:
             data = data[data['hostname'].str.match('^node_.*')].copy()
             # Assign 'worker' to the 'hostname' column for the remaining data
             data['hostname'] = 'worker'
 
         data['timestamp'] = pd.to_datetime(data['timestamp'], unit='s')
-
 
         if unit == 'cpu':
             data['value'] = 100 - data['value']
@@ -137,21 +145,22 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         all_data.append(data)
 
     if plot_type == 'box':
-        box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=True)
+        box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=False)
     elif plot_type == 'line':
         line_plotting(all_data, title, xlabel, ylabel, toSave, unit)
     else:
         scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave, unit)
     
 
-toSave = False # saved them manually since it is not worth handling them via code
+toSave = True # saved them manually since it is not worth handling them via code
 distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density'] # TODO: reliability tests needs different plotting
-testCases = [ 'reliability-control', 'reliability-control-no-pressure-long' ] # 'reliability-worker-no-pressure-long', 
+# testCases = [ 'reliability-control', 'reliability-control-no-pressure-long' ] 
+testCases = [ 'reliability-worker'] # , 'reliability-worker-no-pressure-long' ]
 metrics = ['cpu'] #'cpu', 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
 files = []
 workersOnly=False
-reliabilityTests=False
+reliabilityTests=True
 def create_plots_time_series(plot_type='scatter'):
     for unit in metrics:
         for test in testCases:
@@ -163,4 +172,4 @@ def create_plots_time_series(plot_type='scatter'):
             #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type, False)
             #create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type)
 
-create_plots_time_series('box')
+create_plots_time_series('line')
