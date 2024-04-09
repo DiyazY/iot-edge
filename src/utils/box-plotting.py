@@ -170,8 +170,8 @@ def create_plots_time_series(plot_type='scatter'):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
             ylabel = 'CPU Usage (%)' if unit == 'cpu' else 'Memory Usage (Mb)' if unit == 'ram' else 'Network load (kB)' if unit == 'net' else 'Disk Usage (%)'
             
-            if test == 'reliability-control' or test == 'reliability-control-no-pressure-long':
-                workersOnly = False
+            # if test == 'reliability-control' or test == 'reliability-control-no-pressure-long':
+            #     workersOnly = False
 
             create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, workersOnly, reliabilityTests)
             # create_plots(files, f'{test}', 'Minutes', 'Memory Usage (Mb)', toSave, plot_type, workersOnly, reliabilityTests)
