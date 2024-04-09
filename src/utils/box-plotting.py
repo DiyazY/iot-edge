@@ -155,8 +155,8 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 toSave = True # saved them manually since it is not worth handling them via code
 distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density'] # TODO: reliability tests needs different plotting
-testCases = [ 'reliability-control', 'reliability-control-no-pressure-long' ] 
-# testCases = [ 'reliability-worker-no-pressure-long'] # , 'reliability-worker-no-pressure-long' ]
+# testCases = [ 'reliability-control', 'reliability-control-no-pressure-long' ] 
+testCases = [ 'reliability-worker-no-pressure-long'] # , 'reliability-worker-no-pressure-long' ]
 metrics = ['cpu', 'ram', 'net', 'disk'] # TODO: think how to present net and disk. # TOOD: ram should be in percentage (though 64gb and 4Gb are different, but percentage is more meaningful)
 # files = []
 workersOnly=True
@@ -169,14 +169,10 @@ def create_plots_time_series(plot_type='scatter'):
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
             ylabel = 'CPU Usage (%)' if unit == 'cpu' else 'Memory Usage (Mb)' if unit == 'ram' else 'Network load (kB)' if unit == 'net' else 'Disk Usage (%)'
-            
-            # if test == 'reliability-control' or test == 'reliability-control-no-pressure-long':
-            #     workersOnly = False
-
             create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, workersOnly, reliabilityTests)
             # create_plots(files, f'{test}', 'Minutes', 'Memory Usage (Mb)', toSave, plot_type, workersOnly, reliabilityTests)
             # create_plots(files, f'{test}', 'Minutes', 'Network load (kB)', toSave, plot_type, workersOnly, reliabilityTests)
             # create_plots(files, f'{test}', 'Minutes', 'Disk Usage (%)', toSave, plot_type, workersOnly, reliabilityTests)
             # create_plots(files, f'{test}', 'Minutes', 'CPU Usage (%)', toSave, plot_type, workersOnly, reliabilityTests)
 
-create_plots_time_series('line')
+create_plots_time_series('box')
