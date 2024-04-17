@@ -12,6 +12,8 @@ from matplotlib.projections.polar import PolarAxes
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
 
+# TODO: add some labels for marking of network outage
+
 def scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave=False):
     combined_data = pd.concat(all_data, ignore_index=True)
     hosts = combined_data['hostname'].unique()
@@ -32,8 +34,9 @@ def scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave=False
 
         if toSave:
             snake_title = title.replace(' ', '_').lower()
-            file_name = f'{snake_title}_for_{host}.png'
-            plt.savefig(file_name)
+            file_name = f'{snake_title}_for_{host}'
+            plt.savefig(file_name, format='pdf')
+            # plt.savefig(file_name)
         else:
             plt.show()
 
@@ -63,9 +66,9 @@ def box_plotting(all_data, title, xlabel, ylabel, toSave=False, unit='', showfli
 
         if toSave:
             snake_title = title.replace(' ', '_').lower()
-            file_name = f'{snake_title}_for_{host}.png'
+            file_name = f'{snake_title}_for_{host}.pdf'
             sub_dir = 'box' if showfliers == True else 'box-without-fliers'
-            plt.savefig(f'../diagrams/results/{sub_dir}/{unit}-{file_name}')
+            plt.savefig(f'../diagrams/results/{sub_dir}/{unit}-{file_name}', format='pdf')
         else:
             plt.show()
 
@@ -94,8 +97,8 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
 
         if toSave:
             snake_title = title.replace(' ', '_').lower()
-            file_name = f'{snake_title}_for_{host}.png'
-            plt.savefig(f'../diagrams/results/line/{unit}-{file_name}')
+            file_name = f'{snake_title}_for_{host}.pdf'
+            plt.savefig(f'../diagrams/results/line/{unit}-{file_name}', format='pdf')
         else:
             plt.show()
 
@@ -369,7 +372,7 @@ def create_spider_plots_for_test_cases(toSave=False):
     #          size='large')
 
     if toSave:
-            plt.savefig(f'../diagrams/spider_diagrams.png')
+            plt.savefig('../diagrams/spider_diagrams.pdf', format='pdf')
     else:
         plt.show()
     

@@ -42,10 +42,10 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         data['ops_sec'], data['latency'] = get_metrics(file)
         data['dist'] = dist
         all_data.append(data)
-    print(all_data)
+    # print(all_data)
     combined_data = pd.concat(all_data, ignore_index=True)
 
-    plt.figure(figsize=(5, 5))
+    plt.figure(figsize=(6, 6))
     if plot_type == 'latency':
         sns.boxplot(data=combined_data, x='dist', y='latency')
     elif plot_type == 'ops_sec':
@@ -56,8 +56,8 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 
     if toSave:
         snake_title = title.replace(' ', '_').lower()
-        file_name = f'{snake_title}_for_{dist}.png'
-        plt.savefig(f'../diagrams/{file_name}')
+        file_name = f'{snake_title}.pdf'
+        plt.savefig(f'../diagrams/{file_name}', format='pdf')
     else:
         plt.show()
     
