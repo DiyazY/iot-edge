@@ -182,7 +182,7 @@ def create_plots_time_series(plot_type='scatter'):
             ylabel = 'CPU Usage (%)' if unit == 'cpu' else 'Memory Usage (Mb)' if unit == 'ram' else 'Network load (kB)' if unit == 'net' else 'Disk Usage (%)'
             create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, uniteWorkers, reliabilityTestsForWorker)
 
-# create_plots_time_series('line')
+create_plots_time_series('line')
 
 
 
@@ -376,4 +376,4 @@ def create_spider_plots_for_test_cases(toSave=False):
     else:
         plt.show()
     
-create_spider_plots_for_test_cases(True)
+# create_spider_plots_for_test_cases(True)
