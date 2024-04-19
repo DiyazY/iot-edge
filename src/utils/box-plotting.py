@@ -11,6 +11,8 @@ from matplotlib.projections import register_projection
 from matplotlib.projections.polar import PolarAxes
 from matplotlib.spines import Spine
 from matplotlib.transforms import Affine2D
+import matplotlib.colors as mcolors
+from datetime import datetime
 
 # TODO: add some labels for marking of network outage
 
@@ -93,8 +95,36 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
         plt.title(f'{title} for {host}')
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
-        plt.legend(title='Distribution')
+        
 
+        if len(all_data[0]['outage_start']) > 0:
+            # two lines below are for marking network outage
+            plt.axvline(x = all_data[0]['outage_start'][0], color = 'r', label = 'outage start')
+            plt.axvline(x = all_data[0]['outage_end'][0], color = 'r', label = 'outage end')
+            
+            colors = ['b', 'r', 'g', 'm', 'y']
+            for i, dist in enumerate(host_data['dist'].unique()):
+                dist_data = host_data[host_data['dist'] == dist]
+                xPoint = all_data[0]['outage_end'][0] + dist_data['recovery'].mean()
+                plt.axvline(x=xPoint, color=colors[i], label=f'rec.time of {dist}', alpha=0.5, linestyle='--') # TODO: find out how to plot a dot for intersection point of corresponding distribution
+
+
+                # # ymin = dist_data.loc[dist_data['minutes'] + 0.1 <= x, 'value'].iloc[0]
+                # ymax = dist_data.loc[dist_data['minutes'] + 0.1 <= x, 'value'].iloc[0]
+                # plt.vlines(x = xPoint, ymin = ymin, ymax = ymax, colors = colors[i], label = 'recovery')
+                
+
+                # plt.axvline(x = all_data[0]['outage_start'][0] + dist_data['minutes'].quantile(0.98).max(), color = 'y', label = '98th percentile')
+                # plt.axvline(x = all_data[0]['outage_start'][0] + dist_data['minutes'].quantile(0.95).max(), color = 'y', label = '95th percentile')
+                # plt.axvline(x = all_data[0]['outage_start'][0] + dist_data['minutes'].quantile(0.90).max(), color = 'y', label = '90th percentile')
+
+            # plt.axvline(x = all_data[0]['outage_end'][0]+ host_data['recovery'].mean(), color = 'y', label = 'recovery')
+
+            # fill between two lines for marking network outage
+            # max = host_data['value'].quantile(0.98).max()
+            # min = host_data['value'].min()
+            # plt.fill_betweenx([min, max ], all_data[0]['outage_start'][0], all_data[0]['outage_end'][0], color='red', alpha=0.5)
+        plt.legend(title='Distribution')
         if toSave:
             snake_title = title.replace(' ', '_').lower()
             file_name = f'{snake_title}_for_{host}.pdf'
@@ -102,7 +132,7 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
         else:
             plt.show()
 
-def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter', uniteWorkers=False, reliabilityTests=False):
+def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter', uniteWorkers=False, reliabilityWorker=False, reliabilityTest=''):
     """
     Create and save or display box plots for given data files.
 
@@ -121,19 +151,19 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         unit = path_components[-1].split('-')[-1].split('.')[0]
         data = pd.read_csv(file)
 
-        if reliabilityTests:
+        if reliabilityWorker:
             paths = file.split('/')[:-1]
             filePath = '/'.join(paths) + f'/ansible_output_{dist}_{title}-{paths[-1][-1]}.txt'
-            file = open(filePath, 'r')
-            first_line = file.readline()
-            file.close()
+            opened_file = open(filePath, 'r')
+            first_line = opened_file.readline()
+            opened_file.close()
             node_number = first_line.split(' ')[-1].split(':')[0]
             data['hostname'] = data['hostname'].apply(lambda x: 'failed' if x == f'node_{int(node_number)+1}' else 'worker' if 'node' in x else x)
         else:
             if uniteWorkers:
                 data['hostname'] = data['hostname'].apply(lambda x: 'worker' if 'node' in x else x)
 
-        data['timestamp'] = pd.to_datetime(data['timestamp'], unit='s')
+        data['timestamp'] = pd.to_datetime(data['timestamp'], unit='s')   
 
         if unit == 'cpu':
             data['value'] = 100 - data['value']
@@ -153,19 +183,34 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         data['timestamp'] -= min_timestamp
         data['minutes'] = (data['timestamp'].dt.total_seconds() / 60).round().astype(int)
         data['dist'] = dist
+
+        if reliabilityTest != '':
+            start_in_min = 250/60 # after start of a test, the script waits for 250 seconds
+            duration = 600 if 'long' == reliabilityTest else 100
+            data['outage_start'] = start_in_min
+            data['outage_end'] = start_in_min + duration/60 # duration in minutes
+
+            paths = file.split('/')[:-1]
+            filePath = '/'.join(paths) + f'/tmp-recovery.txt' # actually it is not recovery time, it is the time of before and after
+            opened_file = open(filePath, 'r')
+            durationOfTest = int(opened_file.readline())
+            opened_file.close()
+            data['recovery'] = ((durationOfTest - 250 - 600 - duration) / 60) # 250 is the waiting time, 600 is post test waiting time,duration is the duration of the test 
+
         all_data.append(data)
 
     if plot_type == 'box':
         box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=False)
     elif plot_type == 'line':
-        line_plotting(all_data, title, xlabel, ylabel, toSave, unit)
+        line_plotting(all_data, title, xlabel, ylabel, toSave, unit, )
     else:
         scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave, unit)
     
 
-toSave = True # saved them manually since it is not worth handling them via code
+toSave = False # saved them manually since it is not worth handling them via code
 distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
-testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long'] # TODO: reliability tests needs different plotting
+# testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long'] # TODO: reliability tests needs different plotting
+testCases = ['reliability-worker'] # TODO: reliability tests needs different plotting
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
@@ -180,9 +225,10 @@ def create_plots_time_series(plot_type='scatter'):
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
             ylabel = 'CPU Usage (%)' if unit == 'cpu' else 'Memory Usage (Mb)' if unit == 'ram' else 'Network load (kB)' if unit == 'net' else 'Disk Usage (%)'
-            create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, uniteWorkers, reliabilityTestsForWorker)
+            reliabilityTest = 'long' if 'long' in test else 'short' if 'reliability' in test else ''
+            create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, uniteWorkers, reliabilityTestsForWorker, reliabilityTest)
 
-create_plots_time_series('box')
+create_plots_time_series('line')
 
 
 
