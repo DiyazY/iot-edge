@@ -186,16 +186,18 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 
         if reliabilityTest != '':
             start_in_min = 250/60 # after start of a test, the script waits for 250 seconds
-            duration = 600 if 'long' == reliabilityTest else 100
+            duration = 500 if 'long' == reliabilityTest else 100
+            wait_time = 200 if 'long' == reliabilityTest else 600
             data['outage_start'] = start_in_min
             data['outage_end'] = start_in_min + duration/60 # duration in minutes
+
 
             paths = file.split('/')[:-1]
             filePath = '/'.join(paths) + f'/tmp-recovery.txt' # actually it is not recovery time, it is the time of before and after
             opened_file = open(filePath, 'r')
             durationOfTest = int(opened_file.readline())
             opened_file.close()
-            data['recovery'] = ((durationOfTest - 250 - 600 - duration) / 60) # 250 is the waiting time, 600 is post test waiting time,duration is the duration of the test 
+            data['recovery'] = ((durationOfTest - 250 - wait_time - duration) / 60) # 250 is the waiting time, 600 is post test waiting time,duration is the duration of the test 
 
         all_data.append(data)
 
@@ -210,7 +212,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 toSave = True # saved them manually since it is not worth handling them via code
 distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long'] # TODO: reliability tests needs different plotting
-testCases = ['reliability-control'] # TODO: reliability tests needs different plotting
+testCases = ['reliability-worker-no-pressure-long'] # TODO: reliability tests needs different plotting
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
