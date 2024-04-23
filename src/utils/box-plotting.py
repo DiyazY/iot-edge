@@ -212,7 +212,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 toSave = True # saved them manually since it is not worth handling them via code
 distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long'] # TODO: reliability tests needs different plotting
-testCases = ['reliability-worker-no-pressure-long'] # TODO: reliability tests needs different plotting
+testCases = ['reliability-control-no-pressure-long'] # TODO: reliability tests needs different plotting
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
