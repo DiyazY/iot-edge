@@ -30,7 +30,7 @@ def plot_latency_diagram(file_path, test, saveFile=False):
 
     df = pd.DataFrame(data)
 
-    df = df[df['metics'] == 'latency']
+    df = df[df['metics'] == 'throughput']
 
 
     df['value'] = df['value'].astype(float)
@@ -47,7 +47,7 @@ def plot_latency_diagram(file_path, test, saveFile=False):
     g.map_dataframe(sns.boxplot, x="k8s", y="value_name", hue="k8s", showfliers=False, palette=colors)
     g.add_legend()
     g.set_titles("{col_name} pods " + f"in {test}")
-    g.set_axis_labels("Distributions", "Latency (ms)")
+    g.set_axis_labels("Distributions", "Throughput (pods/min)")
 
     # Set y-axis step size
     # g.axes[0].yaxis.set_major_locator(plt.MultipleLocator(1))
@@ -58,7 +58,7 @@ def plot_latency_diagram(file_path, test, saveFile=False):
     # g.map_dataframe(sns.boxplot, x="type", y="value_name", hue="k8s", showfliers=False, palette=colors)
     # g.ax.set_ylim(bottom=0)
     if saveFile:
-        plt.savefig(f'../../diagrams/throughput-latency-statistics/latency-{test}.pdf', format='pdf')
+        plt.savefig(f'../../diagrams/throughput-latency-statistics/throughput-{test}.pdf', format='pdf')
     else:
         plt.show()
 
