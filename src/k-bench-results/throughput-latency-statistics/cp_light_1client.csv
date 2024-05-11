@@ -13,7 +13,7 @@ pod,k0s,cp_light_1client,3,2,throughput,39.231293
 pod,k0s,cp_light_1client,3,2,latency,1.5293913
 pod,k0s,cp_light_1client,4,2,throughput,36.146866
 pod,k0s,cp_light_1client,4,2,latency,1.659895
-deployment,k0s,cp_light_1client,4,10,throughput,123.170815"
+deployment,k0s,cp_light_1client,4,10,throughput,123.170815
 deployment,k0s,cp_light_1client,4,10,latency,1.5792023
 deployment,k0s,cp_light_1client,5,10,throughput,104.08936
 deployment,k0s,cp_light_1client,5,10,latency,1.6856644

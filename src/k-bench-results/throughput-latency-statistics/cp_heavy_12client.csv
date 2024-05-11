@@ -87,11 +87,11 @@ pod,openYurt,cp_heavy_12client,2,24,throughput,133.43143
 pod,openYurt,cp_heavy_12client,2,24,latency,2.8544157
 deployment,openYurt,cp_heavy_12client,2,120,throughput,212.73601
 deployment,openYurt,cp_heavy_12client,2,120,latency,8.876641
-pod,openYurt,cp_heavy_12client,3,24,throughput,118.444016"
+pod,openYurt,cp_heavy_12client,3,24,throughput,118.444016
 pod,openYurt,cp_heavy_12client,3,24,latency,2.8462932
 deployment,openYurt,cp_heavy_12client,3,120,throughput,215.13206
 deployment,openYurt,cp_heavy_12client,3,120,latency,7.8718553
-pod,openYurt,cp_heavy_12client,4,24,throughput,117.084564"
+pod,openYurt,cp_heavy_12client,4,24,throughput,117.084564
 pod,openYurt,cp_heavy_12client,4,24,latency,3.2317188
 deployment,openYurt,cp_heavy_12client,4,120,throughput,174.79604
 deployment,openYurt,cp_heavy_12client,4,120,latency,9.752893
