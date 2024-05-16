@@ -89,7 +89,8 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
     for host in hosts:
         host_data = combined_data[combined_data['hostname'] == host]
         plt.figure(figsize=(15, 8))
-        sns.lineplot(data=host_data, x='minutes', y='value', hue='dist')
+        colors = ['b', 'r', 'g', 'm', 'y']
+        sns.lineplot(data=host_data, x='minutes', y='value', hue='dist', palette=colors)
         plt.title(f'{title} for {host}')
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
@@ -125,8 +126,8 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
         plt.legend(title='Distribution')
         if toSave:
             snake_title = title.replace(' ', '_').lower()
-            file_name = f'{snake_title}_for_{host}.pdf'
-            plt.savefig(f'../diagrams/results/line/{unit}-{file_name}', format='pdf')
+            file_name = f'{snake_title}_for_{host}'
+            plt.savefig(f'../diagrams/results/latest/{file_name}-{unit}.pdf', format='pdf')
         else:
             plt.show()
 
@@ -202,15 +203,15 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
     if plot_type == 'box':
         box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=False)
     elif plot_type == 'line':
-        line_plotting(all_data, title, xlabel, ylabel, toSave, unit, )
+        line_plotting(all_data, title, xlabel, ylabel, toSave, unit )
     else:
         scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave, unit)
     
 
 toSave = True # saved them manually since it is not worth handling them via code
-distributions = ['k3s', 'k8s', 'k0s', 'kubeEdge', 'openYurt']
-# testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
-testCases = ['reliability-control-no-pressure-long']
+distributions = ['k0s', 'k3s', 'k8s', 'kubeEdge', 'openYurt']
+# testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density' ] #, 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
+testCases = ['reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
