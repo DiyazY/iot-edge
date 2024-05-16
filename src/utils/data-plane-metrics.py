@@ -46,10 +46,11 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
     combined_data = pd.concat(all_data, ignore_index=True)
 
     plt.figure(figsize=(6, 6))
+    colors = ['b', 'r', 'g', 'm', 'y']
     if plot_type == 'latency':
-        sns.boxplot(data=combined_data, x='dist', y='latency')
+        sns.boxplot(data=combined_data, x='dist', y='latency', palette=colors)
     elif plot_type == 'ops_sec':
-        sns.boxplot(data=combined_data, x='dist', y='ops_sec')
+        sns.boxplot(data=combined_data, x='dist', y='ops_sec', palette=colors)
     plt.title(f'{title}')
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
@@ -65,10 +66,10 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 
 
 toSave = True
-distributions = ['k3s', 'k0s', 'k8s', 'kubeEdge', 'openYurt']
+distributions = ['k0s', 'k3s', 'k8s', 'kubeEdge', 'openYurt']
 files = []
 for dist in distributions:
     for i in range(1, 5):
         files.append(f'../k-bench-results/{dist}/dp_redis_density/dp_redis_density-{i}/memtier.out')
-# create_plots(files, 'Data plane - Latency', 'Distributions', 'Avg Latency (ms)', toSave, 'latency')
-create_plots(files, 'Data plane - Throughput', 'Distributions', 'Throughput operations (Ops/sec)', toSave, 'ops_sec')
+create_plots(files, 'Data plane - Latency', 'Distributions', 'Avg Latency (ms)', toSave, 'latency')
+# create_plots(files, 'Data plane - Throughput', 'Distributions', 'Throughput operations (Ops/sec)', toSave, 'ops_sec')
