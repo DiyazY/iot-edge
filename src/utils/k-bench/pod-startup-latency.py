@@ -30,15 +30,15 @@ def plot_diagram(file_path, saveFile=False):
     df = pd.DataFrame(data)
 
     # Prepare DataFrame for plotting by melting it
-    df_melted = df.melt(id_vars=["k8s", "number-of-pods"], 
+    df_melted = df.melt(id_vars=["k8s", "number-of-pods", "dumn"], 
                         value_vars=["medians", "mins", "maxs"],
                         var_name="statistic", value_name="value")
 
     colors = ['b', 'r', 'g', 'm', 'y']
-    g = sns.FacetGrid(df_melted, height=7, col="statistic", aspect=1, col_wrap=3, sharey=False, sharex=False)
+    g = sns.FacetGrid(df_melted, height=7, col="dumn", aspect=1, col_wrap=1, sharey=False, sharex=False)
     g.map_dataframe(sns.lineplot, x="number-of-pods", y="value", hue="k8s", palette=colors,  err_style="bars", errorbar=("se", 2))
     g.add_legend()
-    g.set_titles("Pods startup latency ({col_name})")
+    g.set_titles("Pods startup latency")
     g.set_axis_labels("Number of Pods", "Latency (ms)")
     if saveFile:
         plt.savefig(f'../../diagrams/pod-startup-latency.pdf', format='pdf')
