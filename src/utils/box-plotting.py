@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
-from matplotlib.patches import Circle, RegularPolygon
+from matplotlib.patches import Circle, RegularPolygon, Patch
 from matplotlib.path import Path
 from matplotlib.projections import register_projection
 from matplotlib.projections.polar import PolarAxes
@@ -210,8 +210,8 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 
 toSave = True # saved them manually since it is not worth handling them via code
 distributions = ['k0s', 'k3s', 'k8s', 'kubeEdge', 'openYurt']
-# testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density' ] #, 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
-testCases = ['reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
+testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
+# testCases = ['reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
@@ -229,7 +229,7 @@ def create_plots_time_series(plot_type='scatter'):
             reliabilityTest = 'long' if 'long' in test else 'short' if 'reliability' in test else ''
             create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, uniteWorkers, reliabilityTestsForWorker, reliabilityTest)
 
-create_plots_time_series('line')
+# create_plots_time_series('line')
 
 
 
@@ -384,13 +384,13 @@ def create_spider_plots_for_test_cases(toSave=False):
     theta = radar_factory(N, frame='polygon')
     spoke_labels = metrics
 
+    colors = ['b', 'r', 'g', 'm', 'y']
     fig, axs = plt.subplots(figsize=(10, 35), nrows=len(testCases), ncols=2, # each distribution should be presented as two diagrams: master and worker
                             subplot_kw=dict(projection='radar'))
     fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.90, bottom=0.05)
-    colors = ['b', 'r', 'g', 'm', 'y']
+    fig.tight_layout(pad=3.0)
 
     # I want to have plots a bit far from each other
-    fig.tight_layout(pad=3.0)
 
     for p, data in enumerate(data_set):
         for i, (test, dists) in enumerate(data.items()):
@@ -411,7 +411,10 @@ def create_spider_plots_for_test_cases(toSave=False):
             axs[i, p].set_title(f'{test} for {noteType} (%)')
             axs[i, p].set_ylim(0, math.ceil(max_value))
 
-    legend = axs[0, 0].legend(distributions, loc=(1.2, .80),
+    handles = []
+    for i, dist in enumerate(distributions):
+        handles.append(Patch(color=colors[i], label=dist))
+    legend = axs[0, 0].legend(handles, distributions, loc=(1.2, .80),
                               labelspacing=0.2, fontsize='small')
 
     # fig.text(0.5, 0.965, 'Some descriptive title',
@@ -423,4 +426,4 @@ def create_spider_plots_for_test_cases(toSave=False):
     else:
         plt.show()
     
-# create_spider_plots_for_test_cases(True)
+create_spider_plots_for_test_cases(True)
