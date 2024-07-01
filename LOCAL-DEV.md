@@ -86,7 +86,7 @@ First change the directory: `cd src/ansible`;
 * run `ansible-playbook playbooks/k-bench-run.yaml -i inventory/hosts.ini`
 * To check results 
   * `cd src/k-bench-results/[k8s_distribution]/[test_name]`
-  * pod and deployment throughput statistics: `sed -e 's/.\{47\}//' ./kbench.log | grep -E 'Pod creation throughput|Pod creation average|Deployment Results|Pod Results|Pod startup total latency'`
+  * pod and deployment throughput statistics: `sed -e 's/.\{47\}//' ./kbench.log | grep -E 'Pod creation throughput|Pod creation average|Deployment Results|Pod Results|Pod startup total latency'` #TODO: enhance this into a script
 
 #### k-bench: derive data
 * WIP: run `ansible-playbook playbooks/k-bench-derive.yaml -i inventory/hosts.ini`
@@ -138,7 +138,7 @@ First change the directory: `cd src/ansible`;
   * kubectl taint nodes <control-plane-node-name> node-role.kubernetes.io/master=:NoSchedule
   * kubectl drain <control-plane-node-name> --ignore-daemonsets --delete-local-data
   * kubectl get pods -o wide
-* in final results, measurements metrics should be adjusted (e.g. totalCpuUtilization = 100 - idle, time in minutes, memory in Mb and etc.)
+* ~~in final results, measurements metrics should be adjusted (e.g. totalCpuUtilization = 100 - idle, time in minutes, memory in Mb and etc.)~~
 
 # test coverage
 k8s: done

@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# WIP
-
-distribution="k3s"
-# test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
-test_types=("reliability-worker")
+distribution="openYurt" # [k0s, k3s, k8s, kubeEdge, openYurt]
+test_types=("idle" "cp_light_1client" "cp_heavy_8client" "cp_heavy_12client" "dp_redis_density" "reliability-control" "reliability-worker" "reliability-control-no-pressure-long" "reliability-worker-no-pressure-long")
 
 # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/tymesync.yaml
 
@@ -67,7 +64,6 @@ for test_type in "${test_types[@]}"; do
             wait_time=200
 
             echo "Start testing of $machine: $random_number" > "$output_file"
-            # ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/k-bench-run.yaml --extra-vars "test_type=dp_redis_density" > "${output_file}-density" 2>&1 &
             ansible-playbook -i inventory/${distribution}/hosts.ini ./playbooks/reliability-test.yaml --extra-vars "node_index=$random_number machine=$node_type eth_interface=$eth_interface test_type=$test_type sleep_time=$sleep_time wait_time=$wait_time" >> "$output_file" 2>&1
             # wait
             start_time=$(cat ../k-bench-results/${distribution}/${test_type}/${tag}/tmp-before.txt)
@@ -87,9 +83,6 @@ for test_type in "${test_types[@]}"; do
         if [[ "$test_type" == "dp_redis_density" || "$test_type" == "reliability-control" || "$test_type" == "reliability-worker" ]]; then
             kubectl cp kbench-pod-namespace/kbench-pod-oid-0-tid-0:tmp/redisoutput ../k-bench-results/${distribution}/${test_type}/${tag}/ --kubeconfig ../.kube/${distribution}-config >> "$output_file" 2>&1
         fi
-
-        # TODO: check step
-
         # commit the changes
         git add "../../."
         git commit -m"${distribution} | ${tag}"
