@@ -88,25 +88,25 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
 
     for host in hosts:
         host_data = combined_data[combined_data['hostname'] == host]
-        plt.figure(figsize=(15, 8))
+        plt.figure(figsize=(8, 8))
         colors = ['b', 'r', 'g', 'm', 'y']
         sns.lineplot(data=host_data, x='minutes', y='value', hue='dist', palette=colors)
         plt.title(f'{title} for {host}')
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         
-
-        if len(all_data[0]['outage_start']) > 0:
-            # two lines below are for marking network outage
-            plt.axvline(x = all_data[0]['outage_start'][0], color = 'r', label = 'outage start')
-            plt.axvline(x = all_data[0]['outage_end'][0], color = 'r', label = 'outage end')
+        # uncomment this for plotting network outage and recovery time - start
+        # if len(all_data[0]['outage_start']) > 0:
+        #     # two lines below are for marking network outage
+        #     plt.axvline(x = all_data[0]['outage_start'][0], color = 'r', label = 'outage start')
+        #     plt.axvline(x = all_data[0]['outage_end'][0], color = 'r', label = 'outage end')
             
-            colors = ['b', 'r', 'g', 'm', 'y']
-            for i, dist in enumerate(host_data['dist'].unique()):
-                dist_data = host_data[host_data['dist'] == dist]
-                xPoint = all_data[0]['outage_end'][0] + dist_data['recovery'].mean()
-                plt.axvline(x=xPoint, color=colors[i], label=f'rec.time of {dist}', alpha=0.5, linestyle='--') # TODO: find out how to plot a dot for intersection point of corresponding distribution
-
+        #     colors = ['b', 'r', 'g', 'm', 'y']
+        #     for i, dist in enumerate(host_data['dist'].unique()):
+        #         dist_data = host_data[host_data['dist'] == dist]
+        #         xPoint = all_data[0]['outage_end'][0] + dist_data['recovery'].mean()
+        #         plt.axvline(x=xPoint, color=colors[i], label=f'rec.time of {dist}', alpha=0.5, linestyle='--') # TODO: find out how to plot a dot for intersection point of corresponding distribution
+        # uncomment this for plotting network outage and recovery time - end
 
                 # # ymin = dist_data.loc[dist_data['minutes'] + 0.1 <= x, 'value'].iloc[0]
                 # ymax = dist_data.loc[dist_data['minutes'] + 0.1 <= x, 'value'].iloc[0]
@@ -127,7 +127,7 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
         if toSave:
             snake_title = title.replace(' ', '_').lower()
             file_name = f'{snake_title}_for_{host}'
-            plt.savefig(f'../diagrams/results/latest/{file_name}-{unit}.pdf', format='pdf')
+            plt.savefig(f'../diagrams/results/latest/short/{file_name}-{unit}.pdf', format='pdf')
         else:
             plt.show()
 
@@ -210,8 +210,9 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 
 toSave = True # saved them manually since it is not worth handling them via code
 distributions = ['k0s', 'k3s', 'k8s', 'kubeEdge', 'openYurt']
-testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
+# testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
 # testCases = ['reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
+testCases = ['cp_heavy_8client', 'cp_heavy_12client']
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
@@ -229,7 +230,7 @@ def create_plots_time_series(plot_type='scatter'):
             reliabilityTest = 'long' if 'long' in test else 'short' if 'reliability' in test else ''
             create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, uniteWorkers, reliabilityTestsForWorker, reliabilityTest)
 
-# create_plots_time_series('line')
+create_plots_time_series('line')
 
 
 
@@ -426,4 +427,4 @@ def create_spider_plots_for_test_cases(toSave=False):
     else:
         plt.show()
     
-create_spider_plots_for_test_cases(True)
+# create_spider_plots_for_test_cases(True)
