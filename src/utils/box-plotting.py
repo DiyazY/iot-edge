@@ -14,6 +14,12 @@ from matplotlib.transforms import Affine2D
 import matplotlib.colors as mcolors
 from datetime import datetime
 
+distributions = ['k0s', 'k3s', 'k8s', 'kubeEdge', 'openYurt']
+values = ['k0s', 'k3s', 'k8s', 'KubeEdge', 'OpenYurt']
+
+# Create the dictionary
+mapping = dict(zip(distributions, values))
+
 def scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave=False):
     combined_data = pd.concat(all_data, ignore_index=True)
     hosts = combined_data['hostname'].unique()
@@ -88,12 +94,12 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
 
     for host in hosts:
         host_data = combined_data[combined_data['hostname'] == host]
-        plt.figure(figsize=(8, 8))
+        plt.figure(figsize=(6, 4.1))
         colors = ['b', 'r', 'g', 'm', 'y']
         sns.lineplot(data=host_data, x='minutes', y='value', hue='dist', palette=colors)
-        plt.title(f'{title} for {host}')
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
+        plt.title(f'{title} for {host}', fontsize='x-large')
+        plt.xlabel(xlabel, fontsize='x-large')
+        plt.ylabel(ylabel, fontsize='x-large')
         
         # uncomment this for plotting network outage and recovery time - start
         # if len(all_data[0]['outage_start']) > 0:
@@ -124,6 +130,8 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
             # min = host_data['value'].min()
             # plt.fill_betweenx([min, max ], all_data[0]['outage_start'][0], all_data[0]['outage_end'][0], color='red', alpha=0.5)
         plt.legend(title='Distribution')
+        # legend = plt.legend(title='Distribution', loc='center left', bbox_to_anchor=(1, 0.5))
+        # legend.set_visible(False) # hide the legend
         if toSave:
             snake_title = title.replace(' ', '_').lower()
             file_name = f'{snake_title}_for_{host}'
@@ -181,7 +189,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         min_timestamp = data['timestamp'].min()
         data['timestamp'] -= min_timestamp
         data['minutes'] = (data['timestamp'].dt.total_seconds() / 60).round().astype(int)
-        data['dist'] = dist
+        data['dist'] = mapping[dist]
 
         if reliabilityTest != '':
             start_in_min = 250/60 # after start of a test, the script waits for 250 seconds
@@ -203,16 +211,15 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
     if plot_type == 'box':
         box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=False)
     elif plot_type == 'line':
-        line_plotting(all_data, title, xlabel, ylabel, toSave, unit )
+        line_plotting(all_data, title, xlabel, ylabel, toSave, unit)
     else:
         scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave, unit)
     
 
-toSave = True # saved them manually since it is not worth handling them via code
-distributions = ['k0s', 'k3s', 'k8s', 'kubeEdge', 'openYurt']
+toSave = False # saved them manually since it is not worth handling them via code
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
-# testCases = ['reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
-testCases = ['cp_heavy_8client', 'cp_heavy_12client']
+# testCases = ['idle', 'cp_light_1client', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
+testCases = ['reliability-control']
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
@@ -389,7 +396,7 @@ def create_spider_plots_for_test_cases(toSave=False):
     fig, axs = plt.subplots(figsize=(10, 35), nrows=len(testCases), ncols=2, # each distribution should be presented as two diagrams: master and worker
                             subplot_kw=dict(projection='radar'))
     fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.90, bottom=0.05)
-    fig.tight_layout(pad=3.0)
+    fig.tight_layout(pad=1.7)
 
     # I want to have plots a bit far from each other
 
@@ -408,19 +415,24 @@ def create_spider_plots_for_test_cases(toSave=False):
                 max_value = max(max_value, max(values)) 
             
             axs[i, p].set_varlabels(spoke_labels)
+            # bigger font for labels
+            axs[i, p].tick_params(axis='x', labelsize='xx-large')
+            axs[i, p].tick_params(axis='y', labelsize='xx-large')
             noteType = 'Master' if p == 0 else 'Worker'
-            axs[i, p].set_title(f'{test} for {noteType} (%)')
+            axs[i, p].set_title(f'{test} for {noteType} (%)', weight='bold', size='large', position=(0.5, 1.1))
             axs[i, p].set_ylim(0, math.ceil(max_value))
+
+
 
     handles = []
     for i, dist in enumerate(distributions):
         handles.append(Patch(color=colors[i], label=dist))
-    legend = axs[0, 0].legend(handles, distributions, loc=(1.2, .80),
-                              labelspacing=0.2, fontsize='small')
+    legend = axs[0, 0].legend(handles, distributions, loc=(0.9, .80),
+                              labelspacing=0.2, fontsize='x-large')
 
-    # fig.text(0.5, 0.965, 'Some descriptive title',
-    #          horizontalalignment='center', color='black', weight='bold',
-    #          size='large')
+    # Adjust the layout to prevent overlapping of subplots
+    # plt.subplots_adjust(hspace=0.5)
+
 
     if toSave:
             plt.savefig('../diagrams/spider_diagrams.pdf', format='pdf')

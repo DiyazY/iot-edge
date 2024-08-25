@@ -14,6 +14,13 @@ from matplotlib.transforms import Affine2D
 import matplotlib.colors as mcolors
 from datetime import datetime
 
+
+distributions = ['k0s', 'k3s', 'k8s', 'kubeEdge', 'openYurt']
+values = ['k0s', 'k3s', 'k8s', 'KubeEdge', 'OpenYurt']
+
+# Create the dictionary
+mapping = dict(zip(distributions, values))
+
 # this is the data format
 # k8s,operations,tests,test-numbers,metrics,medians,mins,maxs
 # k0s,namespace,cp_light_1client,1,create,17.026,13.391,17.026
@@ -26,6 +33,8 @@ def plot_diagram(file_path, test, saveFile=False):
     data = pd.read_csv(file_path)
 
     df = pd.DataFrame(data)
+
+    df['k8s'] =  df['k8s'].map(mapping)
 
     # Prepare DataFrame for plotting by melting it
     df_melted = df.melt(id_vars=["k8s", "operations", "metrics"], 
@@ -47,4 +56,4 @@ def plot_diagram(file_path, test, saveFile=False):
 tests=["cp_light_1client", "cp_heavy_8client", "cp_heavy_12client"]
 
 for test in tests:
-    plot_diagram(f"../../k-bench-results/latency-statistics/{test}.csv",test, saveFile=True)
+    plot_diagram(f"../../k-bench-results/latency-statistics/{test}.csv",test, saveFile=False)
