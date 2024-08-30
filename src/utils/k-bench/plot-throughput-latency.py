@@ -36,9 +36,9 @@ def plot_latency_diagram(file_path, test, saveFile=False):
 
     df = pd.DataFrame(data)
 
-    df = df[df['metics'] == 'throughput']
+    # df = df[df['metics'] == 'throughput']
     # df = df[df['metics'] == 'latency']
-
+    df = df[df['type'] == 'pod']
 
     df['value'] = df['value'].astype(float)
 
@@ -60,33 +60,33 @@ def plot_latency_diagram(file_path, test, saveFile=False):
 
 
     # Create a new subset of data by grouping data by the "number-of-pods" column, there are only 2 unique values
-    grouped_data = df.groupby('number-of-pods')
+    grouped_data = df.groupby('metics')
     combined_data = pd.concat([grouped_data.get_group(gp) for gp in grouped_data.groups], ignore_index=True)
     # devide into two dataframes
-    dataset1 = combined_data[combined_data['type'] == 'pod']
+    dataset1 = combined_data[combined_data['metics'] == 'latency']
     nPods = dataset1['number-of-pods'].unique()[0]
     print(dataset1)
 
-    boxprops1 = dict(linestyle='--', linewidth=3, fill=None, color='red')
+    boxprops1 = dict(linewidth=3, fill=None, color='red')
     capprops1 = dict(linewidth=3, color='red')
-    medianprops1 = dict(linestyle='-', linewidth=3, color='red')
+    medianprops1 = dict(linewidth=3, color='red')
     fig, ax1 = plt.subplots(figsize=(6,6))
     whiskerprops1 = dict(color='red')
     sns.boxplot(data=dataset1, x='k8s', y='value', ax=ax1, color='red', whiskerprops=whiskerprops1, showfliers=False, boxprops=boxprops1, capprops=capprops1, medianprops=medianprops1 ) #width=0.5,
-    ax1.set_ylabel(f'Throughput Pod Creation of {nPods} pods (pods/min)', color='red', fontsize='x-large')
-    # ax1.set_ylabel(f'Pod Creation Latency of {nPods} pods (ms)', color='red', fontsize='x-large')
+    # ax1.set_ylabel(f'Throughput Pod Creation of {nPods} pods (pods/min)', color='red', fontsize='x-large')
+    ax1.set_ylabel(f'Pod Creation Latency of {nPods} pods (ms)', color='red', fontsize='x-large')
     ax1.tick_params(axis='y', labelcolor='red')
     ax1.set_xlabel('Distributions', fontsize='x-large')
 
-    dataset2 = combined_data[combined_data['type'] == 'deployment']
-    nPods = dataset2['number-of-pods'].unique()[0]
-    boxprops2 = dict(linestyle='-.', linewidth=3, fill=None, color='blue')
+    dataset2 = combined_data[combined_data['metics'] == 'throughput']
+    # nPods = dataset2['metics'].unique()[0]
+    boxprops2 = dict(linewidth=3, fill=None, color='blue')
     capprops2 = dict(linewidth=3, color='blue')
-    medianprops2 = dict(linestyle='-', linewidth=3, color='blue')
+    medianprops2 = dict(linewidth=3, color='blue')
     ax2 = ax1.twinx()
     whiskerprops2 = dict(color='blue')
     sns.boxplot(data=dataset2, x='k8s', y='value', ax=ax2, color='blue', whiskerprops=whiskerprops2, showfliers=False, boxprops=boxprops2, width=0.5, capprops=capprops2, medianprops=medianprops2)
-    ax2.set_ylabel(f'Throughput Deployment of {nPods} pods(pods/min) ', color='blue', fontsize='x-large')
+    ax2.set_ylabel(f'Throughput Pod Creation of {nPods} pods(pods/min) ', color='blue', fontsize='x-large')
     # ax2.set_ylabel(f'Deployment Latency of {nPods} pods (ms)', color='blue', fontsize='x-large')
     ax2.tick_params(axis='y', labelcolor='blue')
     fig.tight_layout()  
@@ -103,7 +103,7 @@ def plot_latency_diagram(file_path, test, saveFile=False):
     # g.ax.set_ylim(bottom=0)
     if saveFile:
         # plt.savefig(f'../../diagrams/throughput-latency-statistics/latency-{test}.pdf', format='pdf')
-        plt.savefig(f'../../diagrams/throughput-latency-statistics/throughput-{test}.pdf', format='pdf')
+        plt.savefig(f'../../diagrams/throughput-latency-statistics/throughput-and-latency-{nPods}-{test}.pdf', format='pdf')
     else:
         plt.show()
 
