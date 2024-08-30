@@ -38,7 +38,7 @@ def plot_latency_diagram(file_path, test, saveFile=False):
 
     # df = df[df['metics'] == 'throughput']
     # df = df[df['metics'] == 'latency']
-    df = df[df['type'] == 'pod']
+    df = df[df['type'] == 'deployment']
 
     df['value'] = df['value'].astype(float)
 
@@ -73,8 +73,8 @@ def plot_latency_diagram(file_path, test, saveFile=False):
     fig, ax1 = plt.subplots(figsize=(6,6))
     whiskerprops1 = dict(color='red')
     sns.boxplot(data=dataset1, x='k8s', y='value', ax=ax1, color='red', whiskerprops=whiskerprops1, showfliers=False, boxprops=boxprops1, capprops=capprops1, medianprops=medianprops1 ) #width=0.5,
-    # ax1.set_ylabel(f'Throughput Pod Creation of {nPods} pods (pods/min)', color='red', fontsize='x-large')
-    ax1.set_ylabel(f'Pod Creation Latency of {nPods} pods (ms)', color='red', fontsize='x-large')
+    ax1.set_ylabel(f'Deployment Latency of {nPods} pods (ms)', color='red', fontsize='x-large')
+    # ax1.set_ylabel(f'Pod Creation Latency of {nPods} pods (ms)', color='red', fontsize='x-large')
     ax1.tick_params(axis='y', labelcolor='red')
     ax1.set_xlabel('Distributions', fontsize='x-large')
 
@@ -86,8 +86,8 @@ def plot_latency_diagram(file_path, test, saveFile=False):
     ax2 = ax1.twinx()
     whiskerprops2 = dict(color='blue')
     sns.boxplot(data=dataset2, x='k8s', y='value', ax=ax2, color='blue', whiskerprops=whiskerprops2, showfliers=False, boxprops=boxprops2, width=0.5, capprops=capprops2, medianprops=medianprops2)
-    ax2.set_ylabel(f'Throughput Pod Creation of {nPods} pods(pods/min) ', color='blue', fontsize='x-large')
-    # ax2.set_ylabel(f'Deployment Latency of {nPods} pods (ms)', color='blue', fontsize='x-large')
+    # ax2.set_ylabel(f'Throughput Pod Creation of {nPods} pods(pods/min) ', color='blue', fontsize='x-large')
+    ax2.set_ylabel(f'Throughput Deployment of {nPods} pods (pods/min)', color='blue', fontsize='x-large')
     ax2.tick_params(axis='y', labelcolor='blue')
     fig.tight_layout()  
     plt.grid(True)
