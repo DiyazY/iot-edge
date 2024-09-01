@@ -15,10 +15,10 @@ import matplotlib.colors as mcolors
 from datetime import datetime
 
 distributions = ['k0s', 'k3s', 'k8s', 'kubeEdge', 'openYurt']
-values = ['k0s', 'k3s', 'k8s', 'KubeEdge', 'OpenYurt']
+distValues = ['k0s', 'k3s', 'k8s', 'KubeEdge', 'OpenYurt']
 
 # Create the dictionary
-mapping = dict(zip(distributions, values))
+mapping = dict(zip(distributions, distValues))
 
 def scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave=False):
     combined_data = pd.concat(all_data, ignore_index=True)
@@ -219,7 +219,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 toSave = False # saved them manually since it is not worth handling them via code
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
 # testCases = ['idle', 'cp_light_1client', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
-testCases = ['reliability-control']
+testCases = ['idle', 'cp_light_1client']
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
@@ -237,7 +237,7 @@ def create_plots_time_series(plot_type='scatter'):
             reliabilityTest = 'long' if 'long' in test else 'short' if 'reliability' in test else ''
             create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, uniteWorkers, reliabilityTestsForWorker, reliabilityTest)
 
-create_plots_time_series('line')
+# create_plots_time_series('line')
 
 
 
@@ -371,14 +371,15 @@ def prepare_data_set_for_machine(machine):
     for test in testCases:
         data[test] = dict()
         for dist in distributions:
-            data[test][dist] = []
+            mappedDist = mapping[dist]
+            data[test][mappedDist] = []
             for metric in metrics:
                 files = []
                 for i in range(2, 5):
                     files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{metric}.csv')
                 avg = return_single_avg_value(files, metric, machine)
                 # print(f'{test} for {dist} and {metric} is {avg}')
-                data[test][dist].append(avg)
+                data[test][mappedDist].append(avg)
     return data
 
 
@@ -426,8 +427,8 @@ def create_spider_plots_for_test_cases(toSave=False):
 
     handles = []
     for i, dist in enumerate(distributions):
-        handles.append(Patch(color=colors[i], label=dist))
-    legend = axs[0, 0].legend(handles, distributions, loc=(0.9, .80),
+        handles.append(Patch(color=colors[i], label=mapping[dist]))
+    legend = axs[0, 0].legend(handles, distValues, loc=(0.9, .80),
                               labelspacing=0.2, fontsize='x-large')
 
     # Adjust the layout to prevent overlapping of subplots
@@ -435,8 +436,8 @@ def create_spider_plots_for_test_cases(toSave=False):
 
 
     if toSave:
-            plt.savefig('../diagrams/spider_diagrams.pdf', format='pdf')
+            plt.savefig('../diagrams/spider_diagrams-light-tests_v2.pdf', format='pdf')
     else:
         plt.show()
     
-# create_spider_plots_for_test_cases(True)
+create_spider_plots_for_test_cases(True)
