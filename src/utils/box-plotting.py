@@ -219,7 +219,7 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
 toSave = False # saved them manually since it is not worth handling them via code
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
 # testCases = ['idle', 'cp_light_1client', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
-testCases = ['idle', 'cp_light_1client']
+testCases = ['cp_heavy_12client', 'idle']
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
@@ -436,7 +436,7 @@ def create_spider_plots_for_test_cases(toSave=False):
 
 
     if toSave:
-            plt.savefig('../diagrams/spider_diagrams-light-tests_v2.pdf', format='pdf')
+            plt.savefig('../diagrams/spider_diagrams-dp-redis_only_v2.pdf', format='pdf')
     else:
         plt.show()
     

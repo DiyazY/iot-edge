@@ -53,7 +53,8 @@ def plot_diagram(file_path, test, saveFile=False):
         plt.show()
 
 
-tests=["cp_light_1client", "cp_heavy_8client", "cp_heavy_12client"]
+# tests=["cp_light_1client", "cp_heavy_8client", "cp_heavy_12client"]
+tests=["cp_heavy_12client"]
 
 for test in tests:
     plot_diagram(f"../../k-bench-results/latency-statistics/{test}.csv",test, saveFile=False)

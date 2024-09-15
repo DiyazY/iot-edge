@@ -52,7 +52,7 @@ def create_plots(files, title, xlabel, toSave=False):
     combined_data = pd.concat(all_data, ignore_index=True)
 
     # plt.figure(figsize=(6, 6))
-    fig, ax1 = plt.subplots(figsize=(6,6))
+    fig, ax1 = plt.subplots(figsize=(6,5))
     # whiskerprops1 = dict(color='red', linewidth=10)
     boxprops1 = dict(linewidth=3, fill=None, color='red')
     capprops1 = dict(linewidth=3, color='red')
@@ -82,7 +82,7 @@ def create_plots(files, title, xlabel, toSave=False):
 
 
 
-toSave = False
+toSave = True
 
 files = []
 for dist in distributions:
