@@ -100,12 +100,12 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
         plt.title(f'{title} for {host}', fontsize='x-large')
         plt.xlabel(xlabel, fontsize='x-large')
         plt.ylabel(ylabel, fontsize='x-large')
-        
         # uncomment this for plotting network outage and recovery time - start
+        # plt.figure(figsize=(8, 4.1))
         # if len(all_data[0]['outage_start']) > 0:
         #     # two lines below are for marking network outage
-        #     plt.axvline(x = all_data[0]['outage_start'][0], color = 'r', label = 'outage start')
-        #     plt.axvline(x = all_data[0]['outage_end'][0], color = 'r', label = 'outage end')
+        #     plt.axvline(x = all_data[0]['outage_start'][0], color = 'r', label = 'outage start', linestyle=':')
+        #     plt.axvline(x = all_data[0]['outage_end'][0], color = 'r', label = 'outage end', linestyle='dashdot')
             
         #     colors = ['b', 'r', 'g', 'm', 'y']
         #     for i, dist in enumerate(host_data['dist'].unique()):
@@ -131,11 +131,12 @@ def line_plotting(all_data, title, xlabel, ylabel, toSave=False, unit=''):
             # plt.fill_betweenx([min, max ], all_data[0]['outage_start'][0], all_data[0]['outage_end'][0], color='red', alpha=0.5)
         plt.legend(title='Distribution')
         # legend = plt.legend(title='Distribution', loc='center left', bbox_to_anchor=(1, 0.5))
+        # plt.tight_layout(rect=[0, 0, 1, 1])
         # legend.set_visible(False) # hide the legend
         if toSave:
             snake_title = title.replace(' ', '_').lower()
             file_name = f'{snake_title}_for_{host}'
-            plt.savefig(f'../diagrams/results/latest/short/{file_name}-{unit}.pdf', format='pdf')
+            plt.savefig(f'../diagrams/results/latest/short/{file_name}-{unit}-with-legend.pdf', format='pdf', bbox_inches='tight')
         else:
             plt.show()
 
@@ -216,10 +217,10 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave, unit)
     
 
-toSave = False # saved them manually since it is not worth handling them via code
+toSave = True # saved them manually since it is not worth handling them via code
 # testCases = ['idle', 'cp_light_1client', 'cp_heavy_8client', 'cp_heavy_12client', 'dp_redis_density', 'reliability-control', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
 # testCases = ['idle', 'cp_light_1client', 'reliability-control-no-pressure-long', 'reliability-worker', 'reliability-worker-no-pressure-long']
-testCases = ['cp_heavy_12client', 'idle']
+testCases = ['reliability-control', 'reliability-worker']
 metrics = ['cpu', 'ram', 'net', 'disk']
 uniteWorkers=True
 def create_plots_time_series(plot_type='scatter'):
@@ -237,7 +238,7 @@ def create_plots_time_series(plot_type='scatter'):
             reliabilityTest = 'long' if 'long' in test else 'short' if 'reliability' in test else ''
             create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, uniteWorkers, reliabilityTestsForWorker, reliabilityTest)
 
-# create_plots_time_series('line')
+create_plots_time_series('line')
 
 
 
@@ -440,4 +441,4 @@ def create_spider_plots_for_test_cases(toSave=False):
     else:
         plt.show()
     
-create_spider_plots_for_test_cases(True)
+# create_spider_plots_for_test_cases(True)
