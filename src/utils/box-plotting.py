@@ -213,6 +213,8 @@ def create_plots(files, title, xlabel, ylabel, toSave=False, plot_type='scatter'
         box_plotting(all_data, title, xlabel, ylabel, toSave, unit, showfliers=False)
     elif plot_type == 'line':
         line_plotting(all_data, title, xlabel, ylabel, toSave, unit)
+    elif plot_type == 'recovery':
+        plot_recovery_time(all_data, title, xlabel, ylabel, toSave)
     else:
         scatter_plots_with_trend_lines(all_data, title, xlabel, ylabel, toSave, unit)
     
@@ -238,8 +240,62 @@ def create_plots_time_series(plot_type='scatter'):
             reliabilityTest = 'long' if 'long' in test else 'short' if 'reliability' in test else ''
             create_plots(files, f'{test}', 'Minutes', ylabel, toSave, plot_type, uniteWorkers, reliabilityTestsForWorker, reliabilityTest)
 
-create_plots_time_series('line')
+# create_plots_time_series('line')
 
+
+def plot_recovery_time(all_data, title, xlabel, ylabel, toSave=False):
+    """
+    Create and save or display box plots for given data files.
+
+    Args:
+    all_data (list): A list of dataframes.
+    title (str): The title for the plots.
+    xlabel (str): The label for the x-axis.
+    ylabel (str): The label for the y-axis.
+    toSave (bool): If True, save the plots instead of displaying them.
+    """
+    combined_data = pd.concat(all_data, ignore_index=True)
+    hosts = combined_data['hostname'].unique()
+
+    for host in hosts:
+        host_data = combined_data[combined_data['hostname'] == host]
+        plt.figure(figsize=(8, 4.8))
+        sns.boxplot(data=host_data, x='dist', y='recovery', hue='dist', showfliers=False)
+        plt.title(f'{title}', fontsize='x-large')
+        plt.xlabel(xlabel, fontsize='x-large')
+        plt.ylabel(ylabel, fontsize='x-large')
+        if (title == 'reliability-worker'):
+            # axis y should be placed on the right side
+            plt.gca().yaxis.tick_right()
+            plt.gca().yaxis.set_label_position("right")
+        plt.tick_params(axis='y', labelsize='x-large')
+        plt.tick_params(axis='x', labelsize='x-large')
+        
+        plt.grid(True)
+
+        if toSave:
+            snake_title = title.replace(' ', '_').lower()
+            file_name = f'{snake_title}_for_{host}.pdf'
+            plt.savefig(f'../diagrams/recovery/{file_name}', format='pdf')
+        else:
+            plt.show()
+
+def create_plots_recovery(plot_type='recovery'):
+        for test in ['reliability-control', 'reliability-worker']:
+            files = [] 
+            for unit in metrics:
+                if 'worker' in test:
+                    reliabilityTestsForWorker = True
+                else:
+                    reliabilityTestsForWorker = False
+                for dist in distributions:
+                    for i in range(2, 5):
+                        files.append(f'../k-bench-results/{dist}/{test}/{test}-{i}/{test}-{i}-{unit}.csv')
+            ylabel = 'Recovery Time (min)'
+            reliabilityTest = 'long' if 'long' in test else 'short' if 'reliability' in test else ''
+            create_plots(files, f'{test}', 'Distributions', ylabel, toSave, plot_type, uniteWorkers, reliabilityTestsForWorker, reliabilityTest)
+
+create_plots_recovery('recovery')
 
 
 
