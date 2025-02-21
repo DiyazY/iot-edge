@@ -1,5 +1,9 @@
 # iot-edge
-[GenerIoT - Generating and Deploying Lightweight, Secure and Zero-overhead Software for Multipurpose IoT Devices](https://itea4.org/project/generiot.html)
+Yakubov, D., Hästbacka, D. (2025). Comparative Analysis of Lightweight Kubernetes Distributions for Edge Computing: Performance and Resource Efficiency. In: Service-Oriented and Cloud Computing. ESOCC 2025. Lecture Notes in Computer Science, vol 15547. Springer, Cham. https://doi.org/10.1007/978-3-031-84617-5_7
+
+ 
+
+Yakubov, D., Hästbacka, D. (2025). Comparative Analysis of Lightweight Kubernetes Distributions for Edge Computing: Security, Resilience and Maintainability. In: Service-Oriented and Cloud Computing. ESOCC 2025. Lecture Notes in Computer Science, vol 15547. Springer, Cham. https://doi.org/10.1007/978-3-031-84617-5_8
 
 ## Contents
 * [Local Development](./LOCAL-DEV.md)
