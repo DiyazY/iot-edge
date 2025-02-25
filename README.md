@@ -3,6 +3,8 @@
 
 [Yakubov, D., Hästbacka, D. (2025). Comparative Analysis of Lightweight Kubernetes Distributions for Edge Computing: Security, Resilience and Maintainability. In: Service-Oriented and Cloud Computing. ESOCC 2025. Lecture Notes in Computer Science, vol 15547. Springer, Cham.](https://link.springer.com/chapter/10.1007/978-3-031-84617-5_8)
 
+🚨 Arxiv references will be added soon
+
 ## Contents
 * [Local Development](./LOCAL-DEV.md)
 * [Change log](./CHANGE-LOG.md)
