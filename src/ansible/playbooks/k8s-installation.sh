@@ -1,14 +1,20 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates curl
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+# If the directory `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
+# sudo mkdir -p -m 755 /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+# This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
+sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl # this is required by k8s
+
+sudo systemctl enable --now kubelet
 
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
@@ -37,44 +43,49 @@ lsmod | grep overlay
 sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward
 
 # containerd steps - begin
-sudo wget -O /tmp/containerd-1.7.11-linux-amd64.tar.gz https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz
-sudo tar Cxzvf /usr/local /tmp/containerd-1.7.11-linux-amd64.tar.gz
+# sudo wget -O /tmp/containerd-1.7.11-linux-amd64.tar.gz https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz
+# sudo tar Cxzvf /usr/local /tmp/containerd-1.7.11-linux-amd64.tar.gz
 
 # rpi
-# sudo wget -O /tmp/containerd-1.7.11-linux-arm64.tar.gz https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-arm64.tar.gz
-# sudo tar Cxzvf /usr/local /tmp/containerd-1.7.11-linux-arm64.tar.gz
+sudo wget -O /tmp/containerd-2.0.3-linux-arm64.tar.gz https://github.com/containerd/containerd/releases/download/v2.0.3/containerd-2.0.3-linux-arm64.tar.gz
+sudo tar Cxzvf /usr/local /tmp/containerd-2.0.3-linux-arm64.tar.gz
 
-sudo wget -O /usr/local/lib/systemd/system/containerd.service https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+# sudo wget -O /usr/local/lib/systemd/system/containerd.service https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
 # the line below is used on raspberry pi
-# sudo wget -O /etc/systemd/system/containerd.service https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+sudo wget -O /etc/systemd/system/containerd.service https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 
-sudo wget -O /tmp/runc.amd64 https://github.com/opencontainers/runc/releases/download/v1.1.11/runc.amd64
-sudo install -m 755 /tmp/runc.amd64 /usr/local/sbin/runc
+# sudo wget -O /tmp/runc.amd64 https://github.com/opencontainers/runc/releases/download/v1.1.11/runc.amd64
+# sudo install -m 755 /tmp/runc.amd64 /usr/local/sbin/runc
 
 # rpi
-# sudo wget -O /tmp/runc.arm64 https://github.com/opencontainers/runc/releases/download/v1.1.11/runc.arm64
-# sudo install -m 755 /tmp/runc.arm64 /usr/local/sbin/runc
+sudo wget -O /tmp/runc.arm64 https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.arm64
+sudo install -m 755 /tmp/runc.arm64 /usr/local/sbin/runc
 
 mkdir -p /opt/cni/bin
-sudo wget -O /tmp/cni-plugins-linux-amd64-v1.4.0.tgz https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-amd64-v1.4.0.tgz
-sudo tar Cxzvf /opt/cni/bin /tmp/cni-plugins-linux-amd64-v1.4.0.tgz
+# sudo wget -O /tmp/cni-plugins-linux-amd64-v1.4.0.tgz https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-amd64-v1.4.0.tgz
+# sudo tar Cxzvf /opt/cni/bin /tmp/cni-plugins-linux-amd64-v1.4.0.tgz
 
 # rpi
-sudo wget -O /tmp/cni-plugins-linux-arm64-v1.4.0.tgz https://github.com/containernetworking/plugins/releases/download/v1.4.0/cni-plugins-linux-arm64-v1.4.0.tgz
-sudo tar Cxzvf /opt/cni/bin /tmp/cni-plugins-linux-arm64-v1.4.0.tgz
+sudo wget -O /tmp/cni-plugins-linux-arm64-v1.6.2.tgz https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-arm64-v1.6.2.tgz
+sudo tar Cxzvf /opt/cni/bin /tmp/cni-plugins-linux-arm64-v1.6.2.tgz
 # containerd steps - end
 
 sudo mkdir /etc/containerd
 sudo touch /etc/containerd/config.toml
-sudo containerd config default > /etc/containerd/config.toml
+sudo containerd config default | sudo tee /etc/containerd/config.toml > /dev/null
 
 # in /etc/containerd/config.toml change SystemCgroup to true
 # [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
 #   ...
 #   [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
 #     SystemdCgroup = true
+
+# new containerd 2.X
+# version = 3
+# [plugins.'io.containerd.cri.v1.runtime'.containerd.runtimes.runc.options]
+#   SystemdCgroup = true
 
 sudo systemctl restart containerd
 
